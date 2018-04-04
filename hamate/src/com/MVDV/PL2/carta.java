@@ -20,4 +20,12 @@ public class carta {
     public int getValorDer() {
         return valorDer;
     }
+
+    public void setValorIzq(int valorIzq) {
+        this.valorIzq = valorIzq;
+    }
+
+    public void setValorDer(int valorDer) {
+        this.valorDer = valorDer;
+    }
 }
