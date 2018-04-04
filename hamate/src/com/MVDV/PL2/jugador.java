@@ -18,7 +18,7 @@ public class jugador {
         this.maquina = maquina;
     }
 
-    public boolean isLlena(){
+    private boolean isLlena(){
        return (mano.size() == 5);
     }
 
@@ -27,6 +27,6 @@ public class jugador {
             cartaEnMano cartaAux = new cartaEnMano(cartaRobada.getValorIzq(), cartaRobada.getValorDer(), this.isMaquina());
             mano.add(cartaAux);
         }
-
     }
+
 }
