@@ -1,15 +1,13 @@
 package com.MVDV.PL2;
 
-import java.util.ArrayList;
-
-public class cartaEnMano extends  cartaEnMazo {
+public class CartaEnMano extends CartaEnMazo {
     private boolean maquina; //esto ayuda a representar el color
     private boolean enMano;
 
-    public cartaEnMano() {
+    public CartaEnMano() {
     }
 
-    public cartaEnMano(int valorIzq, int valorDer, boolean maquina) {
+    public CartaEnMano(int valorIzq, int valorDer, boolean maquina) {
         super(valorIzq, valorDer, false);
         this.maquina = maquina;
         this.enMano = true;

@@ -1,13 +1,13 @@
 package com.MVDV.PL2;
 
-public class cartaEnMazo extends carta {
+public class CartaEnMazo extends Carta {
 
     private boolean enMazo;
 
-    public cartaEnMazo() {
+    public CartaEnMazo() {
     }
 
-    public cartaEnMazo(int valorIzq, int valorDer, boolean enMazo) {
+    public CartaEnMazo(int valorIzq, int valorDer, boolean enMazo) {
         super(valorIzq, valorDer);
         this.enMazo = true;
     }

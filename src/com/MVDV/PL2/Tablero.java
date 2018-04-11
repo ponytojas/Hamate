@@ -1,12 +1,12 @@
 package com.MVDV.PL2;
 
-public class tablero {
-    private cartaEnJuego [] huecos;
+public class Tablero {
+    private CartaEnJuego[] huecos;
     private int currentIndex;
 
-    public tablero() {
+    public Tablero() {
         this.currentIndex = 0;
-        this.huecos = new cartaEnJuego[10];
+        this.huecos = new CartaEnJuego[10];
     }
 
     private int getCurrentIndex(){
@@ -17,9 +17,9 @@ public class tablero {
         return (currentIndex == huecos.length-1);
     }
 
-    public void recibirCarta (cartaEnMano cartaBajada, int posicion){
+    public void recibirCarta (CartaEnMano cartaBajada, int posicion){
         if (!this.isLleno()){
-            cartaEnJuego cartaAux = new cartaEnJuego(cartaBajada.getValorIzq(), cartaBajada.getValorDer(), cartaBajada.isMaquina(), posicion);
+            CartaEnJuego cartaAux = new CartaEnJuego(cartaBajada.getValorIzq(), cartaBajada.getValorDer(), cartaBajada.isMaquina(), posicion);
             this.huecos[currentIndex] = cartaAux;
             this.currentIndex++;
         }

@@ -1,14 +1,14 @@
 package com.MVDV.PL2;
 
-public class carta {
+public class Carta {
     private int valorIzq;
     private int valorDer;
     /* TODO imagen */
 
-    public carta() {
+    public Carta() {
     }
 
-    public carta(int valorIzq, int valorDer) {
+    public Carta(int valorIzq, int valorDer) {
         this.valorIzq = valorIzq;
         this.valorDer = valorDer;
     }

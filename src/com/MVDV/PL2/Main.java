@@ -10,10 +10,8 @@ public class Main {
         Scanner entrada = new Scanner(System.in);
         String res = "SI";
 
-        //TODO generar el mazo
-
         do{
-            //res=partida.jugarJuego();
+            //res=PPartida.jugarJuego();
 
 
         }while (res.equals("NO"));

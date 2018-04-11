@@ -2,11 +2,11 @@ package com.MVDV.PL2;
 
 import java.util.ArrayList;
 
-public class jugador {
+public class Jugador {
     private boolean maquina;
-    private ArrayList <cartaEnMano> mano = new ArrayList<>();
+    private ArrayList <CartaEnMano> mano = new ArrayList<>();
 
-    public jugador(boolean maquina) {
+    public Jugador(boolean maquina) {
         this.maquina = maquina;
     }
 
@@ -22,9 +22,9 @@ public class jugador {
        return (mano.size() == 5);
     }
 
-    public void recibirCarta(cartaEnMazo cartaRobada){
+    public void recibirCarta(CartaEnMazo cartaRobada){
         if (!isLlena()) {
-            cartaEnMano cartaAux = new cartaEnMano(cartaRobada.getValorIzq(), cartaRobada.getValorDer(), this.isMaquina());
+            CartaEnMano cartaAux = new CartaEnMano(cartaRobada.getValorIzq(), cartaRobada.getValorDer(), this.isMaquina());
             mano.add(cartaAux);
         }
     }

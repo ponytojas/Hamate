@@ -1,4 +1,5 @@
 package com.MVDV.PL2;
 
-public class partida {
+public class Partida {
+
 }
