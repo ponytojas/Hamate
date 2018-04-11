@@ -11,4 +11,12 @@ public class CartaEnJuego extends CartaEnMano {
         super(valorIzq, valorDer, maquina);
         this.posicion = posicion;
     }
+
+    public int getPosicion() {
+        return posicion;
+    }
+
+    public void setPosicion(int posicion) {
+        this.posicion = posicion;
+    }
 }
