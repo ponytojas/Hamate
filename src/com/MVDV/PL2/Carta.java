@@ -3,7 +3,6 @@ package com.MVDV.PL2;
 public class Carta {
     private int valorIzq;
     private int valorDer;
-    /* TODO imagen */
 
     public Carta() {
     }

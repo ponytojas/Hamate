@@ -18,15 +18,26 @@ public class Jugador {
         this.maquina = maquina;
     }
 
-    private boolean isLlena(){
+    public boolean isLlena(){
        return (mano.size() == 5);
     }
 
     public void recibirCarta(CartaEnMazo cartaRobada){
         if (!isLlena()) {
             CartaEnMano cartaAux = new CartaEnMano(cartaRobada.getValorIzq(), cartaRobada.getValorDer(), this.isMaquina());
+            cartaAux.setEnMazo(false);
             mano.add(cartaAux);
         }
     }
+
+    public void mostrarMano(){
+        int contador = 0;
+        for (CartaEnMano aux: mano) {
+            contador += 1;
+            System.out.println(contador+")   Valor Der: " + aux.getValorDer() + " | Valor Izq: " + aux.getValorIzq());
+        }
+    }
+
+
 
 }

@@ -14,7 +14,7 @@ public class Tablero {
             posiciones.add(i);
     }
 
-    private int getCurrentIndex(){
+    public int getCurrentIndex(){
         return currentIndex;
     }
 
@@ -38,12 +38,27 @@ public class Tablero {
             return 2;
     }
 
-    public void mostrarPosicionesOcupadas(){
+    public void mostrarPosicionesLibres(){
         System.out.println("Posiciones libres: ");
         for (Integer posicionAux : this.posiciones){
-            System.out.print(posicionAux+"\t");
+            System.out.print("["+posicionAux+"]\t");
         }
     }
+
+    public void mostrarPosicionesOcupadas(){
+        System.out.println("Tablero: ");
+        int aux = 0;
+        for (int i = 0; i < 10; i++){
+            if (posiciones.contains(i))
+                System.out.print("[ ]   ");
+            else{
+                System.out.println("["+huecos[aux].getValorIzq()+"|"+huecos[aux].getValorDer()+"]");
+            }
+        }
+
+
+    }
+
 
     public void compararCartas(CartaEnMano cartaBajada, int posicion){
         if (!this.isLleno()){

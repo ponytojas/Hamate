@@ -3,6 +3,7 @@ package com.MVDV.PL2;
 public class CartaEnMano extends CartaEnMazo {
     private boolean maquina; //esto ayuda a representar el color
     private boolean enMano;
+    /*TODO imagen*/
 
     public CartaEnMano() {
     }

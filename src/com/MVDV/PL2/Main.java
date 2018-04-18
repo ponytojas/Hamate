@@ -8,10 +8,11 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner entrada = new Scanner(System.in);
+        Partida nuevaPartida = new Partida();
         String res = "SI";
 
         do{
-            //res=PPartida.jugarJuego();
+            res=nuevaPartida.jugarJuego();
 
 
         }while (res.equals("NO"));
