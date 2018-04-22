@@ -30,6 +30,14 @@ public class Jugador {
         }
     }
 
+    public void soltarCarta(int posicion){
+        this.mano.remove(posicion);
+    }
+
+    public CartaEnMano getCarta (int posicion){
+        return this.mano.get(posicion);
+    }
+
     public void mostrarMano(){
         int contador = 0;
         for (CartaEnMano aux: mano) {

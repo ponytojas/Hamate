@@ -42,10 +42,6 @@ public class Partida {
     }
 
     private void turnoJugador(){
-        if (tableroPartida.getCurrentIndex() != 0)
-            tableroPartida.mostrarPosicionesOcupadas();
-
-
         Scanner entrada = new Scanner(System.in);
         this.jugador.mostrarMano();
         System.out.println("Elige una carta a bajar: ");
@@ -62,7 +58,16 @@ public class Partida {
     }
 
     private void reto(int posicionCartaMano, int huecoTablero, boolean isMaquina){
-
+        CartaEnMano cartaAux;
+        if (!isMaquina){
+            cartaAux = this.jugador.getCarta(posicionCartaMano);
+            this.jugador.soltarCarta(posicionCartaMano);
+        }else{
+            cartaAux = this.maquina.getCarta(posicionCartaMano);
+            this.maquina.soltarCarta(posicionCartaMano);
+        }
+        CartaEnJuego nuevaCartaEnTablero = new CartaEnJuego(cartaAux.getValorIzq(), cartaAux.getValorDer(), isMaquina, huecoTablero);
+        tableroPartida.recibirCarta(nuevaCartaEnTablero, huecoTablero);
     }
 
 }
