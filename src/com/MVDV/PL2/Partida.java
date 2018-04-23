@@ -13,7 +13,6 @@ public class Partida {
 
     public String jugarJuego (){
         int contador = 0;
-
         do{
             int izq = (int)(Math.random() * ((12) + 1));
             int der = (int)(Math.random() * ((12) + 1));
@@ -33,31 +32,40 @@ public class Partida {
             this.mazo.remove(0);
         }
 
-        while (!tableroPartida.isLleno()){
+        while (!this.tableroPartida.estaElTableroLleno()){
             turnoJugador();
             turnoMaquina();
         }
-
         return "SI";
     }
 
     private void turnoJugador(){
-        Scanner entrada = new Scanner(System.in);
-        this.jugador.mostrarMano();
-        System.out.println("Elige una carta a bajar: ");
-        int posicionMano = (entrada.nextInt()) - 1;
-        this.tableroPartida.mostrarPosicionesLibres();
-        System.out.println("\nElige una posición para bajar");
-        int posicionTablero = (entrada.nextInt()) - 1;
-        reto(posicionMano, posicionTablero, this.jugador.isMaquina());
+        try {
+            Scanner entrada = new Scanner(System.in);
+            for (HuecoDelTablero huecoAux : this.tableroPartida.getCartasYaBajadas())
+                huecoAux.dibujarHueco();
+            System.out.println("\n\n*************MANO*************\n");
+            this.jugador.mostrarMano();
+            System.out.println("Elige una carta a bajar: ");
+            int posicionMano = (entrada.nextInt()) - 1;
+            System.out.println("\nElige una posición para bajar");
+            int posicionTablero = (entrada.nextInt()) - 1;
+            if (this.tableroPartida.comprobarPosicion(posicionTablero))
+                throw new HuecoOcupado("El hueco esta ocupado, elige una posicion vacia\\n\\n\\n\\n\"");
 
+            else
+                jugar(posicionMano, posicionTablero, this.jugador.isMaquina());
+        }catch (HuecoOcupado msg){
+            System.out.println("\n\n\n\n\nEl hueco esta ocupado, elige una posicion vacia\n\n\n\n\n");
+            turnoJugador();
+        }
     }
 
     private void turnoMaquina(){
 
     }
 
-    private void reto(int posicionCartaMano, int huecoTablero, boolean isMaquina){
+    private void jugar(int posicionCartaMano, int huecoTablero, boolean isMaquina){
         CartaEnMano cartaAux;
         if (!isMaquina){
             cartaAux = this.jugador.getCarta(posicionCartaMano);
@@ -67,7 +75,16 @@ public class Partida {
             this.maquina.soltarCarta(posicionCartaMano);
         }
         CartaEnJuego nuevaCartaEnTablero = new CartaEnJuego(cartaAux.getValorIzq(), cartaAux.getValorDer(), isMaquina, huecoTablero);
-        tableroPartida.recibirCarta(nuevaCartaEnTablero, huecoTablero);
+        tableroPartida.ponerLaCartaEnElTablero(nuevaCartaEnTablero, huecoTablero);
     }
 
+
+    class HuecoOcupado extends Exception {
+
+        public HuecoOcupado() {
+        }
+        public HuecoOcupado(String msg) {
+            super("Excepción definida por el usuario: " + msg);
+        }
+    }
 }

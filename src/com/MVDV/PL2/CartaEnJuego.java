@@ -18,6 +18,8 @@ public class CartaEnJuego extends CartaEnMano {
         return posicion;
     }
 
+    public boolean getIsMaquina(){return this.isMaquina;}
+
     public void setPosicion(int posicion) {
         this.posicion = posicion;
     }

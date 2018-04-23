@@ -42,7 +42,10 @@ public class Jugador {
         int contador = 0;
         for (CartaEnMano aux: mano) {
             contador += 1;
-            System.out.println(contador+")   Valor Der: " + aux.getValorDer() + " | Valor Izq: " + aux.getValorIzq());
+            if (aux.getValorIzq() < 10)
+                System.out.println(contador+")   Valor Izq: " + aux.getValorIzq() + " | Valor Der: " + aux.getValorDer());
+            else
+                System.out.println(contador+")   Valor Izq: " + aux.getValorIzq() + "| Valor Der: " + aux.getValorDer());
         }
     }
 
