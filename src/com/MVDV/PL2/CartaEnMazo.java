@@ -7,22 +7,20 @@ package com.MVDV.PL2;
 
 public class CartaEnMazo extends Carta {
 
-    private boolean enMazo;
+    /**
+     * Constructor por defecto
+     */
 
     public CartaEnMazo() {
     }
 
-    public CartaEnMazo(int valorIzq, int valorDer, boolean enMazo) {
+    /**
+     *
+     * @param valorIzq: Valor por la izquierda de la carta
+     * @param valorDer: Valor por la derecha de la carta
+     */
+    public CartaEnMazo(int valorIzq, int valorDer) {
         super(valorIzq, valorDer);
-        this.enMazo = true;
-    }
-
-    public boolean isEnMazo() {
-        return enMazo;
-    }
-
-    public void setEnMazo(boolean enMazo) {
-        this.enMazo = enMazo;
     }
 
 }

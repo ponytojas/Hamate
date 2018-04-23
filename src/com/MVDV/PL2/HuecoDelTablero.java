@@ -14,7 +14,7 @@ public class HuecoDelTablero {
 
     public void bajarCartaAlHueco (CartaEnJuego cartaQueSePoneEnElHueco){
         this.cartaEnElHueco = cartaQueSePoneEnElHueco;
-        this.setEsRoja(cartaQueSePoneEnElHueco.getIsMaquina());
+        this.setEsRoja(cartaQueSePoneEnElHueco.getisMaquina());
     }
 
     public void setEsRoja(boolean laCartaEsRoja){
