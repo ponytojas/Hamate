@@ -1,5 +1,10 @@
 package com.MVDV.PL2;
 
+/**
+ * @author Marcos Vicente - Daniel Villalobos
+ * @version v1.0.0
+ */
+
 public class CartaEnMazo extends Carta {
 
     private boolean enMazo;

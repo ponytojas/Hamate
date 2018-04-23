@@ -1,6 +1,10 @@
 package com.MVDV.PL2;
-
 import java.util.ArrayList;
+
+/**
+ * @author Marcos Vicente - Daniel Villalobos
+ * @version v1.0.0
+ */
 
 public class Jugador {
     private boolean maquina;

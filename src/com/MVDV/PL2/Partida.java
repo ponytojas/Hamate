@@ -1,7 +1,11 @@
 package com.MVDV.PL2;
-
 import java.util.ArrayList;
 import java.util.Scanner;
+
+/**
+ * @author Marcos Vicente - Daniel Villalobos
+ * @version v1.0.0
+ */
 
 public class Partida {
 
@@ -48,7 +52,7 @@ public class Partida {
             this.jugador.mostrarMano();
             System.out.println("Elige una carta a bajar: ");
             int posicionMano = (entrada.nextInt()) - 1;
-            System.out.println("\nElige una posición para bajar");
+            System.out.println("\nElige una posicion para bajar");
             int posicionTablero = (entrada.nextInt()) - 1;
             if (this.tableroPartida.comprobarPosicion(posicionTablero))
                 throw new HuecoOcupado("El hueco esta ocupado, elige una posicion vacia\\n\\n\\n\\n\"");
@@ -84,7 +88,7 @@ public class Partida {
         public HuecoOcupado() {
         }
         public HuecoOcupado(String msg) {
-            super("Excepción definida por el usuario: " + msg);
+            super("Excepcion definida por el usuario: " + msg);
         }
     }
 }

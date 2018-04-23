@@ -1,8 +1,11 @@
 package com.MVDV.PL2;
-
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
+
+/**
+ * @author Marcos Vicente - Daniel Villalobos
+ * @version v1.0.0
+ */
 
 public class Main {
 

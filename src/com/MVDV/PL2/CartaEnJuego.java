@@ -1,8 +1,13 @@
 package com.MVDV.PL2;
 
+/**
+ * @author Marcos Vicente - Daniel Villalobos
+ * @version v1.0.0
+ */
+
 public class CartaEnJuego extends CartaEnMano {
 
-    private int posicion; //del 0 al 9 la posición que ocupa la Carta
+    private int posicion; //del 0 al 9 la posicion que ocupa la Carta
     private boolean isMaquina;
 
     public CartaEnJuego() {
