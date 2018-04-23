@@ -22,16 +22,16 @@ public class Partida {
             int der = (int)(Math.random() * ((12) + 1));
 
             Carta nuevaCarta = new Carta(izq, der);
-            CartaEnMazo cartaMazo = new CartaEnMazo(nuevaCarta.getValorIzq(),nuevaCarta.getValorDer(),true);
+            CartaEnMazo cartaMazo = new CartaEnMazo(nuevaCarta.getValorIzq(),nuevaCarta.getValorDer());
             this.mazo.add(cartaMazo);
             contador+=1;
         }while (contador < 110);
 
-        while(!maquina.isLlena()){
+        while(!maquina.getisLlena()){
             maquina.recibirCarta(this.mazo.get(0));
             this.mazo.remove(0);
         }
-        while (!jugador.isLlena()){
+        while (!jugador.getisLlena()){
             jugador.recibirCarta(this.mazo.get(0));
             this.mazo.remove(0);
         }
@@ -58,7 +58,7 @@ public class Partida {
                 throw new HuecoOcupado("El hueco esta ocupado, elige una posicion vacia\\n\\n\\n\\n\"");
 
             else
-                jugar(posicionMano, posicionTablero, this.jugador.isMaquina());
+                jugar(posicionMano, posicionTablero, this.jugador.getisMaquina());
         }catch (HuecoOcupado msg){
             System.out.println("\n\n\n\n\nEl hueco esta ocupado, elige una posicion vacia\n\n\n\n\n");
             turnoJugador();
@@ -72,10 +72,10 @@ public class Partida {
     private void jugar(int posicionCartaMano, int huecoTablero, boolean isMaquina){
         CartaEnMano cartaAux;
         if (!isMaquina){
-            cartaAux = this.jugador.getCarta(posicionCartaMano);
+            cartaAux = this.jugador.getcarta(posicionCartaMano);
             this.jugador.soltarCarta(posicionCartaMano);
         }else{
-            cartaAux = this.maquina.getCarta(posicionCartaMano);
+            cartaAux = this.maquina.getcarta(posicionCartaMano);
             this.maquina.soltarCarta(posicionCartaMano);
         }
         CartaEnJuego nuevaCartaEnTablero = new CartaEnJuego(cartaAux.getValorIzq(), cartaAux.getValorDer(), isMaquina, huecoTablero);

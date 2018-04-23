@@ -15,11 +15,11 @@ public class CartaEnMano extends CartaEnMazo {
     }
 
     /**
-     * @param valorIzq: Valor por la izquierda de la carta
-     * @param valorDer: Valor por la derecha de la carta
+     * @param valorIzq Valor por la izquierda de la carta
+     * @param valorDer Valor por la derecha de la carta
      */
 
     public CartaEnMano(int valorIzq, int valorDer) {
-        super(valorIzq, valorDer, false);
+        super(valorIzq, valorDer);
     }
 }

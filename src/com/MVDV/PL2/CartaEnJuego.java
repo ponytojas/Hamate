@@ -18,10 +18,10 @@ public class CartaEnJuego extends CartaEnMano {
 
     /**
      * Crea una instancia del objeto con los valores que obtiene por parametros
-     * @param valorIzq: valor por la izquierda que tiene la carta
-     * @param valorDer: valor por la derecha que tiene la carta
-     * @param maquina: si tenemos la variable a true, la carta sera roja, sino azul. Una aproximacion mas sencilla en el futuro que utilizar variables tipo String
-     * @param posicion: la posicion numerica del 1 al 10 de la carta en juego
+     * @param valorIzq Valor por la izquierda que tiene la carta
+     * @param valorDer Valor por la derecha que tiene la carta
+     * @param maquina Si tenemos la variable a true, la carta sera roja, sino azul. Una aproximacion mas sencilla en el futuro que utilizar variables tipo String
+     * @param posicion La posicion numerica del 1 al 10 de la carta en juego
      */
     public CartaEnJuego(int valorIzq, int valorDer, boolean maquina, int posicion) {
         super(valorIzq, valorDer);
@@ -31,7 +31,7 @@ public class CartaEnJuego extends CartaEnMano {
 
     /**
      * Getter
-     * @return la posicion de la carta. Utilizado para referenciar a la hora de comparar valores
+     * @return La posicion de la carta. Utilizado para referenciar a la hora de comparar valores
      */
     public int getPosicion() {
         return posicion;
@@ -39,7 +39,7 @@ public class CartaEnJuego extends CartaEnMano {
 
     /**
      * Getter
-     * @return de este modo sabemos que color tiene cada carta
+     * @return De este modo sabemos que color tiene cada carta
      */
     public boolean getisMaquina(){return this.isMaquina;}
 

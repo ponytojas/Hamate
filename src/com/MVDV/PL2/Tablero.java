@@ -13,7 +13,7 @@ public class Tablero {
     public Tablero() {
         int contador = 0;
         while(contador < 10){
-            HuecoDelTablero hueco = new HuecoDelTablero (contador+1 );
+            HuecoDelTablero hueco = new HuecoDelTablero();
             cartasYaBajadas.add(hueco);
             contador++;
         }
@@ -22,7 +22,7 @@ public class Tablero {
     public boolean estaElTableroLleno (){
         boolean devolucion = true;
         for (HuecoDelTablero huecoAux : cartasYaBajadas){
-            if (!huecoAux.isHayUnaCarta()) {
+            if (!huecoAux.getHayUnaCarta()) {
                 devolucion = false;
                 break;
             }
@@ -37,7 +37,7 @@ public class Tablero {
     public int comprobarHuecoVacio(){
         int posicionVacia = 0;
         for (HuecoDelTablero encontrarElHuecoVacio : cartasYaBajadas){
-            if (!encontrarElHuecoVacio.isHayUnaCarta())
+            if (!encontrarElHuecoVacio.getHayUnaCarta())
                 return posicionVacia;
             posicionVacia++;
         }
@@ -45,11 +45,11 @@ public class Tablero {
     }
     public void ponerLaCartaEnElTablero (CartaEnJuego nuevaCartaEnTablero, int posicionDelTablero) {
         int indexArrayList = comprobarHuecoVacio();
-        cartasYaBajadas.get(indexArrayList).setCartaEnElHueco(nuevaCartaEnTablero, posicionDelTablero);
-        cartasYaBajadas.get(indexArrayList).setHayUnaCarta(true);
+        cartasYaBajadas.get(indexArrayList).setcartaEnElHueco(nuevaCartaEnTablero, posicionDelTablero);
+        cartasYaBajadas.get(indexArrayList).sethayUnaCarta(true);
     }
 
     public boolean comprobarPosicion (int posicion){
-        return this.cartasYaBajadas.get(posicion).isHayUnaCarta();
+        return this.cartasYaBajadas.get(posicion).getHayUnaCarta();
     }
 }

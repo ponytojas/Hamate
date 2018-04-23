@@ -15,9 +15,8 @@ public class CartaEnMazo extends Carta {
     }
 
     /**
-     *
-     * @param valorIzq: Valor por la izquierda de la carta
-     * @param valorDer: Valor por la derecha de la carta
+     * @param valorIzq Valor por la izquierda de la carta
+     * @param valorDer Valor por la derecha de la carta
      */
     public CartaEnMazo(int valorIzq, int valorDer) {
         super(valorIzq, valorDer);

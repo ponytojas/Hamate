@@ -16,8 +16,8 @@ public class Carta {
     }
 
     /**
-     * @param valorIzq: valor por la izquierda de la carta
-     * @param valorDer: valor por la derecha de la carta
+     * @param valorIzq valor por la izquierda de la carta
+     * @param valorDer  valor por la derecha de la carta
      * Constructor que incluye los valores de izquierda y derecha
      */
     public Carta(int valorIzq, int valorDer) {
@@ -27,7 +27,7 @@ public class Carta {
 
     /**
      * Getter
-     * @return valorIzq: valor izquierdo de la carta
+     * @return Valor izquierdo de la carta
      */
     public int getValorIzq() {
         return valorIzq;
@@ -35,7 +35,7 @@ public class Carta {
 
     /**
      * Getter
-     * @return valorDer: valor derecho de la carta
+     * @return Valor derecho de la carta
      */
 
     public int getValorDer() {
