@@ -1,5 +1,6 @@
 package com.MVDV.PL2;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -18,8 +19,9 @@ public class Partida {
     public String jugarJuego (){
         int contador = 0;
         do{
-            int izq = (int)(Math.random() * ((12) + 1));
-            int der = (int)(Math.random() * ((12) + 1));
+            Random rand = new Random();
+            int izq = rand.nextInt(7)+1;
+            int der = rand.nextInt(7) +1;
 
             Carta nuevaCarta = new Carta(izq, der);
             CartaEnMazo cartaMazo = new CartaEnMazo(nuevaCarta.getValorIzq(),nuevaCarta.getValorDer());
@@ -46,7 +48,7 @@ public class Partida {
     private void turnoJugador(){
         try {
             Scanner entrada = new Scanner(System.in);
-            for (HuecoDelTablero huecoAux : this.tableroPartida.getCartasYaBajadas())
+            for (HuecoDelTablero huecoAux : this.tableroPartida.getCartasYaBajadas())  //PREGUNTAR COMO FUNCIONABA EL BUCLE
                 huecoAux.dibujarHueco();
             System.out.println("\n\n*************MANO*************\n");
             this.jugador.mostrarMano();
@@ -54,6 +56,7 @@ public class Partida {
             int posicionMano = (entrada.nextInt()) - 1;
             System.out.println("\nElige una posicion para bajar");
             int posicionTablero = (entrada.nextInt()) - 1;
+
             if (this.tableroPartida.comprobarPosicion(posicionTablero))
                 throw new HuecoOcupado("El hueco esta ocupado, elige una posicion vacia\\n\\n\\n\\n\"");
 
