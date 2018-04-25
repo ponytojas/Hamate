@@ -95,7 +95,7 @@ public class Partida {
             this.maquina.soltarCarta(posicionCartaMano);
         }
         CartaEnJuego nuevaCartaEnTablero = new CartaEnJuego(cartaAux.getValorIzq(), cartaAux.getValorDer(), isMaquina);
-        this.tableroPartida.ponerLaCartaEnElTablero(nuevaCartaEnTablero, huecoTablero);
+        this.tableroPartida.ponerLaCartaEnElTablero(nuevaCartaEnTablero, huecoTablero, isMaquina);
     }
 
 

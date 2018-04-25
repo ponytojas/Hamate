@@ -43,8 +43,9 @@ public class Tablero {
         }
         return posicionVacia;
     }
-    public void ponerLaCartaEnElTablero (CartaEnJuego nuevaCartaEnTablero, int posicionDelTablero) {
-        cartasYaBajadas.get(posicionDelTablero).setcartaEnElHueco(nuevaCartaEnTablero, posicionDelTablero);
+    public void ponerLaCartaEnElTablero (CartaEnJuego nuevaCartaEnTablero, int posicionDelTablero, boolean isMaquina) {
+        cartasYaBajadas.get(posicionDelTablero).setcartaEnElHueco(nuevaCartaEnTablero, posicionDelTablero, isMaquina);
+
     }
 
     public boolean comprobarPosicion (int posicion){

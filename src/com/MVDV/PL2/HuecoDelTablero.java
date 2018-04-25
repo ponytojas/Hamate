@@ -60,8 +60,9 @@ public class HuecoDelTablero {
      * @param cartaEnElHueco Esta es la carta que bajamos al hueco
      * @param posicion Hemos ocupado el hueco, por lo que debemos indicarle la posicion donde se baja
      */
-    public void setcartaEnElHueco(CartaEnJuego cartaEnElHueco, int posicion) {
+    public void setcartaEnElHueco(CartaEnJuego cartaEnElHueco, int posicion, boolean isMaquina) {
         this.cartaEnElHueco = cartaEnElHueco;
+        this.esRoja = isMaquina;
         setposicion(posicion);
         sethayUnaCarta(true);
     }

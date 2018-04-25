@@ -24,7 +24,7 @@ public class Jugador {
      */
 
     public boolean getisMaquina() {
-        return maquina;
+        return this.maquina;
     }
 
     /**
