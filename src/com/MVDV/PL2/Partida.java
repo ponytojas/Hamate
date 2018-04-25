@@ -70,10 +70,6 @@ public class Partida {
 
     private void turnoMaquina(){
        try{
-        for (HuecoDelTablero huecoAux : this.tableroPartida.getCartasYaBajadas())  //PREGUNTAR COMO FUNCIONABA EL BUCLE
-            huecoAux.dibujarHueco();
-        System.out.println("\n\n*************MANO MAQUINA*************\n");
-        this.maquina.mostrarMano();
         Random rand = new Random();
         int posicionMano = rand.nextInt(maquina.getManoSize());
         int posicionTablero = rand.nextInt(tableroPartida.getCartasYaBajadasSize());
@@ -82,11 +78,10 @@ public class Partida {
             throw new HuecoOcupado("El hueco esta ocupado, elige una posicion vacia\\n\\n\\n\\n\"");
 
         else
-            jugar(posicionMano, posicionTablero, this.jugador.getisMaquina());
+            jugar(posicionMano, posicionTablero, this.maquina.getisMaquina());
 
         }catch (HuecoOcupado msg){
-            System.out.println("\n\n\n\n\nEl hueco esta ocupado, elige una posicion vacia\n\n\n\n\n");
-            turnoJugador();}
+            turnoMaquina();}
 
     }
 
@@ -99,7 +94,7 @@ public class Partida {
             cartaAux = this.maquina.getcarta(posicionCartaMano);
             this.maquina.soltarCarta(posicionCartaMano);
         }
-        CartaEnJuego nuevaCartaEnTablero = new CartaEnJuego(cartaAux.getValorIzq(), cartaAux.getValorDer(), isMaquina, huecoTablero);
+        CartaEnJuego nuevaCartaEnTablero = new CartaEnJuego(cartaAux.getValorIzq(), cartaAux.getValorDer(), isMaquina);
         this.tableroPartida.ponerLaCartaEnElTablero(nuevaCartaEnTablero, huecoTablero);
     }
 

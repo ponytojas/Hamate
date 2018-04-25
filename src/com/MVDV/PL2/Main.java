@@ -18,11 +18,11 @@ public class Main {
         Scanner entrada = new Scanner(System.in);
         Partida nuevaPartida = new Partida();
         String res = "SI";
-        //nuevaPartida = null; //Permite que la clase no tenga referencias y sea recogia por el garbage collector
+
 
         do{
             res=nuevaPartida.jugarJuego();
-
+            nuevaPartida = null; //Permite que la clase no tenga referencias y sea recogia por el garbage collector
 
         }while (res.equals("NO"));
     }

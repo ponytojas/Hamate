@@ -44,9 +44,7 @@ public class Tablero {
         return posicionVacia;
     }
     public void ponerLaCartaEnElTablero (CartaEnJuego nuevaCartaEnTablero, int posicionDelTablero) {
-        int indexArrayList = comprobarHuecoVacio();
-        cartasYaBajadas.get(indexArrayList).setcartaEnElHueco(nuevaCartaEnTablero, posicionDelTablero);
-        cartasYaBajadas.get(indexArrayList).sethayUnaCarta(true);
+        cartasYaBajadas.get(posicionDelTablero).setcartaEnElHueco(nuevaCartaEnTablero, posicionDelTablero);
     }
 
     public boolean comprobarPosicion (int posicion){
@@ -55,6 +53,10 @@ public class Tablero {
 
 
     public int getCartasYaBajadasSize(){
-        return cartasYaBajadas.size();
+        return cartasYaBajadas.size()-1;
+    }
+
+    public int getHuecosVacios(){
+        return 0;
     }
 }

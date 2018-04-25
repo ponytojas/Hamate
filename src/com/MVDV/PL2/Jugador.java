@@ -82,7 +82,7 @@ public class Jugador {
     }
 
     public int getManoSize(){
-        return mano.size();
+        return mano.size()-1;
 
     }
 
