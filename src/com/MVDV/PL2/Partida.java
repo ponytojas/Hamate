@@ -50,7 +50,7 @@ public class Partida {
             Scanner entrada = new Scanner(System.in);
             for (HuecoDelTablero huecoAux : this.tableroPartida.getCartasYaBajadas())  //PREGUNTAR COMO FUNCIONABA EL BUCLE
                 huecoAux.dibujarHueco();
-            System.out.println("\n\n*************MANO*************\n");
+            System.out.println("\n\n*************MANO JUGADOR*************\n");
             this.jugador.mostrarMano();
             System.out.println("Elige una carta a bajar: ");
             int posicionMano = (entrada.nextInt()) - 1;
@@ -70,6 +70,23 @@ public class Partida {
 
     private void turnoMaquina(){
 
+        for (HuecoDelTablero huecoAux : this.tableroPartida.getCartasYaBajadas())  //PREGUNTAR COMO FUNCIONABA EL BUCLE
+            huecoAux.dibujarHueco();
+        System.out.println("\n\n*************MANO MAQUINA*************\n");
+        this.maquina.mostrarMano();
+        Random rand = new Random();
+        int posicionMano = rand.nextInt(7)+1;
+        System.out.println("\nElige una posicion para bajar");
+        int posicionTablero = rand.nextInt(7)+1;
+
+        if (this.tableroPartida.comprobarPosicion(posicionTablero))
+            throw new HuecoOcupado("El hueco esta ocupado, elige una posicion vacia\\n\\n\\n\\n\"");
+
+        else
+            jugar(posicionMano, posicionTablero, this.jugador.getisMaquina());
+
+
+
     }
 
     private void jugar(int posicionCartaMano, int huecoTablero, boolean isMaquina){
@@ -82,7 +99,7 @@ public class Partida {
             this.maquina.soltarCarta(posicionCartaMano);
         }
         CartaEnJuego nuevaCartaEnTablero = new CartaEnJuego(cartaAux.getValorIzq(), cartaAux.getValorDer(), isMaquina, huecoTablero);
-        tableroPartida.ponerLaCartaEnElTablero(nuevaCartaEnTablero, huecoTablero);
+        this.tableroPartida.ponerLaCartaEnElTablero(nuevaCartaEnTablero, huecoTablero);
     }
 
 
