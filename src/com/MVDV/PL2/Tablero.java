@@ -52,4 +52,9 @@ public class Tablero {
     public boolean comprobarPosicion (int posicion){
         return this.cartasYaBajadas.get(posicion).getHayUnaCarta();
     }
+
+
+    public int getCartasYaBajadasSize(){
+        return cartasYaBajadas.size();
+    }
 }
