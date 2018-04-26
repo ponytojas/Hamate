@@ -59,4 +59,25 @@ public class Tablero {
     public int getHuecosVacios(){
         return 0;
     }
+
+
+    public void reto (int huecoTablero, boolean isMaquina){
+        if (!isMaquina){
+            if (this.cartasYaBajadas.);
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
