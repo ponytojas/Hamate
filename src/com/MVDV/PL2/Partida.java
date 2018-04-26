@@ -97,7 +97,7 @@ public class Partida {
             tableroPartida.reto(huecoTablero, isMaquina);
         }
         CartaEnJuego nuevaCartaEnTablero = new CartaEnJuego(cartaAux.getValorIzq(), cartaAux.getValorDer(), isMaquina);
-        this.tableroPartida.ponerLaCartaEnElTablero(nuevaCartaEnTablero, huecoTablero);
+        this.tableroPartida.ponerLaCartaEnElTablero(nuevaCartaEnTablero, huecoTablero, isMaquina);
     }
 
 
