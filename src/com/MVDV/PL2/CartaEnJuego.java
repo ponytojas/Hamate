@@ -40,3 +40,4 @@ public class CartaEnJuego extends CartaEnMano {
         this.isMaquina = !this.isMaquina;
     }
 }
+

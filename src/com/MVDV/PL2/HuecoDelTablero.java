@@ -107,4 +107,10 @@ public class HuecoDelTablero {
             System.out.print("[ "+this.getposicion()+" ]");
         }
     }
+
+
+
+
+
+
 }

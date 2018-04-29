@@ -46,6 +46,7 @@ public class Tablero {
 
     public void ponerLaCartaEnElTablero(CartaEnJuego nuevaCartaEnTablero, int posicionDelTablero, boolean isMaquina) {
         cartasYaBajadas.get(posicionDelTablero).setcartaEnElHueco(nuevaCartaEnTablero, posicionDelTablero, isMaquina);
+        reto(posicionDelTablero, cartasYaBajadas);
 
     }
 
@@ -62,14 +63,75 @@ public class Tablero {
         return 0;
     }
 
-    public int getLastPlace() {
-        int indexLastPlace = 0;
-        for (HuecoDelTablero huecoAux : cartasYaBajadas) {
-            if (!huecoAux.getHayUnaCarta()) {
-                return indexLastPlace;
-            }
-            indexLastPlace++;
+public int getLastPlace() {
+    int indexLastPlace = 0;
+    for (HuecoDelTablero huecoAux : cartasYaBajadas) {
+        if (!huecoAux.getHayUnaCarta()) {
+            return indexLastPlace;
         }
-        return indexLastPlace;
+        indexLastPlace++;
     }
+    return indexLastPlace;
+}
+
+
+
+    public void reto(int posicionDelTablero, ArrayList<HuecoDelTablero> cartasYaBajadas) {
+       boolean retaDerecha = true;
+        switch (posicionDelTablero) {
+            case 0:
+                compararValoresEspecial(retaDerecha, cartasYaBajadas, posicionDelTablero);
+                break;
+
+            case 9:
+                retaDerecha = false;
+                compararValoresEspecial(retaDerecha,cartasYaBajadas, posicionDelTablero);
+                break;
+
+            default:
+                compararValoresNormal(cartasYaBajadas, posicionDelTablero);
+
+        }
+    }
+
+
+    //Compara en los casos de pos 0 y pos 9.
+    public void compararValoresEspecial(boolean retaDerecha, ArrayList<HuecoDelTablero> cartasYaBajadas, int posicionDelTablero) {
+        if (retaDerecha) {
+            if ( cartasYaBajadas.get(posicionDelTablero).getcartaEnElHueco().getValorDer() > cartasYaBajadas.get(posicionDelTablero+1).getcartaEnElHueco().getValorIzq()){
+                cartasYaBajadas.get(posicionDelTablero+1).getcartaEnElHueco().cambiarColor();
+            }
+
+        }
+        else {
+            if (cartasYaBajadas.get(posicionDelTablero).getcartaEnElHueco().getValorIzq() > cartasYaBajadas.get(posicionDelTablero-1).getcartaEnElHueco().getValorDer()){
+                cartasYaBajadas.get(posicionDelTablero-1).getcartaEnElHueco().cambiarColor();
+
+            }
+        }
+
+    }
+
+    public void compararValoresNormal(ArrayList<HuecoDelTablero> cartasYaBajadas, int posicionDelTablero){
+        if ( cartasYaBajadas.get(posicionDelTablero).getcartaEnElHueco().getValorDer() > cartasYaBajadas.get(posicionDelTablero+1).getcartaEnElHueco().getValorIzq()){
+            cartasYaBajadas.get(posicionDelTablero+1).getcartaEnElHueco().cambiarColor();
+        }
+        else if (cartasYaBajadas.get(posicionDelTablero).getcartaEnElHueco().getValorIzq() > cartasYaBajadas.get(posicionDelTablero-1).getcartaEnElHueco().getValorDer()) {
+            cartasYaBajadas.get(posicionDelTablero - 1).getcartaEnElHueco().cambiarColor();
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
