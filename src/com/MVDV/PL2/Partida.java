@@ -90,11 +90,9 @@ public class Partida {
         if (!isMaquina){
             cartaAux = this.jugador.getcarta(posicionCartaMano);
             this.jugador.soltarCarta(posicionCartaMano);
-            tableroPartida.reto(huecoTablero, isMaquina);
         }else{
             cartaAux = this.maquina.getcarta(posicionCartaMano);
             this.maquina.soltarCarta(posicionCartaMano);
-            tableroPartida.reto(huecoTablero, isMaquina);
         }
         CartaEnJuego nuevaCartaEnTablero = new CartaEnJuego(cartaAux.getValorIzq(), cartaAux.getValorDer(), isMaquina);
         this.tableroPartida.ponerLaCartaEnElTablero(nuevaCartaEnTablero, huecoTablero, isMaquina);
