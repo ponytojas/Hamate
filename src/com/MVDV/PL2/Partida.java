@@ -21,7 +21,7 @@ public class Partida {
      * Primeramente genera el mazo
      * Despues reparte las cartas a la maquian y al jugador
      * Por ultimo hace las llamadas a las funciones de los turnos y pregunta al jugador
-     * @return
+     * @return Respuesta del jugador a si quiere o no jugar otra partida
      */
 
     public String jugarJuego (){
@@ -89,7 +89,7 @@ public class Partida {
            if(this.maquina.getManoSize() > 1) {
                Random rand = new Random();
                posicionMano = rand.nextInt(this.maquina.getManoSize());
-               posicionTablero = rand.nextInt(tableroPartida.getCartasYaBajadasSize());
+               posicionTablero = rand.nextInt(10);
            }else{
                posicionMano = 0;
                posicionTablero = tableroPartida.getLastPlace();
@@ -109,9 +109,9 @@ public class Partida {
      * Esta funcion quita la carta de la mano al jugador o la maquina
      * Hacemos esto aqui y no antes porque ya sabemos que la carta elegida es correcta y no se ha lanzado ninguna excepcion
      * Por ultimo se coloca la carta en el tablero
-     * @param posicionCartaMano
-     * @param huecoTablero
-     * @param isMaquina
+     * @param posicionCartaMano Posicion de la carta en la mano
+     * @param huecoTablero Posicion donde se quiere bajar la carta
+     * @param isMaquina Es el jugador o la maquina
      */
     private void jugar(int posicionCartaMano, int huecoTablero, boolean isMaquina){
         CartaEnMano cartaAux;

@@ -10,19 +10,28 @@ import java.util.Objects;
 public class Tablero {
     private ArrayList<HuecoDelTablero> cartasYaBajadas = new ArrayList<>();
 
+    /**
+     * Constructor por defecto
+     * Creamos 10 posiciones por defecto vacias
+     */
 
     public Tablero() {
         int contador = 0;
         while (contador < 10) {
             HuecoDelTablero hueco = new HuecoDelTablero();
-            cartasYaBajadas.add(hueco);
+            this.cartasYaBajadas.add(hueco);
             contador++;
         }
     }
 
+    /**
+     * Getter
+     * @return Comprueba y devuelve si el trablero esta lleno o no
+     */
+
     public boolean estaElTableroLleno() {
         boolean devolucion = true;
-        for (HuecoDelTablero huecoAux : cartasYaBajadas) {
+        for (HuecoDelTablero huecoAux : this.cartasYaBajadas) {
             if (!huecoAux.getHayUnaCarta()) {
                 devolucion = false;
                 break;
@@ -31,10 +40,19 @@ public class Tablero {
         return devolucion;
     }
 
+    /**
+     * Getter
+     * @return El array de cartas que estan en el tablero
+     */
+
     public ArrayList<HuecoDelTablero> getCartasYaBajadas() {
         return cartasYaBajadas;
     }
 
+    /**
+     * Metodo que comprueba una posicion vacia en el tablero
+     * @return Posicion vacia
+     */
     public int comprobarHuecoVacio() {
         int posicionVacia = 0;
         for (HuecoDelTablero encontrarElHuecoVacio : cartasYaBajadas) {
@@ -45,23 +63,32 @@ public class Tablero {
         return posicionVacia;
     }
 
+    /**
+     * Añade la carta que estamos bajando al hueco y genera el reto
+     * @param nuevaCartaEnTablero La carta que estamos jugando
+     * @param posicionDelTablero Posicion del tablero donde se baja la carta
+     * @param isMaquina Si la carta pertenece a la maquina o el jugador
+     */
+
     public void ponerLaCartaEnElTablero(CartaEnJuego nuevaCartaEnTablero, int posicionDelTablero, boolean isMaquina) {
         this.cartasYaBajadas.get(posicionDelTablero).setcartaEnElHueco(nuevaCartaEnTablero, posicionDelTablero, isMaquina);
         reto(posicionDelTablero);
     }
 
+    /**
+     * Comprueba si ya hay una carta en la posicion
+     * @param posicion Posicion que comprobamos
+     * @return Variable booleana si esta llena o no
+     */
     public boolean comprobarPosicion(int posicion) {
         return this.cartasYaBajadas.get(posicion).getHayUnaCarta();
     }
 
-
-    public int getCartasYaBajadasSize() {
-        return cartasYaBajadas.size() - 1;
-    }
-
-    public int getHuecosVacios() {
-        return 0;
-    }
+    /**
+     * Devuelve la posicion del ultimo hueco vacio
+     * Metodo auxiliar para la maquina
+     * @return La posicion del ultimo hueco
+     */
 
     public int getLastPlace() {
         int indexLastPlace = 0;
@@ -73,6 +100,12 @@ public class Tablero {
         }
         return indexLastPlace;
     }
+
+    /**
+     * Metodo que compara los valores de izquierda y derecha de la posicion donde bajamos la carta
+     * Existen dos casos especiales, que son la primera y ultima posicion del tablero
+     * @param posicionDelTablero Posicion donde estamos bajando la carta
+     */
 
 
     private void reto(int posicionDelTablero) {
@@ -90,6 +123,13 @@ public class Tablero {
         }
     }
 
+    /**
+     * Comprobamos si la carta que bajamos es la ultima y la primera y solo comparamos con esa
+     * Primeramente comprobamos si son o no del mismo color
+     * @param retaDerecha Variable boolean que comprueba si reta a la izquierda o la derecha
+     * @param posicionDelTablero Posicion donde bajamos la carta
+     */
+
     private void compararValoresEspecial(boolean retaDerecha, int posicionDelTablero) {
         if (retaDerecha) {
             if (!sonMismoColor(posicionDelTablero, posicionDelTablero+1))
@@ -103,6 +143,11 @@ public class Tablero {
         }
     }
 
+    /**
+     * Similar al metodo anterior, pero en este caso comparamos con la izquierda y la derecha
+     * @param posicionDelTablero Posicion donde bajamos la carta
+     */
+
     private void compararValoresNormal(int posicionDelTablero){
         if (!sonMismoColor(posicionDelTablero, posicionDelTablero+1))
             if ( this.cartasYaBajadas.get(posicionDelTablero).getcartaEnElHueco().getValorDer() > this.cartasYaBajadas.get(posicionDelTablero+1).getcartaEnElHueco().getValorIzq())
@@ -112,29 +157,38 @@ public class Tablero {
                 this.cartasYaBajadas.get(posicionDelTablero - 1).cambiarColor();
     }
 
+    /**
+     * Metodo que dadas dos posiciones comprueba si son del mismo color o no
+     * Metodo auxiliar para el reto
+     * @param posicion1 Primera posicion a bajar
+     * @param posicion2 Segunda posicion a bajar
+     * @return Comprueba si es o no del mismo color
+     */
+
     private boolean sonMismoColor (int posicion1, int posicion2){
-        if (this.cartasYaBajadas.get(posicion1).getHayUnaCarta() && this.cartasYaBajadas.get(posicion2).getHayUnaCarta()) {
-            if (this.cartasYaBajadas.get(posicion1).getesRoja() != this.cartasYaBajadas.get(posicion2).getesRoja())
-                return false;
-            else
-                return true;
-        }
-        return true;
+
+        return (this.cartasYaBajadas.get(posicion1).getesRoja() == this.cartasYaBajadas.get(posicion2).getesRoja());
     }
 
+    /**
+     *Metodo que devuelve la cantidad de cartas del jugador o de la maquina
+     * Metodo auxiliar para comprobar quien ha ganado
+     * @param jugadorMaquina Variable booleana para saber si nos referimos al jugador o la maquina
+     * @return Cantidad de cartas que tiene el jugador o la maquina
+     */
     public int getcantidadCartas(boolean jugadorMaquina) {
         int jugador = 0;
         int cantidad = 0;
         if (jugadorMaquina) jugador = 1 ;
         switch (jugador) {
             case 0:
-                for (HuecoDelTablero variableAuxiliarParaContar : cartasYaBajadas)
+                for (HuecoDelTablero variableAuxiliarParaContar : this.cartasYaBajadas)
                     if (variableAuxiliarParaContar.getesRoja())
                         cantidad++;
                 break;
 
             case 1:
-                for (HuecoDelTablero variableAuxiliarParaContar : cartasYaBajadas)
+                for (HuecoDelTablero variableAuxiliarParaContar : this.cartasYaBajadas)
                     if (!variableAuxiliarParaContar.getesRoja())
                         cantidad++;
                 break;
