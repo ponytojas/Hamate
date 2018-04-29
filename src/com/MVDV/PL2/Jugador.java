@@ -83,7 +83,7 @@ public class Jugador {
 
     /**
      * Getter
-     * @return Tamaño de la mano
+     * @return Size de la mano
      */
 
     public int getManoSize(){
