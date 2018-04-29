@@ -70,9 +70,18 @@ public class Partida {
 
     private void turnoMaquina(){
        try{
-        Random rand = new Random();
-        int posicionMano = rand.nextInt(maquina.getManoSize());
-        int posicionTablero = rand.nextInt(tableroPartida.getCartasYaBajadasSize());
+
+           int posicionTablero;
+           int posicionMano;
+
+           if(tableroPartida.getCartasYaBajadasSize() != 0 || maquina.getManoSize() != 0) {
+               Random rand = new Random();
+               posicionMano = rand.nextInt(maquina.getManoSize());
+               posicionTablero = rand.nextInt(tableroPartida.getCartasYaBajadasSize());
+           }else{
+               posicionMano = 0;
+               posicionTablero = tableroPartida.getLastPlace() + 1;
+           }
 
         if (this.tableroPartida.comprobarPosicion(posicionTablero))
             throw new HuecoOcupado("El hueco esta ocupado, elige una posicion vacia\\n\\n\\n\\n\"");

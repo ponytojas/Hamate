@@ -7,21 +7,21 @@ import java.util.ArrayList;
  */
 
 public class Tablero {
-    private ArrayList <HuecoDelTablero> cartasYaBajadas = new ArrayList<>();
+    private ArrayList<HuecoDelTablero> cartasYaBajadas = new ArrayList<>();
 
 
     public Tablero() {
         int contador = 0;
-        while(contador < 10){
+        while (contador < 10) {
             HuecoDelTablero hueco = new HuecoDelTablero();
             cartasYaBajadas.add(hueco);
             contador++;
         }
     }
 
-    public boolean estaElTableroLleno (){
+    public boolean estaElTableroLleno() {
         boolean devolucion = true;
-        for (HuecoDelTablero huecoAux : cartasYaBajadas){
+        for (HuecoDelTablero huecoAux : cartasYaBajadas) {
             if (!huecoAux.getHayUnaCarta()) {
                 devolucion = false;
                 break;
@@ -34,30 +34,42 @@ public class Tablero {
         return cartasYaBajadas;
     }
 
-    public int comprobarHuecoVacio(){
+    public int comprobarHuecoVacio() {
         int posicionVacia = 0;
-        for (HuecoDelTablero encontrarElHuecoVacio : cartasYaBajadas){
+        for (HuecoDelTablero encontrarElHuecoVacio : cartasYaBajadas) {
             if (!encontrarElHuecoVacio.getHayUnaCarta())
                 return posicionVacia;
             posicionVacia++;
         }
         return posicionVacia;
     }
-    public void ponerLaCartaEnElTablero (CartaEnJuego nuevaCartaEnTablero, int posicionDelTablero, boolean isMaquina) {
+
+    public void ponerLaCartaEnElTablero(CartaEnJuego nuevaCartaEnTablero, int posicionDelTablero, boolean isMaquina) {
         cartasYaBajadas.get(posicionDelTablero).setcartaEnElHueco(nuevaCartaEnTablero, posicionDelTablero, isMaquina);
 
     }
 
-    public boolean comprobarPosicion (int posicion){
+    public boolean comprobarPosicion(int posicion) {
         return this.cartasYaBajadas.get(posicion).getHayUnaCarta();
     }
 
 
-    public int getCartasYaBajadasSize(){
-        return cartasYaBajadas.size()-1;
+    public int getCartasYaBajadasSize() {
+        return cartasYaBajadas.size() - 1;
     }
 
-    public int getHuecosVacios(){
+    public int getHuecosVacios() {
         return 0;
+    }
+
+    public int getLastPlace() {
+        int indexLastPlace = 0;
+        for (HuecoDelTablero huecoAux : cartasYaBajadas) {
+            if (!huecoAux.getHayUnaCarta()) {
+                return indexLastPlace;
+            }
+            indexLastPlace++;
+        }
+        return indexLastPlace;
     }
 }
