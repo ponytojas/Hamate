@@ -36,7 +36,7 @@ public class CartaEnJuego extends CartaEnMano {
     /**
      * Cambiamos el color de la carta al cambiar el booleano de si pertenece o no a la maquina
      */
-    public void cambiarColor(){
+    public void cambiarJugador(){
         this.isMaquina = !this.isMaquina;
     }
 }

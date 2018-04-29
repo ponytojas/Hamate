@@ -92,30 +92,54 @@ public class Tablero {
 
     private void compararValoresEspecial(boolean retaDerecha, int posicionDelTablero) {
         if (retaDerecha) {
-            if (!sonMismoColor(posicionDelTablero, posicionDelTablero++))
+            if (!sonMismoColor(posicionDelTablero, posicionDelTablero+1))
                 if ( this.cartasYaBajadas.get(posicionDelTablero).getcartaEnElHueco().getValorDer() > this.cartasYaBajadas.get(posicionDelTablero+1).getcartaEnElHueco().getValorIzq())
-                    this.cartasYaBajadas.get(posicionDelTablero+1).getcartaEnElHueco().cambiarColor();
+                    this.cartasYaBajadas.get(posicionDelTablero+1).cambiarColor();
         }
         else {
-            if (!sonMismoColor(posicionDelTablero, posicionDelTablero--))
+            if (!sonMismoColor(posicionDelTablero, posicionDelTablero-1))
                 if (this.cartasYaBajadas.get(posicionDelTablero).getcartaEnElHueco().getValorIzq() > this.cartasYaBajadas.get(posicionDelTablero-1).getcartaEnElHueco().getValorDer())
-                    this.cartasYaBajadas.get(posicionDelTablero-1).getcartaEnElHueco().cambiarColor();
+                    this.cartasYaBajadas.get(posicionDelTablero-1).cambiarColor();
         }
     }
 
     private void compararValoresNormal(int posicionDelTablero){
-        if (!sonMismoColor(posicionDelTablero, posicionDelTablero++))
+        if (!sonMismoColor(posicionDelTablero, posicionDelTablero+1))
             if ( this.cartasYaBajadas.get(posicionDelTablero).getcartaEnElHueco().getValorDer() > this.cartasYaBajadas.get(posicionDelTablero+1).getcartaEnElHueco().getValorIzq())
-                this.cartasYaBajadas.get(posicionDelTablero+1).getcartaEnElHueco().cambiarColor();
-        if (!sonMismoColor(posicionDelTablero, posicionDelTablero--))
+                this.cartasYaBajadas.get(posicionDelTablero+1).cambiarColor();
+        if (!sonMismoColor(posicionDelTablero, posicionDelTablero-1))
             if (this.cartasYaBajadas.get(posicionDelTablero).getcartaEnElHueco().getValorIzq() > this.cartasYaBajadas.get(posicionDelTablero-1).getcartaEnElHueco().getValorDer())
-                this.cartasYaBajadas.get(posicionDelTablero - 1).getcartaEnElHueco().cambiarColor();
+                this.cartasYaBajadas.get(posicionDelTablero - 1).cambiarColor();
     }
 
     private boolean sonMismoColor (int posicion1, int posicion2){
-    if (this.cartasYaBajadas.get(posicion1).getesRoja() != this.cartasYaBajadas.get(posicion2).getesRoja())
-        return false;
-    else
+        if (this.cartasYaBajadas.get(posicion1).getHayUnaCarta() && this.cartasYaBajadas.get(posicion2).getHayUnaCarta()) {
+            if (this.cartasYaBajadas.get(posicion1).getesRoja() != this.cartasYaBajadas.get(posicion2).getesRoja())
+                return false;
+            else
+                return true;
+        }
         return true;
+    }
+
+    public int getcantidadCartas(boolean jugadorMaquina) {
+        int jugador = 0;
+        int cantidad = 0;
+        if (jugadorMaquina) jugador = 1 ;
+        switch (jugador) {
+            case 0:
+                for (HuecoDelTablero variableAuxiliarParaContar : cartasYaBajadas)
+                    if (variableAuxiliarParaContar.getesRoja())
+                        cantidad++;
+                break;
+
+            case 1:
+                for (HuecoDelTablero variableAuxiliarParaContar : cartasYaBajadas)
+                    if (!variableAuxiliarParaContar.getesRoja())
+                        cantidad++;
+                break;
+
+        }
+    return cantidad;
     }
 }

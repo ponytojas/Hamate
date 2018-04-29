@@ -14,9 +14,11 @@ public class Partida {
     private Tablero tableroPartida = new Tablero();
     private Jugador maquina = new Jugador(true);
     private Jugador jugador = new Jugador(false);
+    Scanner entrada = new Scanner(System.in);
 
 
     public String jugarJuego (){
+        Scanner entrada = new Scanner(System.in);
         int contador = 0;
         do{
             Random rand = new Random();
@@ -42,12 +44,12 @@ public class Partida {
             turnoJugador();
             turnoMaquina();
         }
-        return "SI";
+        return preguntarJugador();
     }
 
     private void turnoJugador(){
         try {
-            Scanner entrada = new Scanner(System.in);
+
             for (HuecoDelTablero huecoAux : this.tableroPartida.getCartasYaBajadas())  //PREGUNTAR COMO FUNCIONABA EL BUCLE
                 huecoAux.dibujarHueco();
             System.out.println("\n\n*************MANO JUGADOR*************\n");
@@ -74,13 +76,13 @@ public class Partida {
            int posicionTablero;
            int posicionMano;
 
-           if(tableroPartida.getCartasYaBajadasSize() != 0 || maquina.getManoSize() != 0) {
+           if(this.maquina.getManoSize() > 1) {
                Random rand = new Random();
-               posicionMano = rand.nextInt(maquina.getManoSize());
+               posicionMano = rand.nextInt(this.maquina.getManoSize());
                posicionTablero = rand.nextInt(tableroPartida.getCartasYaBajadasSize());
            }else{
                posicionMano = 0;
-               posicionTablero = tableroPartida.getLastPlace() + 1;
+               posicionTablero = tableroPartida.getLastPlace();
            }
 
         if (this.tableroPartida.comprobarPosicion(posicionTablero))
@@ -91,7 +93,6 @@ public class Partida {
 
         }catch (HuecoOcupado msg){
             turnoMaquina();}
-
     }
 
     private void jugar(int posicionCartaMano, int huecoTablero, boolean isMaquina){
@@ -115,6 +116,39 @@ public class Partida {
         }
         public HuecoOcupado(String msg) {
             super("Excepcion definida por el usuario: " + msg);
+        }
+    }
+
+    private String preguntarJugador(){
+        ganoJugador();
+        String respuestaJugador;
+        System.out.println("¿Quieres jugar otra partida?");
+        System.out.println("SI / NO");
+        respuestaJugador = this.entrada.nextLine();
+        respuestaJugador = respuestaJugador.toUpperCase();
+        if (respuestaJugador.equals("SI") || respuestaJugador.equals("NO")){
+            return respuestaJugador;
+        }
+        else
+            System.out.println("La respuesta no es correcta");
+           return respuestaJugador = preguntarJugador();
+    }
+
+    private void ganoJugador(){
+        int cantidadJugador = tableroPartida.getcantidadCartas(true);
+        int cantidadMaquina = tableroPartida.getcantidadCartas(false);
+        int ganaJugador = 0;
+        if (cantidadJugador > cantidadMaquina) ganaJugador = 1;
+        if (cantidadJugador == cantidadMaquina) ganaJugador = 3;
+        switch (ganaJugador){
+            case 0:
+                System.out.println("Gana la maquina con "+cantidadMaquina+" cartas de su color");
+                break;
+            case 1:
+                System.out.println("Gana el jugador con "+cantidadJugador+" cartas de su color");
+                break;
+            default:
+                System.out.println("Ha habido un empate");
         }
     }
 }

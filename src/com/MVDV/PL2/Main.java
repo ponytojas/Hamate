@@ -1,6 +1,5 @@
 package com.MVDV.PL2;
 import java.util.Locale;
-import java.util.Scanner;
 
 /**
  * @author Marcos Vicente - Daniel Villalobos
@@ -15,15 +14,11 @@ public class Main {
      */
 
     public static void main(String[] args) {
-        Scanner entrada = new Scanner(System.in);
-        Partida nuevaPartida = new Partida();
         String res = "SI";
-
-
         do{
+            Partida nuevaPartida = new Partida();
             res=nuevaPartida.jugarJuego();
             nuevaPartida = null; //Permite que la clase no tenga referencias y sea recogia por el garbage collector
-
-        }while (res.equals("NO"));
+        }while (res.equals("SI"));
     }
 }

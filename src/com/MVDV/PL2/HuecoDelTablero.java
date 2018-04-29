@@ -108,6 +108,10 @@ public class HuecoDelTablero {
         }
     }
 
+    public void cambiarColor (){
+        this.esRoja = !this.esRoja;
+        this.getcartaEnElHueco().cambiarJugador();
+    }
 
 
 
