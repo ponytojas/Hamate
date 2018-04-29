@@ -108,6 +108,11 @@ public class HuecoDelTablero {
         }
     }
 
+    /**
+     * Setter
+     * Un setter que permite cambiar el color y el poseedor de la carta, de esta forma contabilizamos quien gana al final
+     */
+
     public void cambiarColor (){
         this.esRoja = !this.esRoja;
         this.getcartaEnElHueco().cambiarJugador();

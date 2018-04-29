@@ -16,18 +16,18 @@ public class Partida {
     private Jugador jugador = new Jugador(false);
     Scanner entrada = new Scanner(System.in);
 
+    /**
+     * Funcion principal que genera la partida
+     * Primeramente genera las cartas y las pone en el mazo
+     * @return
+     */
 
     public String jugarJuego (){
         Scanner entrada = new Scanner(System.in);
         int contador = 0;
         do{
             Random rand = new Random();
-            int izq = rand.nextInt(7)+1;
-            int der = rand.nextInt(7) +1;
-
-            Carta nuevaCarta = new Carta(izq, der);
-            CartaEnMazo cartaMazo = new CartaEnMazo(nuevaCarta.getValorIzq(),nuevaCarta.getValorDer());
-            this.mazo.add(cartaMazo);
+            this.mazo.add(new CartaEnMazo(rand.nextInt(7)+1, rand.nextInt(7) +1));
             contador+=1;
         }while (contador < 110);
 
