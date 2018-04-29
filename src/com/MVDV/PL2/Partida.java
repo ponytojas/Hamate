@@ -139,7 +139,7 @@ public class Partida {
     private String preguntarJugador(){
         ganoJugador();
         String respuestaJugador;
-        System.out.println("¿Quieres jugar otra partida?");
+        System.out.println("Jugar otra partida");
         System.out.println("SI / NO");
         respuestaJugador = this.entrada.nextLine();
         respuestaJugador = respuestaJugador.toUpperCase();

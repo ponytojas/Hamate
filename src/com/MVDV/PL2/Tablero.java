@@ -64,7 +64,7 @@ public class Tablero {
     }
 
     /**
-     * Añade la carta que estamos bajando al hueco y genera el reto
+     * Coloca la carta que estamos bajando al hueco y genera el reto
      * @param nuevaCartaEnTablero La carta que estamos jugando
      * @param posicionDelTablero Posicion del tablero donde se baja la carta
      * @param isMaquina Si la carta pertenece a la maquina o el jugador
