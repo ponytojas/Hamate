@@ -19,6 +19,8 @@ public class Partida {
     /**
      * Funcion principal que genera la partida
      * Primeramente genera el mazo
+     * Despues reparte las cartas a la maquian y al jugador
+     * Por ultimo hace las llamadas a las funciones de los turnos y pregunta al jugador
      * @return
      */
 
@@ -45,10 +47,16 @@ public class Partida {
         return preguntarJugador();
     }
 
+    /**
+     * Funcion del turno del jugador
+     * Se le mostrara la situacion del tablero, y su mano
+     * Se le preguntara por la carta que quiere bajar y la posicion
+     * Tenemos una excepcion que controla si la posicion donde se quiere bajar es correcta o no
+     * Por ultimo se juega la carta a la posicion donde se ha elegido
+     */
     private void turnoJugador(){
         try {
-
-            for (HuecoDelTablero huecoAux : this.tableroPartida.getCartasYaBajadas())  //PREGUNTAR COMO FUNCIONABA EL BUCLE
+            for (HuecoDelTablero huecoAux : this.tableroPartida.getCartasYaBajadas())
                 huecoAux.dibujarHueco();
             System.out.println("\n\n*************MANO JUGADOR*************\n");
             this.jugador.mostrarMano();
@@ -68,6 +76,10 @@ public class Partida {
         }
     }
 
+    /**
+     * Funcion del turno del jugador
+     * Elegimos con un elemento random la carta de la mano que se baja y la posicion
+     */
     private void turnoMaquina(){
        try{
 
@@ -93,6 +105,14 @@ public class Partida {
             turnoMaquina();}
     }
 
+    /**
+     * Esta funcion quita la carta de la mano al jugador o la maquina
+     * Hacemos esto aqui y no antes porque ya sabemos que la carta elegida es correcta y no se ha lanzado ninguna excepcion
+     * Por ultimo se coloca la carta en el tablero
+     * @param posicionCartaMano
+     * @param huecoTablero
+     * @param isMaquina
+     */
     private void jugar(int posicionCartaMano, int huecoTablero, boolean isMaquina){
         CartaEnMano cartaAux;
         if (!isMaquina){
@@ -102,8 +122,7 @@ public class Partida {
             cartaAux = this.maquina.getcarta(posicionCartaMano);
             this.maquina.soltarCarta(posicionCartaMano);
         }
-        CartaEnJuego nuevaCartaEnTablero = new CartaEnJuego(cartaAux.getValorIzq(), cartaAux.getValorDer(), isMaquina);
-        this.tableroPartida.ponerLaCartaEnElTablero(nuevaCartaEnTablero, huecoTablero, isMaquina);
+        this.tableroPartida.ponerLaCartaEnElTablero(new CartaEnJuego(cartaAux.getValorIzq(), cartaAux.getValorDer(), isMaquina), huecoTablero, isMaquina);
     }
 
 
