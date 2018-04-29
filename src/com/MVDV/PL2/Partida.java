@@ -126,7 +126,10 @@ public class Partida {
     }
 
 
-
+    /**
+     * Excepcion
+     * Excepcion de control
+     */
     class HuecoOcupado extends Exception {
 
         public HuecoOcupado() {
@@ -136,6 +139,10 @@ public class Partida {
         }
     }
 
+    /**
+     * Metodo que pregunta al jugador si quiere jugar otra partida o no
+     * @return La respuesta del jugador
+     */
     private String preguntarJugador(){
         ganoJugador();
         String respuestaJugador;
@@ -151,6 +158,9 @@ public class Partida {
            return respuestaJugador = preguntarJugador();
     }
 
+    /**
+     * Metodo que comprueba que jugador gana
+     */
     private void ganoJugador(){
         int cantidadJugador = tableroPartida.getcantidadCartas(true);
         int cantidadMaquina = tableroPartida.getcantidadCartas(false);
