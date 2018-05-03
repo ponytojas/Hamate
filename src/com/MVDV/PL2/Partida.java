@@ -55,13 +55,21 @@ public class Partida {
      * Por ultimo se juega la carta a la posicion donde se ha elegido
      */
     private void turnoJugador(){
+        int posicionMano = 0;
         try {
             for (HuecoDelTablero huecoAux : this.tableroPartida.getCartasYaBajadas())
                 huecoAux.dibujarHueco();
             System.out.println("\n\n*************MANO JUGADOR*************\n");
             this.jugador.mostrarMano();
-            System.out.println("Elige una carta a bajar: ");
-            int posicionMano = (entrada.nextInt()) - 1;
+            try {
+                System.out.println("Elige una carta a bajar: ");
+                posicionMano = (entrada.nextInt()) - 1;
+                if (posicionMano > 5 || posicionMano < 0)
+                    throw  new JugadorException(JugadorException.CARTA_NO_SELECCIONADA);
+            }catch (JugadorException msg)
+            {
+                turnoJugador();
+            }
             System.out.println("\nElige una posicion para bajar");
             int posicionTablero = (entrada.nextInt()) - 1;
 
@@ -162,6 +170,8 @@ public class Partida {
      * Metodo que comprueba que jugador gana
      */
     private void ganoJugador(){
+        for (HuecoDelTablero huecoAux : this.tableroPartida.getCartasYaBajadas())
+                huecoAux.dibujarHueco();
         int cantidadJugador = tableroPartida.getcantidadCartas(true);
         int cantidadMaquina = tableroPartida.getcantidadCartas(false);
         int ganaJugador = 0;
