@@ -9,6 +9,7 @@ import java.util.Objects;
 
 public class Tablero {
     private ArrayList<HuecoDelTablero> cartasYaBajadas = new ArrayList<>();
+    
 
     /**
      * Constructor por defecto
@@ -22,6 +23,7 @@ public class Tablero {
             this.cartasYaBajadas.add(hueco);
             contador++;
         }
+        
     }
 
     /**

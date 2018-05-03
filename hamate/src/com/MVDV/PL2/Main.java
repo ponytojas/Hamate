@@ -16,9 +16,9 @@ public class Main {
     public static void main(String[] args) {
         String res = "SI";
         do{
-            Partida nuevaPartida = new Partida();
-            res=nuevaPartida.jugarJuego();
-            nuevaPartida = null; //Permite que la clase no tenga referencias y sea recogia por el garbage collector
+            //Partida nuevaPartida = new Partida();
+            //res=nuevaPartida.jugarJuego();
+            //nuevaPartida = null; //Permite que la clase no tenga referencias y sea recogia por el garbage collector
         }while (res.equals("SI"));
     }
 }

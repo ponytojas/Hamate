@@ -16,6 +16,12 @@ public class Partida {
     private Jugador jugador = new Jugador(false);
     Scanner entrada = new Scanner(System.in);
 
+    public Partida(String nombre, String nif, int edad){
+        this.jugador.setNombre(nombre);
+        this.jugador.setEdad(edad);
+        this.jugador.setNif(nif);
+    }
+    
     /**
      * Funcion principal que genera la partida
      * Primeramente genera el mazo
@@ -39,7 +45,7 @@ public class Partida {
             jugador.recibirCarta(this.mazo.get(0));
             this.mazo.remove(0);
         }
-
+         lanzarInterfaz();
         while (!this.tableroPartida.estaElTableroLleno()){
             turnoJugador();
             turnoMaquina();
@@ -179,5 +185,9 @@ public class Partida {
             default:
                 System.out.println("Ha habido un empate");
         }
+    }
+    
+    private void lanzarInterfaz (){
+                 new TableroForm(this.jugador, this.maquina).setVisible(true);             
     }
 }
