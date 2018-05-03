@@ -9,6 +9,7 @@ import java.util.Objects;
 
 public class Tablero {
     private ArrayList<HuecoDelTablero> cartasYaBajadas = new ArrayList<>();
+    
 
     /**
      * Constructor por defecto
@@ -22,6 +23,7 @@ public class Tablero {
             this.cartasYaBajadas.add(hueco);
             contador++;
         }
+        
     }
 
     /**
@@ -166,8 +168,10 @@ public class Tablero {
      */
 
     private boolean sonMismoColor (int posicion1, int posicion2){
-
-        return (this.cartasYaBajadas.get(posicion1).getesRoja() == this.cartasYaBajadas.get(posicion2).getesRoja());
+        if (comprobarPosicion(posicion2))
+            return (this.cartasYaBajadas.get(posicion1).getesRoja() == this.cartasYaBajadas.get(posicion2).getesRoja());
+        else
+            return true;
     }
 
     /**
