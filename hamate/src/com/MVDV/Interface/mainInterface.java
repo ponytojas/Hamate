@@ -181,9 +181,15 @@ public class mainInterface extends javax.swing.JFrame {
         this.setVisible(false);
         try {
             if (edad > 18 && !nif.equals("")){
-                        com.MVDV.PL2.Partida partidaNueva;
-                        partidaNueva = new com.MVDV.PL2.Partida(nombre, nif, edad);
-                        partidaNueva.jugarJuego();
+                        
+                        Thread thread = new Thread() {
+                            public void run() {
+                                com.MVDV.PL2.Partida partidaNueva;
+                            partidaNueva = new com.MVDV.PL2.Partida(nombre, nif, edad);
+                               partidaNueva.jugarJuego();
+                            }
+                        };
+                        thread.start();
 
                     }else{
                         if (edad < 18)
