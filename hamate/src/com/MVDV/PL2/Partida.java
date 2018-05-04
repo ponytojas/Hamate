@@ -2,6 +2,7 @@ package com.MVDV.PL2;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import javax.swing.*;
 
 /**
  * @author Marcos Vicente - Daniel Villalobos
@@ -15,6 +16,7 @@ public class Partida {
     private Jugador maquina = new Jugador(true);
     private Jugador jugador = new Jugador(false);
     Scanner entrada = new Scanner(System.in);
+    private TableroForm tableroInterface;
 
     public Partida(String nombre, String nif, int edad){
         this.jugador.setNombre(nombre);
@@ -47,10 +49,30 @@ public class Partida {
         }
          lanzarInterfaz();
         while (!this.tableroPartida.estaElTableroLleno()){
-            turnoJugador();
-            turnoMaquina();
+            //turnoJugador();
+            turnoInterface();
+            //turnoMaquina();
         }
         return preguntarJugador();
+    }
+    
+    private void turnoInterface(){
+        int posicionElegidaMano;
+        int posicionElegidaTablero;
+        
+        while(this.tableroInterface.getposicionMano() == -1 || this.tableroInterface.getposicionTablero() == -1){
+             try{
+                    Thread.sleep(250);
+                }catch(InterruptedException e){}   
+        }
+        posicionElegidaMano = this.tableroInterface.getposicionMano();
+        posicionElegidaTablero = this.tableroInterface.getposicionTablero();
+        this.tableroInterface.setposicionMano(-1);
+        this.tableroInterface.setposicionTablero(-1);
+        this.tableroInterface.pasarCartaManoAlTablero(posicionElegidaMano, posicionElegidaTablero, 0);
+        jugar(posicionElegidaMano, posicionElegidaTablero, this.jugador.getisMaquina());
+        turnoMaquina();
+        
     }
 
     /**
@@ -105,6 +127,7 @@ public class Partida {
             throw new HuecoOcupado("El hueco esta ocupado, elige una posicion vacia\\n\\n\\n\\n\"");
 
         else
+            this.tableroInterface.pasarCartaManoAlTablero(posicionMano, posicionTablero, 1);
             jugar(posicionMano, posicionTablero, this.maquina.getisMaquina());
 
         }catch (HuecoOcupado msg){
@@ -188,6 +211,7 @@ public class Partida {
     }
     
     private void lanzarInterfaz (){
-                 new TableroForm(this.jugador, this.maquina).setVisible(true);             
+        this.tableroInterface = new TableroForm(this.jugador, this.maquina);     
+        this.tableroInterface.setVisible(true);
     }
 }

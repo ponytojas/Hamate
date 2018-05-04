@@ -5,7 +5,10 @@
  */
 package com.MVDV.PL2;
 
+
 import javax.swing.*;
+import java.lang.reflect.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,6 +17,13 @@ import javax.swing.*;
 public class TableroForm extends javax.swing.JFrame {
     private Jugador usuario;
     private Jugador maquina;
+    private ArrayList <javax.swing.JLabel> manoJugador = new ArrayList <>();
+    private ArrayList <javax.swing.JLabel> manoMaquina = new ArrayList <>();
+    private ArrayList <javax.swing.JLabel> posicionesTablero = new ArrayList <>();
+    private ArrayList <String> arrayRutasImagenesUser = new ArrayList <> ();
+    private ArrayList <String> arrayRutasImagenesMaquina = new ArrayList <> ();
+    private int posicionMano = -1;
+    private int posicionTablero = -1;
 
     /**
      * Creates new form TableroForm
@@ -22,11 +32,11 @@ public class TableroForm extends javax.swing.JFrame {
         this.usuario = usuario;
         this.maquina = maquina;
         initComponents();
+        this.jPanel1.setVisible(true);
         getImagesUser();
         getImagesMachine();
+        //setImagesToArrayList();
         this.setVisible(true);
-        this.usuario = null;
-        this.maquina = null;
     }
 
     /**
@@ -47,13 +57,12 @@ public class TableroForm extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
@@ -61,15 +70,185 @@ public class TableroForm extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 87, 68));
 
-        jPanel1.setBackground(new java.awt.Color(0, 87, 68));
-        jPanel1.setForeground(new java.awt.Color(0, 87, 68));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1250, 900));
+        jPanel1.setBackground(new java.awt.Color(76, 175, 80));
+        jPanel1.setToolTipText("");
+        jPanel1.setPreferredSize(new java.awt.Dimension(1350, 900));
+
+        posicionesTablero.add(this.jLabel1);
+        jLabel1.setBackground(new java.awt.Color(96, 125, 139));
+        jLabel1.setOpaque(true);
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+
+        posicionesTablero.add(this.jLabel2);
+        jLabel2.setBackground(new java.awt.Color(96, 125, 139));
+        jLabel2.setOpaque(true);
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+
+        posicionesTablero.add(this.jLabel3);
+        jLabel3.setBackground(new java.awt.Color(96, 125, 139));
+        jLabel3.setOpaque(true);
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+
+        posicionesTablero.add(this.jLabel4);
+        jLabel4.setBackground(new java.awt.Color(96, 125, 139));
+        jLabel4.setOpaque(true);
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+
+        posicionesTablero.add(this.jLabel5);
+        jLabel5.setBackground(new java.awt.Color(96, 125, 139));
+        jLabel5.setOpaque(true);
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
+
+        posicionesTablero.add(this.jLabel6);
+        jLabel6.setBackground(new java.awt.Color(96, 125, 139));
+        jLabel6.setOpaque(true);
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
+
+        posicionesTablero.add(this.jLabel7);
+        jLabel7.setBackground(new java.awt.Color(96, 125, 139));
+        jLabel7.setOpaque(true);
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
+
+        posicionesTablero.add(this.jLabel8);
+        jLabel8.setBackground(new java.awt.Color(96, 125, 139));
+        jLabel8.setOpaque(true);
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
+
+        posicionesTablero.add(this.jLabel10);
+        jLabel10.setBackground(new java.awt.Color(96, 125, 139));
+        jLabel10.setOpaque(true);
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
+
+        manoJugador.add(this.jLabel15);
+        jLabel15.setBackground(new java.awt.Color(3, 169, 244));
+        jLabel15.setForeground(new java.awt.Color(3, 169, 244));
+        jLabel15.setOpaque(true);
+        jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel15MouseClicked(evt);
+            }
+        });
+
+        manoJugador.add(this.jLabel14);
+        jLabel14.setBackground(new java.awt.Color(3, 169, 244));
+        jLabel14.setOpaque(true);
+        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel14MouseClicked(evt);
+            }
+        });
+
+
+        manoJugador.add(this.jLabel11);
+        jLabel11.setBackground(new java.awt.Color(3, 169, 244));
+        jLabel11.setOpaque(true);
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel11MouseClicked(evt);
+            }
+        });
+
+        manoJugador.add(this.jLabel12);
+        jLabel12.setBackground(new java.awt.Color(3, 169, 244));
+        jLabel12.setOpaque(true);
+        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel12MouseClicked(evt);
+            }
+        });
+
+        manoJugador.add(this.jLabel13);
+        jLabel13.setBackground(new java.awt.Color(3, 169, 244));
+        jLabel13.setOpaque(true);
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel13MouseClicked(evt);
+            }
+        });
+
+
+
+        manoMaquina.add(this.jLabel16);
+        jLabel16.setBackground(new java.awt.Color(244, 67, 54));
+        jLabel16.setOpaque(true);
+
+        manoMaquina.add(this.jLabel17);
+        jLabel17.setBackground(new java.awt.Color(244, 67, 54));
+        jLabel17.setOpaque(true);
+
+        manoMaquina.add(this.jLabel18);
+        jLabel18.setBackground(new java.awt.Color(244, 67, 54));
+        jLabel18.setOpaque(true);
+
+        manoMaquina.add(this.jLabel19);
+        jLabel19.setBackground(new java.awt.Color(244, 67, 54));
+        jLabel19.setOpaque(true);
+
+        manoMaquina.add(this.jLabel20);
+        jLabel20.setBackground(new java.awt.Color(244, 67, 54));
+        jLabel20.setOpaque(true);
 
         jButton1.setText("Reiniciar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Salir");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -78,60 +257,114 @@ public class TableroForm extends javax.swing.JFrame {
             }
         });
 
+        posicionesTablero.add(this.jLabel9);
+        jLabel9.setBackground(new java.awt.Color(96, 125, 139));
+        jLabel9.setOpaque(true);
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
+
+        jLabel21.setText("Carta Elegida: ");
+
+        jLabel22.setText("Posicion del tablero elegida: ");
+
+        this.jLabel25.setText(Integer.toString(this.usuario.getcarta(0).getValorIzq()));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(383, 383, 383))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(375, 375, 375)
-                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(375, 375, 375)
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel25)
+                                        .addGap(85, 85, 85)
+                                        .addComponent(jLabel26))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel27)
+                                                .addGap(38, 38, 38)
+                                                .addComponent(jLabel28)))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel29)
+                                                .addGap(79, 79, 79)
+                                                .addComponent(jLabel30)))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel31)
+                                                .addGap(89, 89, 89)
+                                                .addComponent(jLabel32)))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel33)
+                                                .addGap(84, 84, 84)
+                                                .addComponent(jLabel34)))))
+                                .addGap(59, 59, 59)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel22)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel24))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel21)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel23))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,7 +379,6 @@ public class TableroForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -154,20 +386,48 @@ public class TableroForm extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(180, 180, 180)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
-                            .addComponent(jButton2))
-                        .addGap(20, 20, 20)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                            .addComponent(jButton2)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel25)
+                                    .addComponent(jLabel26))
+                                .addGap(9, 9, 9)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel27)
+                                    .addComponent(jLabel28)))
+                            .addComponent(jLabel29)
+                            .addComponent(jLabel30)
+                            .addComponent(jLabel31)
+                            .addComponent(jLabel32)
+                            .addComponent(jLabel33)
+                            .addComponent(jLabel34)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel21)
+                            .addComponent(jLabel23))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel22)
+                            .addComponent(jLabel24))))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -175,25 +435,121 @@ public class TableroForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(186, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(110, 110, 110))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1456, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(103, 103, 103))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+        // TODO add your handling code here:
+        this.posicionTablero = 8;
+        this.jLabel24.setText("9");
+    }//GEN-LAST:event_jLabel9MouseClicked
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        System.exit(1);
+        System.out.println("Saliendo del juego");
+        System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
+
+        this.posicionMano = 0;
+        this.jLabel23.setText("1");
+    }//GEN-LAST:event_jLabel15MouseClicked
+
+    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
+        // TODO add your handling code here:
+        this.posicionMano = 1;
+        this.jLabel23.setText("2");
+    }//GEN-LAST:event_jLabel14MouseClicked
+
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+        // TODO add your handling code here:
+        this.posicionMano = 4;
+        this.jLabel23.setText("5");
+    }//GEN-LAST:event_jLabel13MouseClicked
+
+    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
+        // TODO add your handling code here:
+        this.posicionMano = 3;
+        this.jLabel23.setText("4");
+    }//GEN-LAST:event_jLabel12MouseClicked
+
+    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+        // TODO add your handling code here:
+        this.posicionMano = 2;
+        this.jLabel23.setText("3");
+    }//GEN-LAST:event_jLabel11MouseClicked
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        // TODO add your handling code here:
+        this.posicionTablero = 9;
+        this.jLabel24.setText("10");
+    }//GEN-LAST:event_jLabel10MouseClicked
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        // TODO add your handling code here:
+        this.posicionTablero = 7;
+        this.jLabel24.setText("8");
+    }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        // TODO add your handling code here:
+        this.posicionTablero = 6;
+        this.jLabel24.setText("7");
+    }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        // TODO add your handling code here:
+        this.posicionTablero = 5;
+        this.jLabel24.setText("6");
+    }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        // TODO add your handling code here:
+        this.posicionTablero = 4;
+        this.jLabel24.setText("5");
+    }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // TODO add your handling code here:
+        this.posicionTablero = 3;
+        this.jLabel24.setText("4");
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // TODO add your handling code here:
+        this.posicionTablero = 2;
+        this.jLabel24.setText("3");
+    }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+        this.posicionTablero = 1;
+        this.jLabel24.setText("2");
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+
+        this.posicionTablero = 0;
+        this.jLabel24.setText("1");
+    }//GEN-LAST:event_jLabel1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -212,7 +568,21 @@ public class TableroForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -223,42 +593,57 @@ public class TableroForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void getImagesUser() {
-       try{
-           String rutaImagen;
+        try{
+           String rutaImagenUser;
            this.jLabel15.setSize(130, 100);
-           rutaImagen = this.usuario.getcarta(0).getnombreImagen();
-           ImageIcon imagenManoUser1 = new ImageIcon(rutaImagen); //Se redimensiona
-           ImageIcon imgRedimensionada = new ImageIcon(imagenManoUser1.getImage().getScaledInstance(jLabel15.getWidth(), jLabel15.getHeight(), 1));
-           this.jLabel15.setIcon(imgRedimensionada);
-           
+           rutaImagenUser = this.usuario.getcarta(0).getnombreImagen();
+           ImageIcon imagenManoUser1 = new ImageIcon(rutaImagenUser);
+           ImageIcon imgRedimensionada1 = new ImageIcon(imagenManoUser1.getImage().getScaledInstance(jLabel15.getWidth(), jLabel15.getHeight(), 1));
+           this.jLabel15.setIcon(imgRedimensionada1);
+           arrayRutasImagenesUser.add(rutaImagenUser);
+           //his.jLabel25.setText(Integer.toString(this.usuario.getcarta(0).getValorIzq()));
+           //this.jLabel26.setText(Integer.toString(this.usuario.getcarta(0).getValorDer()));
+
            String rutaImagen2;
            this.jLabel14.setSize(130, 100);
            rutaImagen2 = this.usuario.getcarta(1).getnombreImagen();
            ImageIcon imagenManoUser2 = new ImageIcon(rutaImagen2); //Se redimensiona
            ImageIcon imgRedimensionada2 = new ImageIcon(imagenManoUser2.getImage().getScaledInstance(jLabel14.getWidth(), jLabel14.getHeight(), 1));
-           this.jLabel14.setIcon(imgRedimensionada);
-           
+           this.jLabel14.setIcon(imgRedimensionada2);
+           arrayRutasImagenesUser.add(rutaImagen2);
+           //this.jLabel27.setText(Integer.toString(this.usuario.getcarta(1).getValorIzq()));
+           //this.jLabel28.setText(Integer.toString(this.usuario.getcarta(1).getValorDer()));
+
            String rutaImagen3;
            this.jLabel11.setSize(130, 100);
            rutaImagen3 = this.usuario.getcarta(2).getnombreImagen();
            ImageIcon imagenManoUser3 = new ImageIcon(rutaImagen3); //Se redimensiona
            ImageIcon imgRedimensionada3 = new ImageIcon(imagenManoUser3.getImage().getScaledInstance(jLabel11.getWidth(), jLabel11.getHeight(), 1));
-           this.jLabel11.setIcon(imgRedimensionada);
-           
+           this.jLabel11.setIcon(imgRedimensionada3);
+           arrayRutasImagenesUser.add(rutaImagen3);
+           //this.jLabel29.setText(Integer.toString(this.usuario.getcarta(2).getValorIzq()));
+          // this.jLabel30.setText(Integer.toString(this.usuario.getcarta(2).getValorDer()));
+
            String rutaImagen4;
            this.jLabel12.setSize(130, 100);
            rutaImagen4 = this.usuario.getcarta(3).getnombreImagen();
            ImageIcon imagenManoUser4 = new ImageIcon(rutaImagen4); //Se redimensiona
            ImageIcon imgRedimensionada4 = new ImageIcon(imagenManoUser4.getImage().getScaledInstance(jLabel12.getWidth(), jLabel12.getHeight(), 1));
-           this.jLabel12.setIcon(imgRedimensionada);
-           
+           this.jLabel12.setIcon(imgRedimensionada4);
+           arrayRutasImagenesUser.add(rutaImagen4);
+           //this.jLabel31.setText(Integer.toString(this.usuario.getcarta(3).getValorIzq()));
+           //this.jLabel32.setText(Integer.toString(this.usuario.getcarta(3).getValorDer()));
+
            String rutaImagen5;
            this.jLabel13.setSize(130, 100);
            rutaImagen5 = this.usuario.getcarta(4).getnombreImagen();
            ImageIcon imagenManoUser5 = new ImageIcon(rutaImagen2); //Se redimensiona
            ImageIcon imgRedimensionada5 = new ImageIcon(imagenManoUser5.getImage().getScaledInstance(jLabel13.getWidth(), jLabel13.getHeight(), 1));
-           this.jLabel13.setIcon(imgRedimensionada);
-       
+           this.jLabel13.setIcon(imgRedimensionada5);
+           arrayRutasImagenesUser.add(rutaImagen5);
+           //this.jLabel33.setText(Integer.toString(this.usuario.getcarta(4).getValorIzq()));
+           //this.jLabel34.setText(Integer.toString(this.usuario.getcarta(4).getValorDer()));
+
        }catch (Exception e){
             System.out.println("Error: "+e.toString());
         }
@@ -269,41 +654,79 @@ public class TableroForm extends javax.swing.JFrame {
            this.jLabel16.setSize(130, 100);
            rutaImagen = this.maquina.getcarta(0).getnombreImagen();
            ImageIcon imagenManoMaquina1 = new ImageIcon(rutaImagen); //Se redimensiona
-           ImageIcon imgRedimensionada = new ImageIcon(imagenManoMaquina1.getImage().getScaledInstance(jLabel16.getWidth(), jLabel16.getHeight(), 1));
-           this.jLabel16.setIcon(imgRedimensionada);
-           
+           //ImageIcon imgRedimensionada = new ImageIcon(imagenManoMaquina1.getImage().getScaledInstance(jLabel16.getWidth(), jLabel16.getHeight(), 1));
+           this.jLabel16.setIcon(imagenManoMaquina1);
+           arrayRutasImagenesMaquina.add(rutaImagen);
+           this.jLabel16.setVisible(false);
+
            String rutaImagen2;
            this.jLabel17.setSize(130, 100);
            rutaImagen2 = this.maquina.getcarta(1).getnombreImagen();
            ImageIcon imagenManoMaquina2 = new ImageIcon(rutaImagen2); //Se redimensiona
            ImageIcon imgRedimensionada2 = new ImageIcon(imagenManoMaquina2.getImage().getScaledInstance(jLabel17.getWidth(), jLabel17.getHeight(), 1));
-           this.jLabel17.setIcon(imgRedimensionada);
-           
+           this.jLabel17.setIcon(imagenManoMaquina2);
+           arrayRutasImagenesMaquina.add(rutaImagen2);
+           this.jLabel17.setVisible(false);
+
+
            String rutaImagen3;
            this.jLabel18.setSize(130, 100);
            rutaImagen3 = this.maquina.getcarta(2).getnombreImagen();
            ImageIcon imagenManoMaquina3 = new ImageIcon(rutaImagen3); //Se redimensiona
            ImageIcon imgRedimensionada3 = new ImageIcon(imagenManoMaquina3.getImage().getScaledInstance(jLabel18.getWidth(), jLabel18.getHeight(), 1));
-           this.jLabel18.setIcon(imgRedimensionada);
-           
+           this.jLabel18.setIcon(imagenManoMaquina3);
+           arrayRutasImagenesMaquina.add(rutaImagen3);
+           this.jLabel18.setVisible(false);
+
+
            String rutaImagen4;
            this.jLabel19.setSize(130, 100);
            rutaImagen4 = this.maquina.getcarta(3).getnombreImagen();
            ImageIcon imagenManoMaquina4 = new ImageIcon(rutaImagen4); //Se redimensiona
            ImageIcon imgRedimensionada4 = new ImageIcon(imagenManoMaquina4.getImage().getScaledInstance(jLabel19.getWidth(), jLabel19.getHeight(), 1));
-           this.jLabel19.setIcon(imgRedimensionada);
-           
+           this.jLabel19.setIcon(imagenManoMaquina4);
+           arrayRutasImagenesMaquina.add(rutaImagen4);
+           this.jLabel19.setVisible(false);
+
+
            String rutaImagen5;
            this.jLabel20.setSize(130, 100);
            rutaImagen5 = this.usuario.getcarta(4).getnombreImagen();
            ImageIcon imagenManoMaquina5 = new ImageIcon(rutaImagen2); //Se redimensiona
            ImageIcon imgRedimensionada5 = new ImageIcon(imagenManoMaquina5.getImage().getScaledInstance(jLabel20.getWidth(), jLabel20.getHeight(), 1));
-           this.jLabel20.setIcon(imgRedimensionada);
-       
+           this.jLabel20.setIcon(imagenManoMaquina5);
+           arrayRutasImagenesMaquina.add(rutaImagen5);
+           this.jLabel20.setVisible(false);
+
+
        }catch (Exception e){
             System.out.println("Error: "+e.toString());
         }
-       
+
        }
 
+       public int getposicionMano(){return this.posicionMano;}
+       public int getposicionTablero(){return this.posicionTablero;}
+       public void setposicionMano(int elementoEntrada){this.posicionMano=elementoEntrada;}
+       public void setposicionTablero(int elementoEntrada){this.posicionTablero=elementoEntrada;}
+
+       public void pasarCartaManoAlTablero(int posicionMano, int posicionTablero, int esMaquina){
+           String rutaImagen;
+           switch (esMaquina){
+               case 0:
+                    ImageIcon imagenTablero = new ImageIcon(arrayRutasImagenesUser.get(posicionMano)); //Se redimensiona
+                    ImageIcon imgRedimensionada = new ImageIcon(imagenTablero.getImage().getScaledInstance(this.posicionesTablero.get(posicionTablero).getWidth(), this.posicionesTablero.get(posicionTablero).getHeight(), 1));
+                    this.posicionesTablero.get(posicionTablero).setIcon(imgRedimensionada);
+                    this.manoJugador.get(posicionMano).setVisible(false);
+               case 1:
+                    
+                    ImageIcon imagenTablero2 = new ImageIcon(arrayRutasImagenesMaquina.get(posicionMano)); //Se redimensiona
+                    ImageIcon imgRedimensionada2 = new ImageIcon(imagenTablero2.getImage().getScaledInstance(this.posicionesTablero.get(posicionTablero).getWidth(), this.posicionesTablero.get(posicionTablero).getHeight(), 1));
+                    this.posicionesTablero.get(posicionTablero).setIcon(imgRedimensionada2);
+                    
+           }
+           rutaImagen = null;
+       }
+       
+      
 }

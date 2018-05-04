@@ -23,7 +23,7 @@ private String nombreImagen;
     public CartaEnMazo(int valorIzq, int valorDer) {
         super(valorIzq, valorDer);
         Random rand = new Random();
-       this.nombreImagen = "cards/"+ String.valueOf(rand.nextInt(110)+1)+".png";
+       this.nombreImagen = "Images/"+ String.valueOf(rand.nextInt(110)+1)+".png";
     }
     
     public String getnombreImagen(){return this.nombreImagen;}

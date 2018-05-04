@@ -125,9 +125,16 @@ public class mainInterface extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String nombre = jTextField1.getText();
-        String nif = jTextField2.getText();
-        int edad = Integer.parseInt(jTextField3.getText());
+        String nombre = "";
+        nombre = jTextField1.getText();
+        String nif ="";
+        nif = jTextField2.getText();
+        int edad = 0;
+        try{
+        edad = Integer.parseInt(jTextField3.getText());
+        }catch (java.lang.NumberFormatException ex){
+            edad = 0;
+        }
         comenzarPartida(nombre, nif, edad);
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -178,23 +185,28 @@ public class mainInterface extends javax.swing.JFrame {
     }
     
     public void comenzarPartida (String nombre, String nif, int edad){
-        this.setVisible(false);
+       
+
+            
         try {
             if (edad > 18 && !nif.equals("")){
-                        
+                        this.setVisible(false);
                         Thread thread = new Thread() {
                             public void run() {
                                 com.MVDV.PL2.Partida partidaNueva;
-                            partidaNueva = new com.MVDV.PL2.Partida(nombre, nif, edad);
-                               partidaNueva.jugarJuego();
+                                partidaNueva = new com.MVDV.PL2.Partida(nombre, nif, edad);
+                                partidaNueva.jugarJuego();
+                                
                             }
                         };
                         thread.start();
 
                     }else{
+                        if (nombre.equals(""))
+                            throw new com.MVDV.PL2.JugadorException("No se ha introducido ningun nombre");
                         if (edad < 18)
                             throw new com.MVDV.PL2.JugadorException(com.MVDV.PL2.JugadorException.EDAD_INCORRECTA);
-                        else
+                        if (nif.equals(""))
                             throw new com.MVDV.PL2.JugadorException(com.MVDV.PL2.JugadorException.NIF_INCORRECTO);
                 }
         }catch (com.MVDV.PL2.JugadorException msg){
@@ -202,6 +214,10 @@ public class mainInterface extends javax.swing.JFrame {
             JFrame frame = new JFrame("FrameDemo");
             JOptionPane.showMessageDialog(frame, msg);
         }
+        this.jTextField1.setText("");
+        this.jTextField2.setText("");
+        this.jTextField3.setText("");
+        this.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
