@@ -133,6 +133,8 @@ public class Jugador {
     
     public void setNombre (String nombre){this.nombre = nombre; }
     
+    public String getNombre(){return this.nombre; }
+    
     public void setEdad (int edad){this.edad = edad; }
     
     public void setNif (String nif){this.nif = nif; }

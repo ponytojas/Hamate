@@ -24,6 +24,10 @@ public class Partida {
         this.jugador.setNif(nif);
     }
     
+    public Partida(){
+        this.jugador.preguntasInicioPartida();
+    }
+    
     /**
      * Funcion principal que genera la partida
      * Primeramente genera el mazo
@@ -203,13 +207,13 @@ public class Partida {
                 System.out.println("Gana la maquina con "+cantidadMaquina+" cartas de su color");
                 break;
             case 1:
-                System.out.println("Gana el jugador con "+cantidadJugador+" cartas de su color");
+                System.out.println("Gana el jugador "+this.jugador.getNombre()+" con "+cantidadJugador+" cartas de su color");
                 break;
             default:
                 System.out.println("Ha habido un empate");
         }
     }
-    
+ 
     private void lanzarInterfaz (){
         this.tableroInterface = new TableroForm(this.jugador, this.maquina);     
         this.tableroInterface.setVisible(true);
