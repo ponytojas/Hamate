@@ -49,9 +49,9 @@ public class Partida {
         }
          lanzarInterfaz();
         while (!this.tableroPartida.estaElTableroLleno()){
-            //turnoJugador();
-            turnoInterface();
-            //turnoMaquina();
+            //turnoInterface(); /*Si se descomenta esta línea y se comentan las dos siguientes, se podría jugar sin modo gráfico*/
+            turnoJugador();
+            turnoMaquina();
         }
         return preguntarJugador();
     }
