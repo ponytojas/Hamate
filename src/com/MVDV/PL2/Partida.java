@@ -1,7 +1,10 @@
 package com.MVDV.PL2;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
+import java.awt.*;
+import java.lang.reflect.Array;
+import java.util.*;
+import javax.swing.*;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.Collections;
 
 /**
  * @author Marcos Vicente - Daniel Villalobos
@@ -12,10 +15,20 @@ public class Partida {
 
     private ArrayList <CartaEnMazo> mazo = new ArrayList <>();
     private Tablero tableroPartida = new Tablero();
-    private Jugador maquina = new Jugador(true);
     private Jugador jugador = new Jugador(false);
+    private Jugador maquina = new Jugador(true);
     Scanner entrada = new Scanner(System.in);
+    //private TableroForm tableroInterface;
 
+    public Partida(String nombre, String nif, int edad){
+        this.jugador.setNombre(nombre);
+        this.jugador.setEdad(edad);
+        this.jugador.setNif(nif);
+    }
+    
+    public Partida(){
+    }
+    
     /**
      * Funcion principal que genera la partida
      * Primeramente genera el mazo
@@ -39,13 +52,35 @@ public class Partida {
             jugador.recibirCarta(this.mazo.get(0));
             this.mazo.remove(0);
         }
-
+         //lanzarInterfaz();
         while (!this.tableroPartida.estaElTableroLleno()){
+            //turnoInterface(); /*Si se descomenta esta línea y se comentan las dos siguientes, se podría jugar sin modo gráfico*/
             turnoJugador();
-            turnoMaquina();
+            if (!this.maquina.getDificultad())
+                turnoMaquina();
+            else
+                turnoMaquinaAvanzado();
         }
-        return preguntarJugador();
+        return this.preguntarJugador();
     }
+    
+    /*private void turnoInterface(){
+        int posicionElegidaMano;
+        int posicionElegidaTablero;
+        
+        while(this.tableroInterface.getposicionMano() == -1 || this.tableroInterface.getposicionTablero() == -1){
+             try{
+                    Thread.sleep(250);
+                }catch(InterruptedException e){}   
+        }
+        posicionElegidaMano = this.tableroInterface.getposicionMano();
+        posicionElegidaTablero = this.tableroInterface.getposicionTablero();
+        this.tableroInterface.setposicionMano(-1);
+        this.tableroInterface.setposicionTablero(-1);
+        this.tableroInterface.pasarCartaManoAlTablero(posicionElegidaMano, posicionElegidaTablero, 0);
+        jugar(posicionElegidaMano, posicionElegidaTablero, this.jugador.getisMaquina());
+        turnoMaquina();
+    }*/
 
     /**
      * Funcion del turno del jugador
@@ -55,21 +90,13 @@ public class Partida {
      * Por ultimo se juega la carta a la posicion donde se ha elegido
      */
     private void turnoJugador(){
-        int posicionMano = 0;
         try {
             for (HuecoDelTablero huecoAux : this.tableroPartida.getCartasYaBajadas())
                 huecoAux.dibujarHueco();
             System.out.println("\n\n*************MANO JUGADOR*************\n");
             this.jugador.mostrarMano();
-            try {
-                System.out.println("Elige una carta a bajar: ");
-                posicionMano = (entrada.nextInt()) - 1;
-                if (posicionMano > 5 || posicionMano < 0)
-                    throw  new JugadorException(JugadorException.CARTA_NO_SELECCIONADA);
-            }catch (JugadorException msg)
-            {
-                turnoJugador();
-            }
+            System.out.println("Elige una carta a bajar: ");
+            int posicionMano = (entrada.nextInt()) - 1;
             System.out.println("\nElige una posicion para bajar");
             int posicionTablero = (entrada.nextInt()) - 1;
 
@@ -90,26 +117,26 @@ public class Partida {
      */
     private void turnoMaquina(){
        try{
-
            int posicionTablero;
            int posicionMano;
-
-           if(this.maquina.getManoSize() > 1) {
-               Random rand = new Random();
-               posicionMano = rand.nextInt(this.maquina.getManoSize());
-               posicionTablero = rand.nextInt(10);
-           }else{
+           Random rand = new Random();
+           try {
+               posicionMano = ThreadLocalRandom.current().nextInt(0, this.maquina.getManoSize());
+           }catch (java.lang.IllegalArgumentException e){
                posicionMano = 0;
-               posicionTablero = tableroPartida.getLastPlace();
            }
-
-        if (this.tableroPartida.comprobarPosicion(posicionTablero))
-            throw new HuecoOcupado("El hueco esta ocupado, elige una posicion vacia\\n\\n\\n\\n\"");
-
-        else
-            jugar(posicionMano, posicionTablero, this.maquina.getisMaquina());
-
-        }catch (HuecoOcupado msg){
+           try {
+               posicionTablero = ThreadLocalRandom.current().nextInt(0, this.tableroPartida.getCantidadCartasVacias());
+               posicionTablero = this.tableroPartida.getPosicionDelArrayVacio(posicionTablero);
+           }catch (java.lang.IllegalArgumentException e){
+               posicionTablero = this.tableroPartida.getPosicionDelArrayVacio(0);
+           }
+            if (this.tableroPartida.comprobarPosicion(posicionTablero))
+                throw new HuecoOcupado("El hueco esta ocupado, elige una posicion vacia\\n\\n\\n\\n\"");
+            else
+                //this.tableroInterface.pasarCartaManoAlTablero(posicionMano, posicionTablero, 1);
+                jugar(posicionMano, posicionTablero, this.maquina.getisMaquina());
+       }catch (HuecoOcupado msg){
             turnoMaquina();}
     }
 
@@ -152,11 +179,12 @@ public class Partida {
      * @return La respuesta del jugador
      */
     private String preguntarJugador(){
+        Scanner entrada = new Scanner(System.in);
         ganoJugador();
         String respuestaJugador;
         System.out.println("Jugar otra partida");
         System.out.println("SI / NO");
-        respuestaJugador = this.entrada.nextLine();
+        respuestaJugador = entrada.nextLine();
         respuestaJugador = respuestaJugador.toUpperCase();
         if (respuestaJugador.equals("SI") || respuestaJugador.equals("NO")){
             return respuestaJugador;
@@ -172,20 +200,171 @@ public class Partida {
     private void ganoJugador(){
         for (HuecoDelTablero huecoAux : this.tableroPartida.getCartasYaBajadas())
                 huecoAux.dibujarHueco();
-        int cantidadJugador = tableroPartida.getcantidadCartas(true);
+        int cantidadJugador = this.tableroPartida.getcantidadCartas(true);
         int cantidadMaquina = tableroPartida.getcantidadCartas(false);
         int ganaJugador = 0;
         if (cantidadJugador > cantidadMaquina) ganaJugador = 1;
         if (cantidadJugador == cantidadMaquina) ganaJugador = 3;
         switch (ganaJugador){
             case 0:
-                System.out.println("Gana la maquina con "+cantidadMaquina+" cartas de su color");
+                System.out.println("\n\n\nGana la maquina con "+cantidadMaquina+" cartas de su color");
                 break;
             case 1:
-                System.out.println("Gana el jugador con "+cantidadJugador+" cartas de su color");
+                System.out.println("\n\n\nGana el jugador "+this.jugador.getNombre()+" con "+cantidadJugador+" cartas de su color");
                 break;
             default:
-                System.out.println("Ha habido un empate");
+                System.out.println("\n\n\nHa habido un empate");
         }
     }
+ 
+    /*private void lanzarInterfaz (){
+        this.tableroInterface = new TableroForm(this.jugador, this.maquina);     
+        this.tableroInterface.setVisible(true);
+    }*/
+
+
+    private void turnoMaquinaAvanzado(){
+        try{
+            int posicionTablero;
+            int posicionMano;
+            Random rand = new Random();
+            ArrayList <ArrayList<Integer>> posicionesBajadas = new ArrayList<>();
+
+            ArrayList <Integer> valoresIzqCartasBajadas = cogerValoresIzquierdaDeCartasBajadas();
+            ArrayList <Integer> valoresDerCartasBajadas = cogerValoresDerechaDeCartasBajadas();
+            HashMap <Integer, ArrayList> valoresIzqDerPorPosicion = new HashMap<Integer, ArrayList>();
+            for (int addValoresToMap = 0; addValoresToMap < valoresIzqCartasBajadas.size(); addValoresToMap++) {
+                ArrayList<Integer> arrayAuxiliar = new ArrayList<>();
+                arrayAuxiliar.add(addValoresToMap);
+                arrayAuxiliar.add(valoresIzqCartasBajadas.get(addValoresToMap));
+                arrayAuxiliar.add(valoresDerCartasBajadas.get(addValoresToMap));
+                posicionesBajadas.add(arrayAuxiliar);
+            }
+            ArrayList <ArrayList<Integer>> posicionesPonderadas = ponderarPosicionesPorLosValores(posicionesBajadas);
+
+
+            try {
+                posicionMano = ThreadLocalRandom.current().nextInt(0, this.maquina.getManoSize());
+            }catch (java.lang.IllegalArgumentException e){
+                posicionMano = 0;
+            }
+            try {
+                posicionTablero = ThreadLocalRandom.current().nextInt(0, this.tableroPartida.getCantidadCartasVacias());
+                posicionTablero = this.tableroPartida.getPosicionDelArrayVacio(posicionTablero);
+            }catch (java.lang.IllegalArgumentException e){
+                posicionTablero = this.tableroPartida.getPosicionDelArrayVacio(0);
+            }
+            if (this.tableroPartida.comprobarPosicion(posicionTablero))
+                throw new HuecoOcupado("El hueco esta ocupado, elige una posicion vacia\\n\\n\\n\\n\"");
+            else
+                //this.tableroInterface.pasarCartaManoAlTablero(posicionMano, posicionTablero, 1);
+                jugar(posicionMano, posicionTablero, this.maquina.getisMaquina());
+        }catch (HuecoOcupado msg){
+            turnoMaquina();}
+    }
+
+    private ArrayList cogerValoresIzquierdaDeCartasBajadas(){
+        ArrayList <Integer> posicionesOcupadas = new ArrayList<>();
+        ArrayList<HuecoDelTablero> arrayAuxilar;
+        ArrayList <Integer> valoresIzqDeLasCartasEnJuego = new ArrayList<>();
+        int sizeArrayLleno = this.tableroPartida.getCantidadCartasLlenas();
+        for (int recorrerArrayLleno = 0; recorrerArrayLleno < sizeArrayLleno; recorrerArrayLleno++)
+            posicionesOcupadas.add(this.tableroPartida.getPosicionDelArrayLleno(recorrerArrayLleno));
+        arrayAuxilar = this.tableroPartida.getArrayCartasYaBajadas();
+        for (int recorrerPosicionOcupadas = 0; recorrerPosicionOcupadas < posicionesOcupadas.size(); recorrerPosicionOcupadas++){
+            if (!arrayAuxilar.get(posicionesOcupadas.get(recorrerPosicionOcupadas)).getesRoja())
+                valoresIzqDeLasCartasEnJuego.add(arrayAuxilar.get(posicionesOcupadas.get(recorrerPosicionOcupadas)).getcartaEnElHueco().getValorIzq());
+        }
+        return valoresIzqDeLasCartasEnJuego;
+    }
+
+    private ArrayList cogerValoresDerechaDeCartasBajadas(){
+        ArrayList <Integer> posicionesOcupadas = new ArrayList<>();
+        ArrayList<HuecoDelTablero> arrayAuxilar;
+        ArrayList <Integer> valoresDerDeLasCartasEnJuego = new ArrayList<>();
+        int sizeArrayLleno = this.tableroPartida.getCantidadCartasLlenas();
+        for (int recorrerArrayLleno = 0; recorrerArrayLleno < sizeArrayLleno; recorrerArrayLleno++)
+            posicionesOcupadas.add(this.tableroPartida.getPosicionDelArrayLleno(recorrerArrayLleno));
+        arrayAuxilar = this.tableroPartida.getArrayCartasYaBajadas();
+        for (int recorrerPosicionOcupadas = 0; recorrerPosicionOcupadas < posicionesOcupadas.size(); recorrerPosicionOcupadas++){
+            if (! arrayAuxilar.get(posicionesOcupadas.get(recorrerPosicionOcupadas)).getcartaEnElHueco().getisMaquina())
+                valoresDerDeLasCartasEnJuego.add(arrayAuxilar.get(posicionesOcupadas.get(recorrerPosicionOcupadas)).getcartaEnElHueco().getValorDer());
+        }
+        return valoresDerDeLasCartasEnJuego;
+    }
+
+    private  ArrayList ponderarPosicionesPorLosValores(ArrayList<ArrayList<Integer>> cartasBajadas){
+        ArrayList <Integer> ponderacionesIzq = new ArrayList <> ();
+        ArrayList <Integer> ponderacionesDer = new ArrayList <> ();
+        ArrayList <ArrayList<Integer>> ponderacionesTotal = new ArrayList <> ();
+        ArrayList <Integer> sumaPonderaciones = new ArrayList <> ();
+        ArrayList <Integer> valoresDerechaMano = new ArrayList<>();
+        ArrayList <Integer> valoresIzquierdaMano = new ArrayList<>();
+
+        for (int recorrerMano = 0; recorrerMano <= this.maquina.getManoSize(); recorrerMano++)
+            valoresDerechaMano.add(this.maquina.getMano().get(recorrerMano).getValorDer());
+        for (int recorrerMano = 0; recorrerMano <= this.maquina.getManoSize(); recorrerMano++)
+            valoresIzquierdaMano.add(this.maquina.getMano().get(recorrerMano).getValorIzq());
+
+        for (int recorrerInputArray = 0; recorrerInputArray < cartasBajadas.size(); recorrerInputArray++) {
+            ponderacionesDer = new ArrayList <> ();
+            ponderacionesIzq = new ArrayList <> ();
+            sumaPonderaciones = new ArrayList<>();
+            switch (this.tableroPartida.getPosicionDelArrayLleno(cartasBajadas.get(recorrerInputArray).get(0))) {
+                case 0:
+                    //Solo comprobar el valor de la derecha
+                    for (int recorrerArrayMano : valoresDerechaMano)
+                        ponderacionesDer.add(ponderacionValores(cartasBajadas.get(recorrerInputArray).get(2), recorrerArrayMano));
+                    break;
+                case 9:
+                    //Solo comprobar el valor de la izquierda
+                    for (int recorrerArrayMano : valoresIzquierdaMano)
+                        ponderacionesIzq.add(ponderacionValores(cartasBajadas.get(recorrerInputArray).get(1), recorrerArrayMano));
+                    break;
+                default:
+                    //Comprobar todos los valores
+                    for (int recorrerArrayMano : valoresIzquierdaMano) {
+                        ponderacionesDer.add(ponderacionValores(cartasBajadas.get(recorrerInputArray).get(2), recorrerArrayMano));
+                        ponderacionesIzq.add(ponderacionValores(cartasBajadas.get(recorrerInputArray).get(1), recorrerArrayMano));
+                    }
+                    break;
+            }
+            if (ponderacionesDer.size() == 0)
+                sumaPonderaciones.addAll(ponderacionesIzq);
+            else if (ponderacionesIzq.size() == 0)
+                sumaPonderaciones.addAll(ponderacionesDer);
+            else
+                for (int recorrerPonderacionesIzqDer = 0; recorrerPonderacionesIzqDer < ponderacionesDer.size(); recorrerPonderacionesIzqDer++)
+                    sumaPonderaciones.add((ponderacionesDer.get(recorrerPonderacionesIzqDer))+(ponderacionesIzq.get(recorrerPonderacionesIzqDer)));
+            ponderacionesTotal.add(sumaPonderaciones);
+        }
+        return ponderacionesTotal;
+    }
+
+    private int ponderacionValores(int valorCartaBajada, int valorCartaMano){
+        int value = 0;
+        if ( valorCartaBajada < valorCartaMano)
+            value = 1;
+        switch (value){
+            case 0:
+                return 0;
+            case 1:
+                return 1;
+        }
+        return 0;
+    }
+
+    private int getPosicionMasPonderada (ArrayList<Integer>posicionesPonderadas){
+        int valorMaximo = Collections.max(posicionesPonderadas);
+        ArrayList <Integer> posicionesMasPonderadas = new ArrayList<>();
+
+        for (int recorrerPosicionesPonderadas = 0; recorrerPosicionesPonderadas < posicionesPonderadas.size(); recorrerPosicionesPonderadas++)
+            if (posicionesPonderadas.get(recorrerPosicionesPonderadas) == valorMaximo)
+                posicionesMasPonderadas.add(recorrerPosicionesPonderadas);
+        if (posicionesMasPonderadas.size() == 1)
+            return posicionesMasPonderadas.get(0);
+        else
+            return posicionesMasPonderadas.get(ThreadLocalRandom.current().nextInt(0, posicionesMasPonderadas.size()));
+    }
+
 }

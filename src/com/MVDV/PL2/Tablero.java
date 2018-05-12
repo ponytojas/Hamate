@@ -9,7 +9,8 @@ import java.util.Objects;
 
 public class Tablero {
     private ArrayList<HuecoDelTablero> cartasYaBajadas = new ArrayList<>();
-    
+    private ArrayList <Integer> posicionesVacias = new ArrayList<>();
+    private ArrayList <Integer> posicionesLLenas = new ArrayList<>();
 
     /**
      * Constructor por defecto
@@ -20,7 +21,9 @@ public class Tablero {
         int contador = 0;
         while (contador < 10) {
             HuecoDelTablero hueco = new HuecoDelTablero();
+            hueco.setPosicion(contador+1);
             this.cartasYaBajadas.add(hueco);
+            posicionesVacias.add(contador);
             contador++;
         }
         
@@ -73,8 +76,19 @@ public class Tablero {
      */
 
     public void ponerLaCartaEnElTablero(CartaEnJuego nuevaCartaEnTablero, int posicionDelTablero, boolean isMaquina) {
+        this.quitarPosicionDelArrayDeHuecosVacios(posicionDelTablero);
+        this.posicionesLLenas.add(posicionDelTablero);
         this.cartasYaBajadas.get(posicionDelTablero).setcartaEnElHueco(nuevaCartaEnTablero, posicionDelTablero, isMaquina);
         reto(posicionDelTablero);
+    }
+
+    private void quitarPosicionDelArrayDeHuecosVacios(int posicionDondeSeQuiereBajarLaCarta){
+        for (int i = 0; i < this.posicionesVacias.size(); i++){
+            if (this.posicionesVacias.get(i) == posicionDondeSeQuiereBajarLaCarta){
+                this.posicionesVacias.remove(i);
+                break;
+            }
+        }
     }
 
     /**
@@ -200,4 +214,10 @@ public class Tablero {
         }
     return cantidad;
     }
+
+    public int getCantidadCartasVacias(){ return this.posicionesVacias.size(); }
+    public int getPosicionDelArrayVacio(int posicion){return this.posicionesVacias.get(posicion);}
+    public int getCantidadCartasLlenas(){return this.posicionesLLenas.size();}
+    public int getPosicionDelArrayLleno(int posicion){return this.posicionesLLenas.get(posicion);}
+    public ArrayList getArrayCartasYaBajadas (){return this.cartasYaBajadas;}
 }

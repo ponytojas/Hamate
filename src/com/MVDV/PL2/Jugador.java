@@ -13,15 +13,44 @@ public class Jugador {
     private String nombre;
     private String nif;
     private int edad;
+    private boolean facilAvanzado;
 
     /**
      * Constructor
-     * @param maquina Crea un jugador que puede sera maquina o usuario segun el parametro de entrada
+     * @param maquinaInput Crea un jugador que puede sera maquina o usuario segun el parametro de entrada
      */
-    public Jugador(boolean maquina) {
-        this.maquina = maquina;
-        if (!this.maquina)
+    public Jugador(boolean maquinaInput) { //Throws java.util.InputMismatchException
+        if (!maquinaInput)
             preguntasInicioPartida();
+        else {
+            this.nombre = "R2D2";
+            this.edad = 42;
+            this.nif = "01101000 01110101 01101100 01101001 01101111";
+
+            int dificultad = 0;
+            Scanner entrada = new Scanner(System.in);
+            System.out.println("Elige modalidad de juego");
+            System.out.println("1) Facil \t2) Dificil");
+            try {
+                dificultad = entrada.nextInt();
+            } catch (Exception e) {
+                System.out.println("Algo no ha ido bien, se selecciona FACIL de forma automatica");
+            } finally {
+                switch (dificultad) {
+                    case 1:
+                        facilAvanzado = false;
+                        break;
+                    case 2:
+                        facilAvanzado = true;
+                        break;
+                    default:
+                        facilAvanzado = false;
+                        break;
+                }
+            }
+        }
+        this.maquina = maquinaInput;
+            
     }
 
     /**
@@ -101,21 +130,34 @@ public class Jugador {
         Scanner entrada = new Scanner(System.in);
         System.out.println("Introduce un nombre: ");
         this.nombre = entrada.nextLine();
-        try {
-            System.out.println("Introduce edad (en numero): ");
-            this.edad = entrada.nextInt();
-            if (this.edad < 18)
-                throw new JugadorException(JugadorException.EDAD_INCORRECTA);
-        }catch (JugadorException msg){
-         //Terminar partida
-        }
+
         try{
             System.out.println("Introduce tu nif: ");
             this.nif = entrada.nextLine();
             if (this.nif.equals(""))
                 throw new JugadorException(JugadorException.NIF_INCORRECTO);
         }catch (JugadorException msg){
+            System.out.println(msg);
+        }
+        try {
+            System.out.println("Introduce edad (en numero): ");
+            this.edad = entrada.nextInt();
+            if (this.edad < 18)
+                throw new JugadorException(JugadorException.EDAD_INCORRECTA);
+        }catch (JugadorException msg){
             //Terminar partida
         }
     }
+    
+    public void setNombre (String nombre){this.nombre = nombre; }
+    
+    public String getNombre(){return this.nombre; }
+    
+    public void setEdad (int edad){this.edad = edad; }
+    
+    public void setNif (String nif){this.nif = nif; }
+
+    public boolean getDificultad(){return  this.facilAvanzado;}
+
+    public ArrayList <CartaEnMano> getMano(){return this.mano;}
 }
