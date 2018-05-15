@@ -9,6 +9,7 @@ public class JugadorException extends Exception {
     public static final String EDAD_INCORRECTA = "El jugador debe ser mayor de edad para poder jugar";
     public static final String CARTA_NO_SELECCIONADA = "No se ha seleccionado ninguna carta para jugar.";
     public static final String RETO_INCORRECTO = "No se ha seleccionado la dirección del reto";
+    public static final String NOMBRE_INCORRECTO = "Nombre incorrecto";
     public JugadorException() {
         super("Se ha producido una excepción en la aplicación.");
     }

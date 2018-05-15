@@ -130,6 +130,12 @@ public class Jugador {
         Scanner entrada = new Scanner(System.in);
         System.out.println("Introduce un nombre: ");
         this.nombre = entrada.nextLine();
+        try{
+        if (this.nombre.equals(""))
+            throw  new JugadorException(JugadorException.NOMBRE_INCORRECTO);
+        }catch (JugadorException msg){
+            preguntasInicioPartida();
+        }
 
         try{
             System.out.println("Introduce tu nif: ");
@@ -138,6 +144,7 @@ public class Jugador {
                 throw new JugadorException(JugadorException.NIF_INCORRECTO);
         }catch (JugadorException msg){
             System.out.println(msg);
+            preguntasInicioPartida();
         }
         try {
             System.out.println("Introduce edad (en numero): ");
@@ -145,6 +152,8 @@ public class Jugador {
             if (this.edad < 18)
                 throw new JugadorException(JugadorException.EDAD_INCORRECTA);
         }catch (JugadorException msg){
+            System.out.println("Edad fuera de rango");
+            System.exit(0);
             //Terminar partida
         }
     }

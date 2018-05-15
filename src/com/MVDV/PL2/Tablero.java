@@ -219,5 +219,6 @@ public class Tablero {
     public int getPosicionDelArrayVacio(int posicion){return this.posicionesVacias.get(posicion);}
     public int getCantidadCartasLlenas(){return this.posicionesLLenas.size();}
     public int getPosicionDelArrayLleno(int posicion){return this.posicionesLLenas.get(posicion);}
+    public ArrayList<Integer> getPosicionesLlenas(){return this.posicionesLLenas;}
     public ArrayList getArrayCartasYaBajadas (){return this.cartasYaBajadas;}
 }
