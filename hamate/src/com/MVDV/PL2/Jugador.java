@@ -1,6 +1,5 @@
 package com.MVDV.PL2;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * @author Marcos Vicente - Daniel Villalobos
@@ -10,9 +9,6 @@ import java.util.Scanner;
 public class Jugador {
     private boolean maquina;
     private ArrayList <CartaEnMano> mano = new ArrayList<>();
-    private String nombre;
-    private String nif;
-    private int edad;
 
     /**
      * Constructor
@@ -20,19 +16,6 @@ public class Jugador {
      */
     public Jugador(boolean maquina) {
         this.maquina = maquina;
-        /*if (!this.maquina)
-            preguntasInicioPartida();
-        else{
-            this.nombre = "R2D2";
-            this.edad = 42;
-            this.nif = "01101000 01110101 01101100 01101001 01101111";
-        }*/
-        if (this.maquina){
-            this.nombre = "R2D2";
-            this.edad = 42;
-            this.nif = "01101000 01110101 01101100 01101001 01101111";
-        }
-            
     }
 
     /**
@@ -108,34 +91,4 @@ public class Jugador {
     }
 
 
-    public void preguntasInicioPartida(){
-        Scanner entrada = new Scanner(System.in);
-        System.out.println("Introduce un nombre: ");
-        this.nombre = entrada.nextLine();
-
-        try{
-            System.out.println("Introduce tu nif: ");
-            this.nif = entrada.nextLine();
-            if (this.nif.equals(""))
-                throw new JugadorException(JugadorException.NIF_INCORRECTO);
-        }catch (JugadorException msg){
-            System.out.println(msg);
-        }
-        try {
-            System.out.println("Introduce edad (en numero): ");
-            this.edad = entrada.nextInt();
-            if (this.edad < 18)
-                throw new JugadorException(JugadorException.EDAD_INCORRECTA);
-        }catch (JugadorException msg){
-            //Terminar partida
-        }
-    }
-    
-    public void setNombre (String nombre){this.nombre = nombre; }
-    
-    public String getNombre(){return this.nombre; }
-    
-    public void setEdad (int edad){this.edad = edad; }
-    
-    public void setNif (String nif){this.nif = nif; }
 }

@@ -2,7 +2,6 @@ package com.MVDV.PL2;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-import javax.swing.*;
 
 /**
  * @author Marcos Vicente - Daniel Villalobos
@@ -16,18 +15,7 @@ public class Partida {
     private Jugador maquina = new Jugador(true);
     private Jugador jugador = new Jugador(false);
     Scanner entrada = new Scanner(System.in);
-    private TableroForm tableroInterface;
 
-    public Partida(String nombre, String nif, int edad){
-        this.jugador.setNombre(nombre);
-        this.jugador.setEdad(edad);
-        this.jugador.setNif(nif);
-    }
-    
-    public Partida(){
-        this.jugador.preguntasInicioPartida();
-    }
-    
     /**
      * Funcion principal que genera la partida
      * Primeramente genera el mazo
@@ -51,32 +39,12 @@ public class Partida {
             jugador.recibirCarta(this.mazo.get(0));
             this.mazo.remove(0);
         }
-         lanzarInterfaz();
+
         while (!this.tableroPartida.estaElTableroLleno()){
-            //turnoInterface(); /*Si se descomenta esta línea y se comentan las dos siguientes, se podría jugar sin modo gráfico*/
             turnoJugador();
             turnoMaquina();
         }
         return preguntarJugador();
-    }
-    
-    private void turnoInterface(){
-        int posicionElegidaMano;
-        int posicionElegidaTablero;
-        
-        while(this.tableroInterface.getposicionMano() == -1 || this.tableroInterface.getposicionTablero() == -1){
-             try{
-                    Thread.sleep(250);
-                }catch(InterruptedException e){}   
-        }
-        posicionElegidaMano = this.tableroInterface.getposicionMano();
-        posicionElegidaTablero = this.tableroInterface.getposicionTablero();
-        this.tableroInterface.setposicionMano(-1);
-        this.tableroInterface.setposicionTablero(-1);
-        this.tableroInterface.pasarCartaManoAlTablero(posicionElegidaMano, posicionElegidaTablero, 0);
-        jugar(posicionElegidaMano, posicionElegidaTablero, this.jugador.getisMaquina());
-        turnoMaquina();
-        
     }
 
     /**
@@ -131,7 +99,6 @@ public class Partida {
             throw new HuecoOcupado("El hueco esta ocupado, elige una posicion vacia\\n\\n\\n\\n\"");
 
         else
-            this.tableroInterface.pasarCartaManoAlTablero(posicionMano, posicionTablero, 1);
             jugar(posicionMano, posicionTablero, this.maquina.getisMaquina());
 
         }catch (HuecoOcupado msg){
@@ -207,15 +174,10 @@ public class Partida {
                 System.out.println("Gana la maquina con "+cantidadMaquina+" cartas de su color");
                 break;
             case 1:
-                System.out.println("Gana el jugador "+this.jugador.getNombre()+" con "+cantidadJugador+" cartas de su color");
+                System.out.println("Gana el jugador con "+cantidadJugador+" cartas de su color");
                 break;
             default:
                 System.out.println("Ha habido un empate");
         }
-    }
- 
-    private void lanzarInterfaz (){
-        this.tableroInterface = new TableroForm(this.jugador, this.maquina);     
-        this.tableroInterface.setVisible(true);
     }
 }
