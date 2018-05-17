@@ -15,6 +15,7 @@ public class Partida {
     private Tablero tableroPartida = new Tablero();
     private Jugador jugador = new Jugador(false);
     private Jugador maquina = new Jugador(true);
+    private datosJugadorClasificacion clasificacion = new datosJugadorClasificacion();
 
     //private TableroForm tableroInterface;
 
@@ -25,6 +26,13 @@ public class Partida {
     }
     
     public Partida(){
+        boolean datosCorrectos = false;
+        while (!datosCorrectos)
+            datosCorrectos = this.clasificacion.comenzarPartida();
+        this.jugador = this.clasificacion.getJugador();
+        this.jugador.setPuntos(this.clasificacion.getPuntosAnteDeComenzarPartida(this.jugador.getNif()));
+        this.maquina.setPuntos(this.clasificacion.getPuntosAnteDeComenzarPartida(this.maquina.getNif()));
+
     }
     
     /**
@@ -39,15 +47,20 @@ public class Partida {
         Scanner entrada = new Scanner(System.in);
         do{
             Random rand = new Random();
-            this.mazo.add(new CartaEnMazo(rand.nextInt(7)+1, rand.nextInt(7) +1));
+            if (this.mazo.size() % 10 == 0)
+                this.mazo.add(new CartaEnMazo(rand.nextInt(7)+1, rand.nextInt(7) +1, true));
+            else
+                this.mazo.add(new CartaEnMazo(rand.nextInt(7)+1, rand.nextInt(7) +1, false));
         }while (this.mazo.size() < 110);
 
-        while(!maquina.getisLlena()){
-            maquina.recibirCarta(this.mazo.get(0));
+        Collections.shuffle(this.mazo);
+
+        while(!this.maquina.getisLlena()){
+            this.maquina.recibirCarta(this.mazo.get(0));
             this.mazo.remove(0);
         }
-        while (!jugador.getisLlena()){
-            jugador.recibirCarta(this.mazo.get(0));
+        while (!this.jugador.getisLlena()){
+            this.jugador.recibirCarta(this.mazo.get(0));
             this.mazo.remove(0);
         }
          //lanzarInterfaz();
@@ -98,7 +111,7 @@ public class Partida {
             System.out.println("Elige una carta a bajar: ");
             posicionMano = (entrada.nextInt()) - 1;
             try {
-                if (posicionMano+1 >= this.jugador.getManoSize() || posicionMano < 0)
+                if (posicionMano+1 > this.jugador.getManoSize() || posicionMano < 0)
                     throw new fueraDelRangoDeLaMano("La carta selecciona no existe, elige otra");
             }catch (fueraDelRangoDeLaMano msg){
                 System.out.println("\n\n\n\n\nLa carta selecciona no existe, elige otra\n\n\n\n\n");
@@ -168,7 +181,7 @@ public class Partida {
             cartaAux = this.maquina.getcarta(posicionCartaMano);
             this.maquina.soltarCarta(posicionCartaMano);
         }
-        this.tableroPartida.ponerLaCartaEnElTablero(new CartaEnJuego(cartaAux.getValorIzq(), cartaAux.getValorDer(), isMaquina), huecoTablero, isMaquina);
+        this.tableroPartida.ponerLaCartaEnElTablero(new CartaEnJuego(cartaAux.getValorIzq(), cartaAux.getValorDer(), isMaquina, cartaAux.getvaleDoble()), huecoTablero, isMaquina);
     }
 
 
@@ -232,15 +245,18 @@ public class Partida {
                 huecoAux.dibujarHueco();
         int cantidadJugador = this.tableroPartida.getcantidadCartas(true);
         int cantidadMaquina = tableroPartida.getcantidadCartas(false);
+        int puntosJugador = this.tableroPartida.calcularPuntos(true);
+        int puntosMaquina = this.tableroPartida.calcularPuntos(false);
         int ganaJugador = 0;
+        this.clasificacion.actualizarDatosPartida(this.jugador.getNif(), this.maquina.getNif(), cantidadJugador, cantidadMaquina, puntosJugador, puntosMaquina);
         if (cantidadJugador > cantidadMaquina) ganaJugador = 1;
         else if (cantidadJugador == cantidadMaquina) ganaJugador = 3;
         switch (ganaJugador){
             case 0:
-                System.out.println("\n\n\nGana la maquina con "+cantidadMaquina+" cartas de su color");
+                System.out.println("\n\n\nGana la maquina con "+puntosMaquina+" puntos");
                 break;
             case 1:
-                System.out.println("\n\n\nGana el jugador "+this.jugador.getNombre()+" con "+cantidadJugador+" cartas de su color");
+                System.out.println("\n\n\nGana el jugador "+this.jugador.getNombre()+" con "+puntosJugador+" puntos");
                 break;
             default:
                 System.out.println("\n\n\nHa habido un empate");
@@ -341,7 +357,7 @@ public class Partida {
         ArrayList <Integer> valoresDerechaManoMaquina = new ArrayList<>();
         ArrayList <Integer> valoresIzquierdaManoMaquina = new ArrayList<>();
 
-        for (int recorrerMano = 0; recorrerMano <= this.maquina.getManoSize(); recorrerMano++) {
+        for (int recorrerMano = 0; recorrerMano <= this.maquina.getManoSize()-1; recorrerMano++) {
             valoresDerechaManoMaquina.add(this.maquina.getMano().get(recorrerMano).getValorDer());
             valoresIzquierdaManoMaquina.add(this.maquina.getMano().get(recorrerMano).getValorIzq());
         }

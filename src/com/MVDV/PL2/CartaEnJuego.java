@@ -21,8 +21,8 @@ public class CartaEnJuego extends CartaEnMano {
      * @param valorDer Valor por la derecha que tiene la carta
      * @param maquina Si tenemos la variable a true, la carta sera roja, sino azul. Una aproximacion mas sencilla en el futuro que utilizar variables tipo String
      */
-    public CartaEnJuego(int valorIzq, int valorDer, boolean maquina) {
-        super(valorIzq, valorDer);
+    public CartaEnJuego(int valorIzq, int valorDer, boolean maquina, boolean valeDoble) {
+        super(valorIzq, valorDer, valeDoble);
         this.isMaquina = maquina;
     }
 
