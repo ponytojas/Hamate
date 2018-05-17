@@ -203,6 +203,7 @@ public class Tablero {
                 for (HuecoDelTablero variableAuxiliarParaContar : this.cartasYaBajadas)
                     if (variableAuxiliarParaContar.getesRoja())
                         cantidad++;
+
                 break;
 
             case 1:
@@ -210,9 +211,36 @@ public class Tablero {
                     if (!variableAuxiliarParaContar.getesRoja())
                         cantidad++;
                 break;
-
         }
-    return cantidad;
+        return cantidad;
+    }
+
+    public int calcularPuntos(boolean jugadorMaquina){
+        int jugador = 0;
+        int cantidad = 0;
+        if (jugadorMaquina) jugador = 1 ;
+        switch (jugador) {
+            case 0:
+                for (HuecoDelTablero variableAuxiliarParaContar : this.cartasYaBajadas)
+                    if (variableAuxiliarParaContar.getesRoja()) {
+                        if (variableAuxiliarParaContar.getcartaEnElHueco().getvaleDoble()) {
+                            cantidad += 2;
+                        } else
+                            cantidad +=1;
+                    }
+                break;
+
+            case 1:
+                for (HuecoDelTablero variableAuxiliarParaContar : this.cartasYaBajadas)
+                    if (!variableAuxiliarParaContar.getesRoja()) {
+                        if (variableAuxiliarParaContar.getcartaEnElHueco().getvaleDoble()){
+                            cantidad += 2;
+                        }else
+                            cantidad++;
+                    }
+                break;
+        }
+        return cantidad;
     }
 
     public int getCantidadCartasVacias(){ return this.posicionesVacias.size(); }

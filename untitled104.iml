@@ -18,5 +18,17 @@
         <SOURCES />
       </library>
     </orderEntry>
+<<<<<<< HEAD
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/gson-2.8.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+=======
+>>>>>>> 3c573f891f5ba942bdad3d392f1ba71c3176a721
   </component>
 </module>

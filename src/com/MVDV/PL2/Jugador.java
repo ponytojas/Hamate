@@ -1,6 +1,12 @@
 package com.MVDV.PL2;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+
+import java.io.FileWriter;
+import java.io.IOException;
+
 
 /**
  * @author Marcos Vicente - Daniel Villalobos
@@ -14,18 +20,38 @@ public class Jugador {
     private String nif;
     private int edad;
     private boolean facilAvanzado;
+<<<<<<< HEAD
+    private int puntos;
+
+
+    public Jugador(String nombreInput, String nifInput, int edad, boolean esMaquinaInput){
+        this.nombre = nombreInput;
+        this.nif = nifInput;
+        this.edad = edad;
+        this.maquina = esMaquinaInput;
+    }
+=======
+>>>>>>> 3c573f891f5ba942bdad3d392f1ba71c3176a721
 
     /**
      * Constructor
      * @param maquinaInput Crea un jugador que puede sera maquina o usuario segun el parametro de entrada
      */
     public Jugador(boolean maquinaInput) { //Throws java.util.InputMismatchException
+<<<<<<< HEAD
+        if (maquinaInput) {
+            this.nombre = "R2D2";
+            this.edad = 42;
+            this.nif = "01101000 01110101 01101100 01101001 01101111";
+            this.maquina = true;
+=======
         if (!maquinaInput)
             preguntasInicioPartida();
         else {
             this.nombre = "R2D2";
             this.edad = 42;
             this.nif = "01101000 01110101 01101100 01101001 01101111";
+>>>>>>> 3c573f891f5ba942bdad3d392f1ba71c3176a721
 
             int dificultad = 0;
             Scanner entrada = new Scanner(System.in);
@@ -49,8 +75,11 @@ public class Jugador {
                 }
             }
         }
+<<<<<<< HEAD
+=======
         this.maquina = maquinaInput;
             
+>>>>>>> 3c573f891f5ba942bdad3d392f1ba71c3176a721
     }
 
     /**
@@ -77,7 +106,7 @@ public class Jugador {
 
     public void recibirCarta(CartaEnMazo cartaRobada){
         if (!getisLlena()) {
-            CartaEnMano cartaAux = new CartaEnMano(cartaRobada.getValorIzq(), cartaRobada.getValorDer());
+            CartaEnMano cartaAux = new CartaEnMano(cartaRobada.getValorIzq(), cartaRobada.getValorDer(), cartaRobada.getvaleDoble());
             mano.add(cartaAux);
         }
     }
@@ -122,7 +151,7 @@ public class Jugador {
      */
 
     public int getManoSize(){
-        return mano.size()-1;
+        return mano.size();
     }
 
 
@@ -169,4 +198,21 @@ public class Jugador {
     public boolean getDificultad(){return  this.facilAvanzado;}
 
     public ArrayList <CartaEnMano> getMano(){return this.mano;}
+<<<<<<< HEAD
+
+    public String getNif(){return this.nif;}
+
+    public int getEdad() { return edad; }
+
+    public void setMaquina(boolean maquina) {
+        this.maquina = maquina;
+    }
+
+    public void setPuntos(int puntosInput){this.puntos += puntosInput;}
+
+    public Jugador getJugador (){return this;}
+
+    public int getPuntos(){return  this.puntos;}
+=======
+>>>>>>> 3c573f891f5ba942bdad3d392f1ba71c3176a721
 }
