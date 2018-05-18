@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6692edd1-fb7e-4b63-93ab-5779d58a83b6" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/datosJugadores/jugadores.json" beforeDir="false" afterPath="$PROJECT_DIR$/datosJugadores/jugadores.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datosJugadores/jugadores0.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/MVDV/PL2/datosJugadorClasificacion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/MVDV/PL2/datosJugadorClasificacion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/MVDV/PL2/Partida.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/MVDV/PL2/Partida.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,21 +21,17 @@
       <file leaf-file-name="Tablero.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/MVDV/PL2/Tablero.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3525">
+            <state relative-caret-position="3570">
               <caret line="238" column="39" selection-start-line="238" selection-start-column="39" selection-end-line="238" selection-end-column="39" />
-              <folding>
-                <element signature="e#1359#1360#0" expanded="true" />
-                <element signature="e#1397#1398#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Partida.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Partida.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/MVDV/PL2/Partida.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="32" selection-start-line="32" selection-end-line="32" />
+            <state relative-caret-position="710">
+              <caret line="319" column="13" lean-forward="true" selection-start-line="319" selection-start-column="13" selection-end-line="319" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -47,8 +42,8 @@
       <file leaf-file-name="CartaEnMazo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/MVDV/PL2/CartaEnMazo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="35" selection-start-line="35" selection-end-line="35" />
+            <state relative-caret-position="585">
+              <caret line="39" selection-start-line="39" selection-end-line="39" />
             </state>
           </provider>
         </entry>
@@ -71,14 +66,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="datosJugadorClasificacion.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="datosJugadorClasificacion.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/MVDV/PL2/datosJugadorClasificacion.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="88" column="29" selection-start-line="88" selection-start-column="29" selection-end-line="88" selection-end-column="29" />
+            <state relative-caret-position="761">
+              <caret line="127" column="75" selection-start-line="127" selection-start-column="75" selection-end-line="127" selection-end-column="75" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#956#986#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -96,8 +90,8 @@
       <file leaf-file-name="Jugador.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/MVDV/PL2/Jugador.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2700">
-              <caret line="192" column="43" selection-start-line="192" selection-start-column="43" selection-end-line="192" selection-end-column="43" />
+            <state relative-caret-position="2640">
+              <caret line="194" column="43" selection-start-line="194" selection-start-column="43" selection-end-line="194" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -152,8 +146,8 @@
         <option value="$PROJECT_DIR$/src/com/MVDV/PL2/CartaEnJuego.java" />
         <option value="$PROJECT_DIR$/src/com/MVDV/PL2/Jugador.java" />
         <option value="$PROJECT_DIR$/src/com/MVDV/PL2/Tablero.java" />
-        <option value="$PROJECT_DIR$/src/com/MVDV/PL2/Partida.java" />
         <option value="$PROJECT_DIR$/src/com/MVDV/PL2/datosJugadorClasificacion.java" />
+        <option value="$PROJECT_DIR$/src/com/MVDV/PL2/Partida.java" />
       </list>
     </option>
   </component>
@@ -168,7 +162,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -191,8 +184,9 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -463,10 +457,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1680" height="1028" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32914045" />
-      <window_info anchor="bottom" id="Messages" order="8" weight="0.32914045" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
@@ -477,7 +471,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Designer" order="3" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19166666" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19166666" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="4" />
@@ -491,6 +485,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32914045" />
+      <window_info anchor="bottom" id="Messages" order="8" weight="0.32914045" />
     </layout>
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -802,9 +797,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="690">
           <caret line="54" selection-start-line="54" selection-end-line="54" />
-          <folding>
-            <element signature="e#1441#1442#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -812,11 +804,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="585">
           <caret line="41" selection-start-line="41" selection-end-line="41" />
-          <folding>
-            <element signature="e#766#767#0" expanded="true" />
-            <element signature="e#797#798#0" expanded="true" />
-            <element signature="e#932#933#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -861,8 +848,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/MVDV/PL2/CartaEnMazo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="35" selection-start-line="35" selection-end-line="35" />
+        <state relative-caret-position="585">
+          <caret line="39" selection-start-line="39" selection-end-line="39" />
         </state>
       </provider>
     </entry>
@@ -875,29 +862,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/MVDV/PL2/Tablero.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3525">
+        <state relative-caret-position="3570">
           <caret line="238" column="39" selection-start-line="238" selection-start-column="39" selection-end-line="238" selection-end-column="39" />
-          <folding>
-            <element signature="e#1359#1360#0" expanded="true" />
-            <element signature="e#1397#1398#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/MVDV/PL2/Partida.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" selection-start-line="32" selection-end-line="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/MVDV/PL2/Jugador.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2700">
-          <caret line="192" column="43" selection-start-line="192" selection-start-column="43" selection-end-line="192" selection-end-column="43" />
+        <state relative-caret-position="2640">
+          <caret line="194" column="43" selection-start-line="194" selection-start-column="43" selection-end-line="194" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -906,11 +879,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/MVDV/PL2/datosJugadorClasificacion.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="88" column="29" selection-start-line="88" selection-start-column="29" selection-end-line="88" selection-end-column="29" />
+        <state relative-caret-position="761">
+          <caret line="127" column="75" selection-start-line="127" selection-start-column="75" selection-end-line="127" selection-end-column="75" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#956#986#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/MVDV/PL2/Partida.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="710">
+          <caret line="319" column="13" lean-forward="true" selection-start-line="319" selection-start-column="13" selection-end-line="319" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
