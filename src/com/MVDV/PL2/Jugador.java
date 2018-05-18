@@ -30,6 +30,7 @@ public class Jugador {
         this.maquina = esMaquinaInput;
     }
 
+
     /**
      * Constructor
      * @param maquinaInput Crea un jugador que puede sera maquina o usuario segun el parametro de entrada
@@ -40,6 +41,7 @@ public class Jugador {
             this.edad = 42;
             this.nif = "01101000 01110101 01101100 01101001 01101111";
             this.maquina = true;
+
 
             int dificultad = 0;
             Scanner entrada = new Scanner(System.in);
@@ -169,13 +171,13 @@ public class Jugador {
             //Terminar partida
         }
     }
-    
+
     public void setNombre (String nombre){this.nombre = nombre; }
-    
+
     public String getNombre(){return this.nombre; }
-    
+
     public void setEdad (int edad){this.edad = edad; }
-    
+
     public void setNif (String nif){this.nif = nif; }
 
     public boolean getDificultad(){return  this.facilAvanzado;}
@@ -195,4 +197,5 @@ public class Jugador {
     public Jugador getJugador (){return this;}
 
     public int getPuntos(){return  this.puntos;}
+
 }

@@ -48,7 +48,7 @@ public class datosJugadorClasificacion {
         if (!dir.exists()) dir.mkdirs();
         return (directory + "/" + filename + ".json");
     }
-
+    
     public boolean comenzarPartida() {
         Scanner entrada = new Scanner(System.in);
         boolean devolucion = false;

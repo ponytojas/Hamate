@@ -8,8 +8,10 @@ import java.util.Random;
  */
 
 public class CartaEnMazo extends Carta {
+
     private String nombreImagen;
     private boolean valeDoble;
+
     /**
      * Constructor por defecto
      */
@@ -24,12 +26,14 @@ public class CartaEnMazo extends Carta {
     public CartaEnMazo(int valorIzq, int valorDer, boolean valeDobleInput) {
         super(valorIzq, valorDer);
         this.valeDoble = valeDobleInput;
+
         Random rand = new Random();
        this.nombreImagen = "Images/"+ String.valueOf(rand.nextInt(110)+1)+".png";
     }
-    
+
     public String getnombreImagen(){return this.nombreImagen;}
 
     public boolean getvaleDoble(){return valeDoble;}
+
 
 }

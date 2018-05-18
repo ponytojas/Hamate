@@ -19,12 +19,13 @@ public class Partida {
 
     //private TableroForm tableroInterface;
 
+
     public Partida(String nombre, String nif, int edad){
         this.jugador.setNombre(nombre);
         this.jugador.setEdad(edad);
         this.jugador.setNif(nif);
     }
-    
+
     public Partida(){
         boolean datosCorrectos = false;
         while (!datosCorrectos)
@@ -33,8 +34,9 @@ public class Partida {
         this.jugador.setPuntos(this.clasificacion.getPuntosAnteDeComenzarPartida(this.jugador.getNif()));
         this.maquina.setPuntos(this.clasificacion.getPuntosAnteDeComenzarPartida(this.maquina.getNif()));
 
+
     }
-    
+
     /**
      * Funcion principal que genera la partida
      * Primeramente genera el mazo
@@ -65,7 +67,7 @@ public class Partida {
         }
          //lanzarInterfaz();
         while (!this.tableroPartida.estaElTableroLleno()){
-            //turnoInterface(); /*Si se descomenta esta línea y se comentan las dos siguientes, se podría jugar sin modo gráfico*/
+            //turnoInterface(); /*Si se descomenta esta linea y se comentan las dos siguientes, se podria jugar sin modo grafico*/
             turnoJugador();
             if (!this.maquina.getDificultad())
                 turnoMaquina();
@@ -74,15 +76,15 @@ public class Partida {
         }
         return this.preguntarJugador();
     }
-    
+
     /*private void turnoInterface(){
         int posicionElegidaMano;
         int posicionElegidaTablero;
-        
+
         while(this.tableroInterface.getposicionMano() == -1 || this.tableroInterface.getposicionTablero() == -1){
              try{
                     Thread.sleep(250);
-                }catch(InterruptedException e){}   
+                }catch(InterruptedException e){}
         }
         posicionElegidaMano = this.tableroInterface.getposicionMano();
         posicionElegidaTablero = this.tableroInterface.getposicionTablero();
@@ -112,6 +114,7 @@ public class Partida {
             posicionMano = (entrada.nextInt()) - 1;
             try {
                 if (posicionMano+1 > this.jugador.getManoSize() || posicionMano < 0)
+
                     throw new fueraDelRangoDeLaMano("La carta selecciona no existe, elige otra");
             }catch (fueraDelRangoDeLaMano msg){
                 System.out.println("\n\n\n\n\nLa carta selecciona no existe, elige otra\n\n\n\n\n");
@@ -257,14 +260,15 @@ public class Partida {
                 break;
             case 1:
                 System.out.println("\n\n\nGana el jugador "+this.jugador.getNombre()+" con "+puntosJugador+" puntos");
+
                 break;
             default:
                 System.out.println("\n\n\nHa habido un empate");
         }
     }
- 
+
     /*private void lanzarInterfaz (){
-        this.tableroInterface = new TableroForm(this.jugador, this.maquina);     
+        this.tableroInterface = new TableroForm(this.jugador, this.maquina);
         this.tableroInterface.setVisible(true);
     }*/
 
@@ -314,13 +318,59 @@ public class Partida {
             }catch (java.util.NoSuchElementException e){
                 turnoMaquina();
             }
+            valoresDerechaManoMaquina.add(this.maquina.getMano().get(recorrerMano).getValorDer());
+            valoresIzquierdaManoMaquina.add(this.maquina.getMano().get(recorrerMano).getValorIzq());
+
         }
+
+        for (int recorrerInputArray = 0; recorrerInputArray < cartasBajadas.get(0).size(); recorrerInputArray++) {
+            ponderacionesAtacandoPorDer = new ArrayList <> ();
+            ponderacionesAtacandoPorIzq = new ArrayList <> ();
+            sumaPonderaciones = new ArrayList<>();
+
+            switch (cartasBajadas.get(0).get(recorrerInputArray)) {
+                case 0:
+                    //Solo comprobar el valor de la derecha
+                    for (int recorrerArrayMano : valoresIzquierdaManoMaquina)
+                        if (checkNextOrPreviousPosition((cartasBajadas.get(0).get(recorrerInputArray)+1)))
+                            ponderacionesAtacandoPorDer.add(ponderacionValores(cartasBajadas.get(2).get(recorrerInputArray), recorrerArrayMano));
+                    break;
+                case 9:
+                    //Solo comprobar el valor de la izquierda
+                    for (int recorrerArrayMano : valoresDerechaManoMaquina)
+                        if (checkNextOrPreviousPosition((cartasBajadas.get(0).get(recorrerInputArray))-1))
+                        ponderacionesAtacandoPorIzq.add(ponderacionValores(cartasBajadas.get(1).get(recorrerInputArray), recorrerArrayMano));
+                    break;
+                default:
+                    //Comprobar todos los valores
+                    for (int recorrerArrayDeValoresIzqDerManoMaquina = 0; recorrerArrayDeValoresIzqDerManoMaquina < valoresDerechaManoMaquina.size() || recorrerArrayDeValoresIzqDerManoMaquina < valoresDerechaManoMaquina.size(); recorrerArrayDeValoresIzqDerManoMaquina++){
+                        try{
+                            if (checkNextOrPreviousPosition((cartasBajadas.get(0).get(recorrerInputArray)+1)))
+                                ponderacionesAtacandoPorDer.add(ponderacionValores(cartasBajadas.get(2).get(recorrerInputArray), valoresIzquierdaManoMaquina.get(recorrerArrayDeValoresIzqDerManoMaquina)));
+                            if (checkNextOrPreviousPosition((cartasBajadas.get(0).get(recorrerInputArray))-1))
+                                ponderacionesAtacandoPorIzq.add(ponderacionValores(cartasBajadas.get(1).get(recorrerInputArray), valoresDerechaManoMaquina.get(recorrerArrayDeValoresIzqDerManoMaquina)));
+                        }catch (Exception e){
+                            continue;
+                        }
+                    }
+                    break;
+            }
+            if (ponderacionesAtacandoPorDer.size() == 0)
+                sumaPonderaciones.addAll(ponderacionesAtacandoPorIzq);
+            else if (ponderacionesAtacandoPorIzq.size() == 0)
+                sumaPonderaciones.addAll(ponderacionesAtacandoPorDer);
+            else
+                for (int recorrerPonderacionesIzqDer = 0; recorrerPonderacionesIzqDer < ponderacionesAtacandoPorDer.size(); recorrerPonderacionesIzqDer++)
+                    sumaPonderaciones.add((ponderacionesAtacandoPorDer.get(recorrerPonderacionesIzqDer))+(ponderacionesAtacandoPorIzq.get(recorrerPonderacionesIzqDer)));
+            ponderacionesTotal.add(sumaPonderaciones);
+        }
+        return ponderacionesTotal;
     }
 
     /**
      * Se cogen los valores de la izquierda y derecha de las cartas den juego y las posiciones
      * @param posicionesLlenasDelContrario
-     * @return ArrayList con ArrayList de  posiciones, los valores izquierdo y las posiciones de las cartas. Están en orden. La posicion 0 de cada Array esta relacionado
+     * @return ArrayList con ArrayList de  posiciones, los valores izquierdo y las posiciones de las cartas. Estan en orden. La posicion 0 de cada Array esta relacionado
      */
 
     private ArrayList cogerPosicionesIzqDerOponenteTablero(ArrayList <Integer> posicionesLlenasDelContrario){
