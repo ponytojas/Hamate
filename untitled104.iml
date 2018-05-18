@@ -18,10 +18,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 4c9cd7bbdbee50748a68c508b9e23a68586332cc
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -31,10 +27,5 @@
         <SOURCES />
       </library>
     </orderEntry>
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 3c573f891f5ba942bdad3d392f1ba71c3176a721
->>>>>>> 4c9cd7bbdbee50748a68c508b9e23a68586332cc
   </component>
 </module>
