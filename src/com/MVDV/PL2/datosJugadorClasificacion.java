@@ -78,34 +78,30 @@ public class datosJugadorClasificacion {
         ArrayList<ArrayList<String>> arrayAuxiliar = new ArrayList<>();
         int posicionDelMayor = 0;
         int contador = 0;
-        while (archivoJSon.size() > 1) {
-            for (ArrayList<ArrayList<String>> arrayAuxiliarQueRecorreElJson : archivoJSon)
-                arrayAuxiliar.add(arrayAuxiliarQueRecorreElJson.get(0));
-            arrayAuxiliar.remove(0);
+        for (ArrayList<ArrayList<String>> arrayAuxiliarQueRecorreElJson : archivoJSon)
+            arrayAuxiliar.add(arrayAuxiliarQueRecorreElJson.get(0));
+        arrayAuxiliar.remove(0);
+        while (arrayAuxiliar.size() != 0) {
             posicionDelMayor = getJugadorConMasPuntos(arrayAuxiliar);
-            posicionDelMayor += 1;
-
-            System.out.println("Puesto " + (contador + 1) + ") \tNombre: "+archivoJSon.get(posicionDelMayor).get(0).get(1)
-                    +" \t\t\tPuntos: "+archivoJSon.get(posicionDelMayor).get(0).get(3)
-                    +"\tPartidas Ganadas: "+ archivoJSon.get(posicionDelMayor).get(0).get(6));
-            archivoJSon.remove(posicionDelMayor);
+            System.out.println("Puesto " + (contador + 1) + ") \tNombre: "+arrayAuxiliar.get(posicionDelMayor).get(1)
+                    +" \t\t\tPuntos: "+arrayAuxiliar.get(posicionDelMayor).get(3)
+                    +"\tPartidas Ganadas: "+ arrayAuxiliar.get(posicionDelMayor).get(6));
+            arrayAuxiliar.remove(posicionDelMayor);
             contador += 1;
         }
     }
 
     private int getJugadorConMasPuntos(ArrayList<ArrayList<String>> arrayConDatosDeJugadores){
-        ArrayList<String> maximoTemporal;
+        ArrayList<String> maximoTemporal = arrayConDatosDeJugadores.get(0);
+        int tamaño = arrayConDatosDeJugadores.size();
         int posicionArray = 0;
-        int contadorDeEliminados = 0;
-        maximoTemporal = arrayConDatosDeJugadores.get(0);
-        while (arrayConDatosDeJugadores.size() > 0){
-
-            if (Integer.valueOf(maximoTemporal.get(3)) < Integer.valueOf(arrayConDatosDeJugadores.get(0).get(3))) {
+        int contador = 0;
+        while (contador < tamaño){
+            if (Integer.valueOf(maximoTemporal.get(3)) < Integer.valueOf(arrayConDatosDeJugadores.get(contador).get(3))) {
                 maximoTemporal = arrayConDatosDeJugadores.get(0);
-                posicionArray = contadorDeEliminados;
+                posicionArray = contador;
             }
-            arrayConDatosDeJugadores.remove(0);
-            contadorDeEliminados++;
+            contador++;
         }
         return posicionArray;
     }
