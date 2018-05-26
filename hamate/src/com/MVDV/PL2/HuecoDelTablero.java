@@ -118,6 +118,8 @@ public class HuecoDelTablero {
         this.getcartaEnElHueco().cambiarJugador();
     }
 
+    public void setPosicion(int posicion){this.posicion = posicion;}
+
 
 
 
