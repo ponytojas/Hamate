@@ -295,7 +295,7 @@ public class Partida {
                 ArrayList<Integer> cartaElegida = seleccionarCartaABajar(
                         this.tableroPartida.getCartasYaBajadas().get(arrayConPosicionesValoresIzqDerDeCartasEnTableroOponente.get(0).get(posicionTablero)).getcartaEnElHueco().getValorIzq(),
                         this.tableroPartida.getCartasYaBajadas().get(arrayConPosicionesValoresIzqDerDeCartasEnTableroOponente.get(0).get(posicionTablero)).getcartaEnElHueco().getValorDer(),
-                        posicionesPonderadas.get(posicionTablero), arrayConPosicionesValoresIzqDerDeCartasEnTableroOponente.get(0).get(posicionTablero));
+                       posicionesPonderadas.get(posicionTablero), arrayConPosicionesValoresIzqDerDeCartasEnTableroOponente.get(0).get(posicionTablero));
                 if (cartaElegida.size() != 0) {
                     posicionTablero = Integer.valueOf(arrayConPosicionesValoresIzqDerDeCartasEnTableroOponente.get(0).get(posicionTablero));
                     try {
@@ -313,12 +313,58 @@ public class Partida {
                     }
                 } else
                     turnoMaquina();
-            } catch (noPonderacion msg) {
+            }catch (noPonderacion msg){
                 turnoMaquina();
-            } catch (java.util.NoSuchElementException e) {
+            }catch (java.util.NoSuchElementException e){
                 turnoMaquina();
             }
+            valoresDerechaManoMaquina.add(this.maquina.getMano().get(recorrerMano).getValorDer());
+            valoresIzquierdaManoMaquina.add(this.maquina.getMano().get(recorrerMano).getValorIzq());
+
         }
+
+        for (int recorrerInputArray = 0; recorrerInputArray < cartasBajadas.get(0).size(); recorrerInputArray++) {
+            ponderacionesAtacandoPorDer = new ArrayList <> ();
+            ponderacionesAtacandoPorIzq = new ArrayList <> ();
+            sumaPonderaciones = new ArrayList<>();
+
+            switch (cartasBajadas.get(0).get(recorrerInputArray)) {
+                case 0:
+                    //Solo comprobar el valor de la derecha
+                    for (int recorrerArrayMano : valoresIzquierdaManoMaquina)
+                        if (checkNextOrPreviousPosition((cartasBajadas.get(0).get(recorrerInputArray)+1)))
+                            ponderacionesAtacandoPorDer.add(ponderacionValores(cartasBajadas.get(2).get(recorrerInputArray), recorrerArrayMano));
+                    break;
+                case 9:
+                    //Solo comprobar el valor de la izquierda
+                    for (int recorrerArrayMano : valoresDerechaManoMaquina)
+                        if (checkNextOrPreviousPosition((cartasBajadas.get(0).get(recorrerInputArray))-1))
+                        ponderacionesAtacandoPorIzq.add(ponderacionValores(cartasBajadas.get(1).get(recorrerInputArray), recorrerArrayMano));
+                    break;
+                default:
+                    //Comprobar todos los valores
+                    for (int recorrerArrayDeValoresIzqDerManoMaquina = 0; recorrerArrayDeValoresIzqDerManoMaquina < valoresDerechaManoMaquina.size() || recorrerArrayDeValoresIzqDerManoMaquina < valoresDerechaManoMaquina.size(); recorrerArrayDeValoresIzqDerManoMaquina++){
+                        try{
+                            if (checkNextOrPreviousPosition((cartasBajadas.get(0).get(recorrerInputArray)+1)))
+                                ponderacionesAtacandoPorDer.add(ponderacionValores(cartasBajadas.get(2).get(recorrerInputArray), valoresIzquierdaManoMaquina.get(recorrerArrayDeValoresIzqDerManoMaquina)));
+                            if (checkNextOrPreviousPosition((cartasBajadas.get(0).get(recorrerInputArray))-1))
+                                ponderacionesAtacandoPorIzq.add(ponderacionValores(cartasBajadas.get(1).get(recorrerInputArray), valoresDerechaManoMaquina.get(recorrerArrayDeValoresIzqDerManoMaquina)));
+                        }catch (Exception e){
+                            continue;
+                        }
+                    }
+                    break;
+            }
+            if (ponderacionesAtacandoPorDer.size() == 0)
+                sumaPonderaciones.addAll(ponderacionesAtacandoPorIzq);
+            else if (ponderacionesAtacandoPorIzq.size() == 0)
+                sumaPonderaciones.addAll(ponderacionesAtacandoPorDer);
+            else
+                for (int recorrerPonderacionesIzqDer = 0; recorrerPonderacionesIzqDer < ponderacionesAtacandoPorDer.size(); recorrerPonderacionesIzqDer++)
+                    sumaPonderaciones.add((ponderacionesAtacandoPorDer.get(recorrerPonderacionesIzqDer))+(ponderacionesAtacandoPorIzq.get(recorrerPonderacionesIzqDer)));
+            ponderacionesTotal.add(sumaPonderaciones);
+        }
+        return ponderacionesTotal;
     }
 
     /**
