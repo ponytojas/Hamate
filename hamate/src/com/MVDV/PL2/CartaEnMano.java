@@ -6,7 +6,6 @@ package com.MVDV.PL2;
  */
 
 public class CartaEnMano extends CartaEnMazo {
-    /*TODO imagen*/
 
     /**
      * Constructor por defecto
@@ -19,7 +18,8 @@ public class CartaEnMano extends CartaEnMazo {
      * @param valorDer Valor por la derecha de la carta
      */
 
-    public CartaEnMano(int valorIzq, int valorDer) {
-        super(valorIzq, valorDer);
+    public CartaEnMano(int valorIzq, int valorDer, boolean valeDoble) {
+        super(valorIzq, valorDer, valeDoble);
     }
+    
 }

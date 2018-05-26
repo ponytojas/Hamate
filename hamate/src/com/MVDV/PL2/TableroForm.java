@@ -5,38 +5,513 @@
  */
 package com.MVDV.PL2;
 
-
-import javax.swing.*;
-import java.lang.reflect.*;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.util.ArrayList;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.border.Border;
 
 /**
  *
  * @author ponytojas
  */
 public class TableroForm extends javax.swing.JFrame {
-    private Jugador usuario;
+    private Jugador jugador;
     private Jugador maquina;
-    private ArrayList <javax.swing.JLabel> manoJugador = new ArrayList <>();
-    private ArrayList <javax.swing.JLabel> manoMaquina = new ArrayList <>();
-    private ArrayList <javax.swing.JLabel> posicionesTablero = new ArrayList <>();
-    private ArrayList <String> arrayRutasImagenesUser = new ArrayList <> ();
-    private ArrayList <String> arrayRutasImagenesMaquina = new ArrayList <> ();
-    private int posicionMano = -1;
-    private int posicionTablero = -1;
-
+    private int posicionManoJugador = -1;
+    private int posicionManoMaquina = -1 ;
+    private int posicionTableroJugador = -1;
+    private int posicionTableroMaquina = -1;
+    ArrayList <JLabel> arrayCartasTablero = new ArrayList<>();
+  
+    private ArrayList <String> arrayRutasImagenesTablero = new ArrayList<>();
+    private ArrayList <JLabel> arrayCartasManoJugador = new ArrayList<>();
+    private ArrayList <JLabel> arrayCartasManoMaquina = new ArrayList<>();
+    private ArrayList <String> pertenenciaCartasTablero = new ArrayList <>();
+    private ArrayList<ArrayList<JLabel>> valoresIzqDerManoJugador = new ArrayList<>();
+    private ArrayList<ArrayList<String>> valoresIzqDerManoMaquina = new ArrayList<>();
+    private ArrayList<ArrayList<JLabel>> valoresIzqDerTablero = new ArrayList<>();
+    private ArrayList<ArrayList<String>> arrayPosicionesCartasJugador = new ArrayList <>();
+    private ArrayList<ArrayList<String>> arrayPosicionesCartasMaquina = new ArrayList <>();
+    private datosJugadorClasificacion clasificacion = new datosJugadorClasificacion();
+    private ArrayList <String> arrayRutasImagenesJugador = new ArrayList<>();
+    private ArrayList <String> arrayRutasImagenesMaquina = new ArrayList<>();
+    
     /**
      * Creates new form TableroForm
      */
-    public TableroForm(Jugador usuario, Jugador maquina) {
-        this.usuario = usuario;
+    public TableroForm(Jugador jugador, Jugador maquina) {
+        //get imagenes de las cartas
+        this.jugador = jugador;
         this.maquina = maquina;
+        ArrayList <String> arrayImagenesJugador = getImagenesCartas(true);
+        ArrayList <String> arrayImagenesMaquina = getImagenesCartas(false);
         initComponents();
-        this.jPanel1.setVisible(true);
-        getImagesUser();
-        getImagesMachine();
-        //setImagesToArrayList();
-        this.setVisible(true);
+        meterManosEnArray();
+        meterPosicionesTablero();
+        meterValoresIzqDerManoJugador();
+        meterValoresIzqDerTablero();
+        meterPosicionesCartasEnArray();
+        setValorDerIzq();
+        meterValoresIzqDerManoMaquina();
+        iniciarPertenenciasTablero();
+        generarArrayImagenesJugadorMaquina();
+        int contador = 0;
+        for (String arrayAuxiliar : arrayImagenesJugador){
+            contador += 1;
+            setImagenMano(arrayAuxiliar,String.valueOf(contador) );
+        }
+    }
+    
+    private void generarArrayImagenesJugadorMaquina(){
+    for (int recorrerMano = 0; recorrerMano < 5; recorrerMano++)
+        this.arrayRutasImagenesJugador.add(this.jugador.getMano().get(recorrerMano).getnombreImagen());
+    for (int recorrerMano = 0; recorrerMano < 5; recorrerMano++)
+        this.arrayRutasImagenesMaquina.add(this.maquina.getMano().get(recorrerMano).getnombreImagen());
+    }
+    
+    private void iniciarPertenenciasTablero(){
+        for (int i = 0; i < 10; i++)
+            pertenenciaCartasTablero.add("Nadie");
+    }
+    
+    private void meterPosicionesTablero(){
+        this.arrayCartasTablero.add(cartaTablero1);
+        this.arrayCartasTablero.add(cartaTablero2);
+        this.arrayCartasTablero.add(cartaTablero3);
+        this.arrayCartasTablero.add(cartaTablero4);
+        this.arrayCartasTablero.add(cartaTablero5);
+        this.arrayCartasTablero.add(cartaTablero6);
+        this.arrayCartasTablero.add(cartaTablero7);
+        this.arrayCartasTablero.add(cartaTablero8);
+        this.arrayCartasTablero.add(cartaTablero9);
+        this.arrayCartasTablero.add(cartaTablero10);
+    }
+    
+    private void meterValoresIzqDerManoJugador(){
+        ArrayList <JLabel> labelsMano;
+        
+        labelsMano = new ArrayList<>();
+        labelsMano.add(this.jLabel1);
+        labelsMano.add(this.jLabel2);
+        this.valoresIzqDerManoJugador.add(labelsMano);
+        
+        labelsMano = new ArrayList<>();
+        labelsMano.add(this.jLabel3);
+        labelsMano.add(this.jLabel4);
+        this.valoresIzqDerManoJugador.add(labelsMano);
+        
+        labelsMano = new ArrayList<>();
+        labelsMano.add(this.jLabel5);
+        labelsMano.add(this.jLabel6);
+        this.valoresIzqDerManoJugador.add(labelsMano);
+        
+        labelsMano = new ArrayList<>();
+        labelsMano.add(this.jLabel7);
+        labelsMano.add(this.jLabel8);
+        this.valoresIzqDerManoJugador.add(labelsMano);
+        
+        labelsMano = new ArrayList<>();
+        labelsMano.add(this.jLabel9);
+        labelsMano.add(this.jLabel10);
+        this.valoresIzqDerManoJugador.add(labelsMano);
+    }
+    
+    private void meterValoresIzqDerManoMaquina(){
+        ArrayList <String> valoresIzqDerMaquina;
+        
+        for (int recorrerManoMaquina = 0; recorrerManoMaquina < 5; recorrerManoMaquina++){
+            valoresIzqDerMaquina = new ArrayList<>();
+            valoresIzqDerMaquina.add(String.valueOf(this.maquina.getMano().get(recorrerManoMaquina).getValorIzq()));
+            valoresIzqDerMaquina.add(String.valueOf(this.maquina.getMano().get(recorrerManoMaquina).getValorDer()));
+            this.valoresIzqDerManoMaquina.add(valoresIzqDerMaquina);
+        }
+    
+    }
+    
+    private void meterValoresIzqDerTablero(){
+        ArrayList <JLabel> labelsMano;
+        
+        labelsMano = new ArrayList<>();
+        labelsMano.add(this.jLabel11);
+        labelsMano.add(this.jLabel12);
+        this.valoresIzqDerTablero.add(labelsMano);
+        
+        labelsMano = new ArrayList<>();
+        labelsMano.add(this.jLabel13);
+        labelsMano.add(this.jLabel14);
+        this.valoresIzqDerTablero.add(labelsMano);
+        
+        labelsMano = new ArrayList<>();
+        labelsMano.add(this.jLabel15);
+        labelsMano.add(this.jLabel16);
+        this.valoresIzqDerTablero.add(labelsMano);
+        
+        labelsMano = new ArrayList<>();
+        labelsMano.add(this.jLabel17);
+        labelsMano.add(this.jLabel18);
+        this.valoresIzqDerTablero.add(labelsMano);
+        
+        labelsMano = new ArrayList<>();
+        labelsMano.add(this.jLabel19);
+        labelsMano.add(this.jLabel20);
+        this.valoresIzqDerTablero.add(labelsMano);
+        
+        labelsMano = new ArrayList<>();
+        labelsMano.add(this.jLabel21);
+        labelsMano.add(this.jLabel22);
+        this.valoresIzqDerTablero.add(labelsMano);
+        
+        labelsMano = new ArrayList<>();
+        labelsMano.add(this.jLabel23);
+        labelsMano.add(this.jLabel24);
+        this.valoresIzqDerTablero.add(labelsMano);
+        
+        labelsMano = new ArrayList<>();
+        labelsMano.add(this.jLabel25);
+        labelsMano.add(this.jLabel26);
+        this.valoresIzqDerTablero.add(labelsMano);
+        
+        labelsMano = new ArrayList<>();
+        labelsMano.add(this.jLabel27);
+        labelsMano.add(this.jLabel28);
+        this.valoresIzqDerTablero.add(labelsMano);
+        
+        labelsMano = new ArrayList<>();
+        labelsMano.add(this.jLabel29);
+        labelsMano.add(this.jLabel30);
+        this.valoresIzqDerTablero.add(labelsMano);
+    }
+    
+    private void meterManosEnArray(){
+        this.arrayCartasManoJugador.add(cartaManoJugador1);
+        this.arrayCartasManoJugador.add(cartaManoJugador2);
+        this.arrayCartasManoJugador.add(cartaManoJugador3);
+        this.arrayCartasManoJugador.add(cartaManoJugador4);
+        this.arrayCartasManoJugador.add(cartaManoJugador5);
+        
+        this.arrayCartasManoMaquina.add(cartaManoMaquina1);
+        this.arrayCartasManoMaquina.add(cartaManoMaquina2);
+        this.arrayCartasManoMaquina.add(cartaManoMaquina3);
+        this.arrayCartasManoMaquina.add(cartaManoMaquina4);
+        this.arrayCartasManoMaquina.add(cartaManoMaquina5);
+    }
+    
+    private void meterPosicionesCartasEnArray(){
+        ArrayList <String> posicionNueva = new ArrayList();
+        for (int i = 0; i < 5; i ++){
+            posicionNueva = new ArrayList();
+            posicionNueva.add("Posicion Original");
+            posicionNueva.add(String.valueOf(i));
+            posicionNueva.add("Posicion Nueva");
+            posicionNueva.add(String.valueOf(i));
+            posicionNueva.add("Hay Carta");
+            posicionNueva.add("Si");
+            posicionNueva.add("Jugador o Maquina");
+            posicionNueva.add("Jugador");
+            this.arrayPosicionesCartasJugador.add(posicionNueva);
+        }
+        for (int i = 0; i < 5; i ++){
+            posicionNueva = new ArrayList();
+            posicionNueva.add("Posicion Original");
+            posicionNueva.add(String.valueOf(i));
+            posicionNueva.add("Posicion Nueva");
+            posicionNueva.add(String.valueOf(i));
+            posicionNueva.add("Hay Carta");
+            posicionNueva.add("Si");
+            posicionNueva.add("Jugador o Maquina");
+            posicionNueva.add("Maquina");
+            this.arrayPosicionesCartasMaquina.add(posicionNueva);
+        }
+        
+    }
+    
+    public void actualizarPosiciones(boolean esJugador){
+        int posicionTemporalAuxiliar = 0;
+        int auxiliarValorArray;
+        if (esJugador){
+            posicionTemporalAuxiliar = Integer.valueOf(this.arrayPosicionesCartasJugador.get(this.posicionManoJugador).get(3));
+            for (int auxiliar = 0; auxiliar < 5; auxiliar++)
+                if(this.posicionManoJugador == Integer.valueOf(this.arrayPosicionesCartasJugador.get(auxiliar).get(3)) 
+                        && this.arrayPosicionesCartasJugador.get(auxiliar).get(5).equals("Si"))
+                    this.arrayPosicionesCartasJugador.get(auxiliar).set(5, "No");
+                else if (Integer.valueOf(this.arrayPosicionesCartasJugador.get(auxiliar).get(3)) >= this.posicionManoJugador 
+                        && this.arrayPosicionesCartasJugador.get(auxiliar).get(5).equals("Si")){
+                    int valorTemporal = Integer.valueOf(this.arrayPosicionesCartasJugador.get(auxiliar).get(3));
+                    valorTemporal -= 1;
+                    this.arrayPosicionesCartasJugador.get(auxiliar).set(3, String.valueOf(valorTemporal));
+                }
+        
+        }else{
+            for (int auxiliarArray = this.posicionManoMaquina; auxiliarArray < 5; auxiliarArray ++){
+                posicionTemporalAuxiliar = Integer.valueOf(this.arrayPosicionesCartasMaquina.get(this.posicionManoMaquina).get(3));
+                for (int auxiliar = 0; auxiliar < 5; auxiliar++)
+                    if(this.posicionManoMaquina == Integer.valueOf(this.arrayPosicionesCartasMaquina.get(auxiliar).get(3)) 
+                            && this.arrayPosicionesCartasMaquina.get(auxiliar).get(5).equals("Si"))
+                        this.arrayPosicionesCartasMaquina.get(auxiliar).set(5, "No");
+                    else if (Integer.valueOf(this.arrayPosicionesCartasMaquina.get(auxiliar).get(3)) >= this.posicionManoMaquina
+                            && this.arrayPosicionesCartasMaquina.get(auxiliar).get(5).equals("Si")){
+                        int valorTemporal = Integer.valueOf(this.arrayPosicionesCartasMaquina.get(auxiliar).get(3));
+                        valorTemporal -= 1;
+                        this.arrayPosicionesCartasMaquina.get(auxiliar).set(3, String.valueOf(valorTemporal));
+                    }
+            }
+        }
+    }
+    
+    public int seleccionarCartaDeLaInterfaz (){
+        ArrayList <String> arrayAuxiliar = new ArrayList();
+        return Integer.valueOf(this.arrayPosicionesCartasJugador.get(this.posicionManoJugador).get(3));
+    }
+    
+    public int getPosicionManoJugador(){return this.posicionManoJugador;}
+    
+    public int getPosicionTablero(){return this.posicionTableroJugador;}
+    
+    public void setPosicionManoMaquina(int posicion){this.posicionManoMaquina = posicion;}
+    
+    public void setPosicionTableroMaquina(int posicion){this.posicionTableroMaquina = posicion;}
+    
+    public void setPosicionManoJugador(int posicion){this.posicionManoJugador = posicion;}
+    
+    public void setPosicionTableroJugador(int posicion){this.posicionTableroJugador = posicion;}
+    
+    public void pasarCartaManoAlTablero(boolean esMaquina){
+        String rutaImagenAColocarEnTablero;
+        if (!esMaquina)
+            rutaImagenAColocarEnTablero = this.arrayRutasImagenesJugador.get(posicionManoJugador);
+        else
+            rutaImagenAColocarEnTablero = this.arrayRutasImagenesMaquina.get(posicionManoMaquina);
+        
+        setImagenTablero(rutaImagenAColocarEnTablero, !esMaquina); 
+        ocultarCartaValoresIzqDerAndsetValoresIzqDerTablero(!esMaquina);
+        ocultarCartaMano(!esMaquina);
+        this.actualizarPertenencia(!esMaquina);
+        if (!esMaquina)
+            this.arrayRutasImagenesJugador.remove(getValorOriginalPosicion(!esMaquina));
+        else
+            this.arrayRutasImagenesMaquina.remove(getValorOriginalPosicion(!esMaquina));
+        
+        actualizarPosiciones(!esMaquina);
+    }
+    
+    private void actualizarPertenencia(boolean esJugador){
+        if (esJugador)
+            this.pertenenciaCartasTablero.set(this.posicionTableroJugador, "Jugador");
+        else
+            this.pertenenciaCartasTablero.set(this.posicionTableroMaquina, "Maquina");
+    }
+    
+    private int getValorRealPosicion(boolean esJugador, int posicion){
+        
+        if (esJugador)
+            return Integer.valueOf(this.arrayPosicionesCartasJugador.get(posicion).get(3));
+        else
+            return Integer.valueOf(this.arrayPosicionesCartasMaquina.get(posicion).get(3));
+        
+    }
+    
+    private int getValorOriginalPosicion (boolean esJugador){
+        int devolucion = -1;
+        if (esJugador){
+            for (ArrayList <String> arrayAuxiliar : arrayPosicionesCartasJugador)
+                if(this.posicionManoJugador == Integer.valueOf(arrayAuxiliar.get(3)) && arrayAuxiliar.get(5).equals("Si"))
+                    devolucion = Integer.valueOf(arrayAuxiliar.get(1));
+        }else
+            for (ArrayList <String> arrayAuxiliar : arrayPosicionesCartasMaquina)
+                if(this.posicionManoMaquina == Integer.valueOf(arrayAuxiliar.get(3)) && arrayAuxiliar.get(5).equals("Si"))
+                    devolucion = Integer.valueOf(arrayAuxiliar.get(1));
+        
+        return devolucion;
+    }
+    
+    
+    
+    private void ocultarCartaValoresIzqDerAndsetValoresIzqDerTablero(boolean esJugador){
+        if (esJugador){
+            String textAux = this.valoresIzqDerManoJugador.get(this.posicionManoJugador).get(0).getText();
+            String textAux2 = this.valoresIzqDerManoJugador.get(this.posicionManoJugador).get(1).getText();
+            this.valoresIzqDerTablero.get(this.posicionTableroJugador).get(0).setText(textAux);
+            this.valoresIzqDerTablero.get(this.posicionTableroJugador).get(0).setVisible(true);
+            this.valoresIzqDerTablero.get(this.posicionTableroJugador).get(1).setText(textAux2);
+            this.valoresIzqDerTablero.get(this.posicionTableroJugador).get(1).setVisible(true);
+            this.valoresIzqDerManoJugador.get(this.posicionManoJugador).get(0).setVisible(false);
+            this.valoresIzqDerManoJugador.get(this.posicionManoJugador).get(1).setVisible(false);
+        }else{
+            String textAux = this.valoresIzqDerManoMaquina.get(this.posicionManoMaquina).get(0);
+            String textAux2 = this.valoresIzqDerManoMaquina.get(this.posicionManoMaquina).get(1);
+            this.valoresIzqDerTablero.get(this.posicionTableroMaquina).get(0).setText(textAux);
+            this.valoresIzqDerTablero.get(this.posicionTableroMaquina).get(0).setVisible(true);
+            this.valoresIzqDerTablero.get(this.posicionTableroMaquina).get(1).setText(textAux2);
+            this.valoresIzqDerTablero.get(this.posicionTableroMaquina).get(1).setVisible(true);
+        }
+        
+    }
+    
+    private void ocultarCartaMano(boolean esJugador){
+        if (esJugador)
+            this.arrayCartasManoJugador.get(this.posicionManoJugador).setVisible(false);
+        else
+            this.arrayCartasManoMaquina.get(this.posicionManoMaquina).setVisible(false);
+    }
+    
+    private void setImagenTablero(String rutaImagen, boolean esJugador){
+        Border none = BorderFactory.createLineBorder(Color.RED,0);
+        
+        int posicionTableroAuxiliar;
+        if (esJugador)
+            posicionTableroAuxiliar = this.posicionTableroJugador;
+        else
+            posicionTableroAuxiliar = this.posicionTableroMaquina;
+        
+        JLabel auxiliarCarta = new JLabel();
+        auxiliarCarta = this.arrayCartasTablero.get(posicionTableroAuxiliar);
+        auxiliarCarta.setSize(105, 150);
+        ImageIcon imagenTablero = new ImageIcon(rutaImagen);
+        ImageIcon imgRedimensionada1 = new ImageIcon(imagenTablero.getImage()
+                .getScaledInstance(auxiliarCarta.getWidth(), auxiliarCarta.getHeight(), 1));
+        auxiliarCarta.setIcon(imgRedimensionada1);
+        if (esJugador)
+            auxiliarCarta.setBackground(new java.awt.Color(33, 150, 243));
+        else
+            auxiliarCarta.setBackground(new java.awt.Color(210, 9, 40));
+        auxiliarCarta.setOpaque(true);
+        auxiliarCarta.setBorder(none);
+        this.arrayCartasTablero.set(posicionTableroAuxiliar, auxiliarCarta);
+    }
+    
+    public void actualizarColores(boolean esJugador){
+        int posicionAuxiliarTablero;
+        if (esJugador)
+            posicionAuxiliarTablero = this.posicionTableroJugador;
+        else
+            posicionAuxiliarTablero = this.posicionTableroMaquina;
+        
+        switch (posicionAuxiliarTablero){
+            case 0:
+                if (!this.pertenenciaCartasTablero.get(posicionAuxiliarTablero).equals(this.pertenenciaCartasTablero.get((posicionAuxiliarTablero+1)))
+                        && !this.pertenenciaCartasTablero.get((posicionAuxiliarTablero+1)).equals("Nadie")){
+                    int valorDerCartaBajada = Integer.valueOf(this.valoresIzqDerTablero.get(posicionAuxiliarTablero).get(1).getText());
+                    int ValorIzqCartaYaEnJuego = Integer.valueOf(this.valoresIzqDerTablero.get((posicionAuxiliarTablero+1)).get(0).getText());
+                    if (esElValorBajadoMayor(valorDerCartaBajada, ValorIzqCartaYaEnJuego))
+                        ponerColor(esJugador, (posicionAuxiliarTablero+1));
+                }
+                break;
+            case 9:
+                if (!this.pertenenciaCartasTablero.get(posicionAuxiliarTablero).equals(this.pertenenciaCartasTablero.get((posicionAuxiliarTablero-1)))
+                        && !this.pertenenciaCartasTablero.get((posicionAuxiliarTablero-1)).equals("Nadie")){
+                    int valorDerCartaBajada = Integer.valueOf(this.valoresIzqDerTablero.get(posicionAuxiliarTablero).get(0).getText());
+                    int ValorIzqCartaYaEnJuego = Integer.valueOf(this.valoresIzqDerTablero.get((posicionAuxiliarTablero-1)).get(1).getText());
+                    if (esElValorBajadoMayor(valorDerCartaBajada, ValorIzqCartaYaEnJuego))
+                        ponerColor(esJugador, (posicionAuxiliarTablero-1));
+                }
+                break;
+            default:
+                if (!this.pertenenciaCartasTablero.get(posicionAuxiliarTablero).equals(this.pertenenciaCartasTablero.get((posicionAuxiliarTablero+1)))
+                        && !this.pertenenciaCartasTablero.get((posicionAuxiliarTablero+1)).equals("Nadie")){
+                    int valorDerCartaBajada = Integer.valueOf(this.valoresIzqDerTablero.get(posicionAuxiliarTablero).get(1).getText());
+                    int ValorIzqCartaYaEnJuego = Integer.valueOf(this.valoresIzqDerTablero.get((posicionAuxiliarTablero+1)).get(0).getText());
+                    if (esElValorBajadoMayor(valorDerCartaBajada, ValorIzqCartaYaEnJuego))
+                        ponerColor(esJugador, (posicionAuxiliarTablero+1));
+                }
+                if (!this.pertenenciaCartasTablero.get(posicionAuxiliarTablero).equals(this.pertenenciaCartasTablero.get((posicionAuxiliarTablero-1)))
+                        && !this.pertenenciaCartasTablero.get((posicionAuxiliarTablero-1)).equals("Nadie")){
+                    int valorDerCartaBajada = Integer.valueOf(this.valoresIzqDerTablero.get(posicionAuxiliarTablero).get(0).getText());
+                    int ValorIzqCartaYaEnJuego = Integer.valueOf(this.valoresIzqDerTablero.get(posicionAuxiliarTablero-1).get(1).getText());
+                    if (esElValorBajadoMayor(valorDerCartaBajada, ValorIzqCartaYaEnJuego))
+                        ponerColor(esJugador, (posicionAuxiliarTablero-1));
+                }
+                break;
+        }
+        
+    }
+    
+    private void ponerColor(boolean esJugador, int posicion){
+        if (esJugador)
+            this.arrayCartasTablero.get(posicion).setBackground(new java.awt.Color(33, 150, 243));
+        else
+            this.arrayCartasTablero.get(posicion).setBackground(new java.awt.Color(210, 9, 40));
+    }
+    
+    
+    private boolean esElValorBajadoMayor(int valorCartaBajada, int valorCartaEnJuego){
+        return (valorCartaBajada > valorCartaEnJuego);
+    }
+    
+    private void setImagenMano(String rutaImagen, String posicionMano){
+        switch (posicionMano){
+            case "1":
+                this.cartaManoJugador1.setSize(105, 150);
+                ImageIcon imagenManoJugador1 = new ImageIcon(rutaImagen);
+                ImageIcon imgRedimensionada1 = new ImageIcon(imagenManoJugador1.getImage()
+                        .getScaledInstance(cartaManoJugador1.getWidth(), cartaManoJugador1.getHeight(), 1));
+                this.cartaManoJugador1.setIcon(imgRedimensionada1);
+                break;
+                
+            case "2":
+                this.cartaManoJugador2.setSize(105, 150);
+                ImageIcon imagenManoJugador2 = new ImageIcon(rutaImagen);
+                ImageIcon imgRedimensionada2 = new ImageIcon(imagenManoJugador2.getImage()
+                        .getScaledInstance(cartaManoJugador2.getWidth(), cartaManoJugador2.getHeight(), 1));
+                this.cartaManoJugador2.setIcon(imgRedimensionada2);
+                break;
+                
+            case "3":
+                this.cartaManoJugador3.setSize(105, 150);
+                ImageIcon imagenManoJugador3 = new ImageIcon(rutaImagen);
+                ImageIcon imgRedimensionada3 = new ImageIcon(imagenManoJugador3.getImage()
+                        .getScaledInstance(cartaManoJugador3.getWidth(), cartaManoJugador3.getHeight(), 1));
+                this.cartaManoJugador3.setIcon(imgRedimensionada3);
+                break;
+                
+            case "4":
+                this.cartaManoJugador4.setSize(105, 150);
+                ImageIcon imagenManoJugador4 = new ImageIcon(rutaImagen);
+                ImageIcon imgRedimensionada4 = new ImageIcon(imagenManoJugador4.getImage()
+                        .getScaledInstance(cartaManoJugador4.getWidth(), cartaManoJugador4.getHeight(), 1));
+                this.cartaManoJugador4.setIcon(imgRedimensionada4);
+                break;
+                
+            case "5":
+                this.cartaManoJugador5.setSize(105, 150);
+                ImageIcon imagenManoJugador5 = new ImageIcon(rutaImagen);
+                ImageIcon imgRedimensionada5 = new ImageIcon(imagenManoJugador5.getImage()
+                        .getScaledInstance(cartaManoJugador5.getWidth(), cartaManoJugador5.getHeight(), 1));
+                this.cartaManoJugador5.setIcon(imgRedimensionada5);
+                break;
+        }
+    }
+    
+    private void setValorDerIzq (){
+        this.jLabel1.setText(String.valueOf(this.jugador.getMano().get(0).getValorIzq()));
+        this.jLabel2.setText(String.valueOf(this.jugador.getMano().get(0).getValorDer()));
+        this.jLabel3.setText(String.valueOf(this.jugador.getMano().get(1).getValorIzq()));
+        this.jLabel4.setText(String.valueOf(this.jugador.getMano().get(1).getValorDer()));
+        this.jLabel5.setText(String.valueOf(this.jugador.getMano().get(2).getValorIzq()));
+        this.jLabel6.setText(String.valueOf(this.jugador.getMano().get(2).getValorDer()));
+        this.jLabel7.setText(String.valueOf(this.jugador.getMano().get(3).getValorIzq()));
+        this.jLabel8.setText(String.valueOf(this.jugador.getMano().get(3).getValorDer()));
+        this.jLabel9.setText(String.valueOf(this.jugador.getMano().get(4).getValorIzq()));
+        this.jLabel10.setText(String.valueOf(this.jugador.getMano().get(4).getValorDer()));
+    }
+    
+    private TableroForm() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    private ArrayList <String> getImagenesCartas(boolean esJugador){
+        ArrayList <String> arrayImagenes = new ArrayList<>();
+        if (esJugador)
+            for (CartaEnMano variableAuxiliarQueRecorreLaMano : this.jugador.getMano())
+                arrayImagenes.add(variableAuxiliarQueRecorreLaMano.getnombreImagen());
+        else
+        for (CartaEnMano variableAuxiliarQueRecorreLaMano : this.maquina.getMano())
+                arrayImagenes.add(variableAuxiliarQueRecorreLaMano.getnombreImagen());
+        return arrayImagenes;
     }
 
     /**
@@ -49,6 +524,21 @@ public class TableroForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        cartaManoJugador1 = new javax.swing.JLabel();
+        cartaManoJugador2 = new javax.swing.JLabel();
+        cartaManoJugador3 = new javax.swing.JLabel();
+        cartaManoJugador4 = new javax.swing.JLabel();
+        cartaManoJugador5 = new javax.swing.JLabel();
+        cartaTablero1 = new javax.swing.JLabel();
+        cartaTablero2 = new javax.swing.JLabel();
+        cartaTablero3 = new javax.swing.JLabel();
+        cartaTablero4 = new javax.swing.JLabel();
+        cartaTablero7 = new javax.swing.JLabel();
+        cartaTablero8 = new javax.swing.JLabel();
+        cartaTablero6 = new javax.swing.JLabel();
+        cartaTablero5 = new javax.swing.JLabel();
+        cartaTablero10 = new javax.swing.JLabel();
+        cartaTablero9 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -57,20 +547,21 @@ public class TableroForm extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
@@ -81,480 +572,1021 @@ public class TableroForm extends javax.swing.JFrame {
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
+        cartaManoMaquina1 = new javax.swing.JLabel();
+        cartaManoMaquina2 = new javax.swing.JLabel();
+        cartaManoMaquina3 = new javax.swing.JLabel();
+        cartaManoMaquina4 = new javax.swing.JLabel();
+        cartaManoMaquina5 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 87, 68));
 
-        jPanel1.setBackground(new java.awt.Color(76, 175, 80));
-        jPanel1.setToolTipText("");
-        jPanel1.setPreferredSize(new java.awt.Dimension(1350, 900));
+        jPanel1.setBackground(new java.awt.Color(0, 87, 68));
+        jPanel1.setForeground(new java.awt.Color(0, 87, 68));
 
-        posicionesTablero.add(this.jLabel1);
-        jLabel1.setBackground(new java.awt.Color(96, 125, 139));
-        jLabel1.setOpaque(true);
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+        cartaManoJugador1.setBackground(new java.awt.Color(33, 150, 243));
+        cartaManoJugador1.setForeground(new java.awt.Color(210, 9, 40));
+        cartaManoJugador1.setOpaque(true);
+        cartaManoJugador1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cartaManoJugador1MouseMoved(evt);
+            }
+        });
+        cartaManoJugador1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
+                cartaManoJugador1MouseClicked(evt);
             }
         });
 
-        posicionesTablero.add(this.jLabel2);
-        jLabel2.setBackground(new java.awt.Color(96, 125, 139));
-        jLabel2.setOpaque(true);
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+        cartaManoJugador2.setBackground(new java.awt.Color(33, 150, 243));
+        cartaManoJugador2.setForeground(new java.awt.Color(210, 9, 40));
+        cartaManoJugador2.setOpaque(true);
+        cartaManoJugador2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cartaManoJugador2MouseMoved(evt);
+            }
+        });
+        cartaManoJugador2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
+                cartaManoJugador2MouseClicked(evt);
             }
         });
 
-        posicionesTablero.add(this.jLabel3);
-        jLabel3.setBackground(new java.awt.Color(96, 125, 139));
-        jLabel3.setOpaque(true);
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+        cartaManoJugador3.setBackground(new java.awt.Color(33, 150, 243));
+        cartaManoJugador3.setForeground(new java.awt.Color(210, 9, 40));
+        cartaManoJugador3.setOpaque(true);
+        cartaManoJugador3.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cartaManoJugador3MouseMoved(evt);
+            }
+        });
+        cartaManoJugador3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3MouseClicked(evt);
+                cartaManoJugador3MouseClicked(evt);
             }
         });
 
-        posicionesTablero.add(this.jLabel4);
-        jLabel4.setBackground(new java.awt.Color(96, 125, 139));
-        jLabel4.setOpaque(true);
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+        cartaManoJugador4.setBackground(new java.awt.Color(33, 150, 243));
+        cartaManoJugador4.setForeground(new java.awt.Color(210, 9, 40));
+        cartaManoJugador4.setOpaque(true);
+        cartaManoJugador4.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cartaManoJugador4MouseMoved(evt);
+            }
+        });
+        cartaManoJugador4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
+                cartaManoJugador4MouseClicked(evt);
             }
         });
 
-        posicionesTablero.add(this.jLabel5);
-        jLabel5.setBackground(new java.awt.Color(96, 125, 139));
-        jLabel5.setOpaque(true);
-        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+        cartaManoJugador5.setBackground(new java.awt.Color(33, 150, 243));
+        cartaManoJugador5.setForeground(new java.awt.Color(210, 9, 40));
+        cartaManoJugador5.setOpaque(true);
+        cartaManoJugador5.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cartaManoJugador5MouseMoved(evt);
+            }
+        });
+        cartaManoJugador5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel5MouseClicked(evt);
+                cartaManoJugador5MouseClicked(evt);
             }
         });
 
-        posicionesTablero.add(this.jLabel6);
-        jLabel6.setBackground(new java.awt.Color(96, 125, 139));
-        jLabel6.setOpaque(true);
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+        cartaTablero1.setBackground(new java.awt.Color(72, 72, 85));
+        cartaTablero1.setOpaque(true);
+        cartaTablero1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cartaTablero1MouseMoved(evt);
+            }
+        });
+        cartaTablero1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
+                cartaTablero1MouseClicked(evt);
             }
         });
 
-        posicionesTablero.add(this.jLabel7);
-        jLabel7.setBackground(new java.awt.Color(96, 125, 139));
-        jLabel7.setOpaque(true);
-        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+        cartaTablero2.setBackground(new java.awt.Color(72, 72, 85));
+        cartaTablero2.setOpaque(true);
+        cartaTablero2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cartaTablero2MouseMoved(evt);
+            }
+        });
+        cartaTablero2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel7MouseClicked(evt);
+                cartaTablero2MouseClicked(evt);
             }
         });
 
-        posicionesTablero.add(this.jLabel8);
-        jLabel8.setBackground(new java.awt.Color(96, 125, 139));
-        jLabel8.setOpaque(true);
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+        cartaTablero3.setBackground(new java.awt.Color(72, 72, 85));
+        cartaTablero3.setOpaque(true);
+        cartaTablero3.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cartaTablero3MouseMoved(evt);
+            }
+        });
+        cartaTablero3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
+                cartaTablero3MouseClicked(evt);
             }
         });
 
-        posicionesTablero.add(this.jLabel10);
-        jLabel10.setBackground(new java.awt.Color(96, 125, 139));
-        jLabel10.setOpaque(true);
-        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+        cartaTablero4.setBackground(new java.awt.Color(72, 72, 85));
+        cartaTablero4.setOpaque(true);
+        cartaTablero4.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cartaTablero4MouseMoved(evt);
+            }
+        });
+        cartaTablero4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel10MouseClicked(evt);
+                cartaTablero4MouseClicked(evt);
             }
         });
 
-        manoJugador.add(this.jLabel15);
-        jLabel15.setBackground(new java.awt.Color(3, 169, 244));
-        jLabel15.setForeground(new java.awt.Color(3, 169, 244));
-        jLabel15.setOpaque(true);
-        jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
+        cartaTablero7.setBackground(new java.awt.Color(72, 72, 85));
+        cartaTablero7.setOpaque(true);
+        cartaTablero7.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cartaTablero7MouseMoved(evt);
+            }
+        });
+        cartaTablero7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel15MouseClicked(evt);
+                cartaTablero7MouseClicked(evt);
             }
         });
 
-        manoJugador.add(this.jLabel14);
-        jLabel14.setBackground(new java.awt.Color(3, 169, 244));
-        jLabel14.setOpaque(true);
-        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
+        cartaTablero8.setBackground(new java.awt.Color(72, 72, 85));
+        cartaTablero8.setOpaque(true);
+        cartaTablero8.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cartaTablero8MouseMoved(evt);
+            }
+        });
+        cartaTablero8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel14MouseClicked(evt);
+                cartaTablero8MouseClicked(evt);
             }
         });
 
-
-        manoJugador.add(this.jLabel11);
-        jLabel11.setBackground(new java.awt.Color(3, 169, 244));
-        jLabel11.setOpaque(true);
-        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+        cartaTablero6.setBackground(new java.awt.Color(72, 72, 85));
+        cartaTablero6.setOpaque(true);
+        cartaTablero6.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cartaTablero6MouseMoved(evt);
+            }
+        });
+        cartaTablero6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel11MouseClicked(evt);
+                cartaTablero6MouseClicked(evt);
             }
         });
 
-        manoJugador.add(this.jLabel12);
-        jLabel12.setBackground(new java.awt.Color(3, 169, 244));
-        jLabel12.setOpaque(true);
-        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
+        cartaTablero5.setBackground(new java.awt.Color(72, 72, 85));
+        cartaTablero5.setOpaque(true);
+        cartaTablero5.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cartaTablero5MouseMoved(evt);
+            }
+        });
+        cartaTablero5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel12MouseClicked(evt);
+                cartaTablero5MouseClicked(evt);
             }
         });
 
-        manoJugador.add(this.jLabel13);
-        jLabel13.setBackground(new java.awt.Color(3, 169, 244));
-        jLabel13.setOpaque(true);
-        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+        cartaTablero10.setBackground(new java.awt.Color(72, 72, 85));
+        cartaTablero10.setOpaque(true);
+        cartaTablero10.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cartaTablero10MouseMoved(evt);
+            }
+        });
+        cartaTablero10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel13MouseClicked(evt);
+                cartaTablero10MouseClicked(evt);
             }
         });
 
+        cartaTablero9.setBackground(new java.awt.Color(72, 72, 85));
+        cartaTablero9.setOpaque(true);
+        cartaTablero9.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cartaTablero9MouseMoved(evt);
+            }
+        });
+        cartaTablero9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cartaTablero9MouseClicked(evt);
+            }
+        });
 
+        jLabel1.setBackground(new java.awt.Color(250, 250, 250));
+        jLabel1.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel1.setText("1");
 
-        manoMaquina.add(this.jLabel16);
-        jLabel16.setBackground(new java.awt.Color(244, 67, 54));
-        jLabel16.setOpaque(true);
+        jLabel2.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel2.setText("2");
 
-        manoMaquina.add(this.jLabel17);
-        jLabel17.setBackground(new java.awt.Color(244, 67, 54));
-        jLabel17.setOpaque(true);
+        jLabel3.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel3.setText("3");
 
-        manoMaquina.add(this.jLabel18);
-        jLabel18.setBackground(new java.awt.Color(244, 67, 54));
-        jLabel18.setOpaque(true);
+        jLabel4.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel4.setText("4");
 
-        manoMaquina.add(this.jLabel19);
-        jLabel19.setBackground(new java.awt.Color(244, 67, 54));
-        jLabel19.setOpaque(true);
+        jLabel5.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel5.setText("5");
 
-        manoMaquina.add(this.jLabel20);
-        jLabel20.setBackground(new java.awt.Color(244, 67, 54));
-        jLabel20.setOpaque(true);
+        jLabel6.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel6.setText("6");
 
-        jButton1.setText("Reiniciar");
+        jLabel7.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel7.setText("7");
+
+        jLabel8.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel8.setText("8");
+
+        jLabel9.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel9.setText("9");
+
+        jLabel10.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel10.setText("10");
+
+        jButton1.setFont(new java.awt.Font("Open Sans", 0, 14)); // NOI18N
+        jButton1.setText("Salir");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Salir");
+        jButton2.setFont(new java.awt.Font("Open Sans", 0, 14)); // NOI18N
+        jButton2.setText("Clasificacion");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        posicionesTablero.add(this.jLabel9);
-        jLabel9.setBackground(new java.awt.Color(96, 125, 139));
-        jLabel9.setOpaque(true);
-        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel9MouseClicked(evt);
+        jButton3.setFont(new java.awt.Font("Open Sans", 0, 14)); // NOI18N
+        jButton3.setText("Reiniciar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
-        jLabel21.setText("Carta Elegida: ");
+        jLabel11.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel11.setText("11");
+        jLabel11.setVisible(false);
 
-        jLabel22.setText("Posicion del tablero elegida: ");
+        jLabel12.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel12.setText("11");
+        jLabel12.setVisible(false);
 
-        this.jLabel25.setText(Integer.toString(this.usuario.getcarta(0).getValorIzq()));
+        jLabel13.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel13.setText("11");
+        jLabel13.setVisible(false);
+
+        jLabel14.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel14.setText("11");
+        jLabel14.setVisible(false);
+
+        jLabel15.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel15.setText("11");
+        jLabel15.setVisible(false);
+
+        jLabel16.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel16.setText("11");
+        jLabel16.setVisible(false);
+
+        jLabel17.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel17.setText("11");
+        jLabel17.setVisible(false);
+
+        jLabel18.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel18.setText("11");
+        jLabel18.setVisible(false);
+
+        jLabel19.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel19.setText("11");
+        jLabel19.setVisible(false);
+
+        jLabel20.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel20.setText("11");
+        jLabel20.setVisible(false);
+
+        jLabel21.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel21.setText("11");
+        jLabel21.setVisible(false);
+
+        jLabel22.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel22.setText("11");
+        jLabel22.setVisible(false);
+
+        jLabel23.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel23.setText("11");
+        jLabel23.setVisible(false);
+
+        jLabel24.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel24.setText("11");
+        jLabel24.setVisible(false);
+
+        jLabel25.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel25.setText("11");
+        jLabel25.setVisible(false);
+
+        jLabel26.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel26.setText("11");
+        jLabel26.setVisible(false);
+
+        jLabel27.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel27.setText("11");
+        jLabel27.setVisible(false);
+
+        jLabel28.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel28.setText("11");
+        jLabel28.setVisible(false);
+
+        jLabel29.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel29.setText("11");
+        jLabel29.setVisible(false);
+
+        jLabel30.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel30.setText("11");
+        jLabel30.setVisible(false);
+
+        cartaManoMaquina1.setBackground(new java.awt.Color(210, 9, 40));
+        cartaManoMaquina1.setOpaque(true);
+
+        cartaManoMaquina2.setBackground(new java.awt.Color(210, 9, 40));
+        cartaManoMaquina2.setOpaque(true);
+
+        cartaManoMaquina3.setBackground(new java.awt.Color(210, 9, 40));
+        cartaManoMaquina3.setOpaque(true);
+
+        cartaManoMaquina4.setBackground(new java.awt.Color(210, 9, 40));
+        cartaManoMaquina4.setOpaque(true);
+
+        cartaManoMaquina5.setBackground(new java.awt.Color(210, 9, 40));
+        cartaManoMaquina5.setOpaque(true);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jButton1)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(375, 375, 375)
-                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(38, 38, 38)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(27, 27, 27))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(83, 83, 83))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel11)
+                                                .addGap(61, 61, 61)
+                                                .addComponent(jLabel12))
+                                            .addComponent(cartaTablero1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel13)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel14))
+                                            .addComponent(cartaTablero2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel15)
+                                                .addGap(61, 61, 61)
+                                                .addComponent(jLabel16))
+                                            .addComponent(cartaTablero3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel17)
+                                                .addGap(61, 61, 61)
+                                                .addComponent(jLabel18))
+                                            .addComponent(cartaTablero4, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(224, 224, 224)
+                                        .addComponent(cartaManoMaquina1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cartaManoMaquina2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel25)
-                                        .addGap(85, 85, 85)
-                                        .addComponent(jLabel26))
+                                        .addGap(26, 26, 26)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel19)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel20))
+                                            .addComponent(cartaTablero5, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(17, 17, 17)
+                                        .addComponent(cartaManoMaquina3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel21)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel22))
+                                            .addComponent(cartaTablero6, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(18, 18, 18)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel23)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel24))
+                                            .addComponent(cartaTablero7, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel25)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel26))
+                                            .addComponent(cartaTablero8, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jLabel27)
-                                                .addGap(38, 38, 38)
-                                                .addComponent(jLabel28)))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel28))
+                                            .addComponent(cartaTablero9, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(18, 18, 18)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(cartaTablero10, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jLabel29)
-                                                .addGap(79, 79, 79)
-                                                .addComponent(jLabel30)))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel31)
-                                                .addGap(89, 89, 89)
-                                                .addComponent(jLabel32)))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel33)
-                                                .addGap(84, 84, 84)
-                                                .addComponent(jLabel34)))))
-                                .addGap(59, 59, 59)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel22)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel24))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel21)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel23))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(49, Short.MAX_VALUE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel30))))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(4, 4, 4)
+                                        .addComponent(cartaManoMaquina4, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(31, 31, 31)
+                                        .addComponent(cartaManoMaquina5, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 62, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(342, 342, 342)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2))
+                    .addComponent(cartaManoJugador1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4))
+                    .addComponent(cartaManoJugador2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6))
+                    .addComponent(cartaManoJugador3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel8))
+                    .addComponent(cartaManoJugador4, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cartaManoJugador5, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel10)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSeparator1))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cartaManoMaquina2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cartaManoMaquina1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cartaManoMaquina3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cartaManoMaquina4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cartaManoMaquina5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cartaTablero3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(cartaTablero2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cartaTablero4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cartaTablero5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cartaTablero6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cartaTablero7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cartaTablero8, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cartaTablero9, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cartaTablero10, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cartaTablero1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 26, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel17)
+                    .addComponent(jLabel18)
+                    .addComponent(jLabel19)
+                    .addComponent(jLabel20)
+                    .addComponent(jLabel21)
+                    .addComponent(jLabel22)
+                    .addComponent(jLabel23)
+                    .addComponent(jLabel24)
+                    .addComponent(jLabel25)
+                    .addComponent(jLabel26)
+                    .addComponent(jLabel27)
+                    .addComponent(jLabel28)
+                    .addComponent(jLabel29)
+                    .addComponent(jLabel30))
+                .addGap(44, 44, 44)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cartaManoJugador5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cartaManoJugador4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cartaManoJugador3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cartaManoJugador2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cartaManoJugador1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(180, 180, 180)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel25)
-                                    .addComponent(jLabel26))
-                                .addGap(9, 9, 9)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel27)
-                                    .addComponent(jLabel28)))
-                            .addComponent(jLabel29)
-                            .addComponent(jLabel30)
-                            .addComponent(jLabel31)
-                            .addComponent(jLabel32)
-                            .addComponent(jLabel33)
-                            .addComponent(jLabel34)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(84, 84, 84)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel21)
-                            .addComponent(jLabel23))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel22)
-                            .addComponent(jLabel24))))
-                .addContainerGap(44, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel5))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(jLabel7)
+                        .addComponent(jLabel8)
+                        .addComponent(jLabel9))
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton3)
+                    .addComponent(jButton2))
+                .addGap(83, 83, 83))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1456, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(103, 103, 103))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+    private void cartaManoJugador1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaManoJugador1MouseMoved
         // TODO add your handling code here:
-        this.posicionTablero = 8;
-        this.jLabel24.setText("9");
-    }//GEN-LAST:event_jLabel9MouseClicked
+        this.cartaManoJugador1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_cartaManoJugador1MouseMoved
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void cartaManoJugador2MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaManoJugador2MouseMoved
         // TODO add your handling code here:
-        System.out.println("Saliendo del juego");
-        System.exit(0);
-    }//GEN-LAST:event_jButton2ActionPerformed
+        this.cartaManoJugador2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_cartaManoJugador2MouseMoved
+
+    private void cartaManoJugador3MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaManoJugador3MouseMoved
+        // TODO add your handling code here:
+        this.cartaManoJugador3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_cartaManoJugador3MouseMoved
+
+    private void cartaManoJugador4MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaManoJugador4MouseMoved
+        // TODO add your handling code here:
+        this.cartaManoJugador4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_cartaManoJugador4MouseMoved
+
+    private void cartaTablero1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero1MouseMoved
+        // TODO add your handling code here:
+        this.cartaTablero1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_cartaTablero1MouseMoved
+
+    private void cartaManoJugador5MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaManoJugador5MouseMoved
+        // TODO add your handling code here:
+        this.cartaManoJugador5.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_cartaManoJugador5MouseMoved
+
+    private void cartaTablero2MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero2MouseMoved
+        // TODO add your handling code here:
+        this.cartaTablero2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_cartaTablero2MouseMoved
+
+    private void cartaTablero3MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero3MouseMoved
+        // TODO add your handling code here:
+        this.cartaTablero3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_cartaTablero3MouseMoved
+
+    private void cartaTablero4MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero4MouseMoved
+        // TODO add your handling code here:
+        this.cartaTablero4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_cartaTablero4MouseMoved
+
+    private void cartaTablero5MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero5MouseMoved
+        // TODO add your handling code here:
+        this.cartaTablero7.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_cartaTablero5MouseMoved
+
+    private void cartaTablero6MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero6MouseMoved
+        // TODO add your handling code here:
+        this.cartaTablero8.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_cartaTablero6MouseMoved
+
+    private void cartaTablero7MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero7MouseMoved
+        // TODO add your handling code here:
+        this.cartaTablero6.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_cartaTablero7MouseMoved
+
+    private void cartaTablero8MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero8MouseMoved
+        // TODO add your handling code here:
+        this.cartaTablero5.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_cartaTablero8MouseMoved
+
+    private void cartaTablero9MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero9MouseMoved
+        // TODO add your handling code here:
+        this.cartaTablero9.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_cartaTablero9MouseMoved
+
+    private void cartaTablero10MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero10MouseMoved
+        // TODO add your handling code here:
+        this.cartaTablero10.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_cartaTablero10MouseMoved
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
-
-        this.posicionMano = 0;
-        this.jLabel23.setText("1");
-    }//GEN-LAST:event_jLabel15MouseClicked
-
-    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        this.posicionMano = 1;
-        this.jLabel23.setText("2");
-    }//GEN-LAST:event_jLabel14MouseClicked
+        JFrame frame = new JFrame();
+        JOptionPane.showMessageDialog(frame, this.clasificacion.dibujarClasificacionInterfaz(), "Clasificacion", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        this.posicionMano = 4;
-        this.jLabel23.setText("5");
-    }//GEN-LAST:event_jLabel13MouseClicked
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
+    private void cartaManoJugador1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaManoJugador1MouseClicked
         // TODO add your handling code here:
-        this.posicionMano = 3;
-        this.jLabel23.setText("4");
-    }//GEN-LAST:event_jLabel12MouseClicked
+        Border red = BorderFactory.createLineBorder(Color.RED,2);
+        Border none = BorderFactory.createLineBorder(Color.RED,0);
+        this.cartaManoJugador1.setBorder(red);
+        this.cartaManoJugador2.setBorder(none);
+        this.cartaManoJugador3.setBorder(none);
+        this.cartaManoJugador4.setBorder(none);
+        this.cartaManoJugador5.setBorder(none);
+        this.posicionManoJugador = this.getValorRealPosicion(true, 0);
+    }//GEN-LAST:event_cartaManoJugador1MouseClicked
 
-    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+    private void cartaManoJugador2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaManoJugador2MouseClicked
         // TODO add your handling code here:
-        this.posicionMano = 2;
-        this.jLabel23.setText("3");
-    }//GEN-LAST:event_jLabel11MouseClicked
+        Border red = BorderFactory.createLineBorder(Color.RED,2);
+        Border none = BorderFactory.createLineBorder(Color.RED,0);
+        this.cartaManoJugador1.setBorder(none);
+        this.cartaManoJugador2.setBorder(red);
+        this.cartaManoJugador3.setBorder(none);
+        this.cartaManoJugador4.setBorder(none);
+        this.cartaManoJugador5.setBorder(none);
+        this.posicionManoJugador = this.getValorRealPosicion(true, 1);
+    }//GEN-LAST:event_cartaManoJugador2MouseClicked
 
-    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+    private void cartaManoJugador3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaManoJugador3MouseClicked
         // TODO add your handling code here:
-        this.posicionTablero = 9;
-        this.jLabel24.setText("10");
-    }//GEN-LAST:event_jLabel10MouseClicked
+       Border red = BorderFactory.createLineBorder(Color.RED,2);
+        Border none = BorderFactory.createLineBorder(Color.RED,0);
+        this.cartaManoJugador1.setBorder(none);
+        this.cartaManoJugador2.setBorder(none);
+        this.cartaManoJugador3.setBorder(red);
+        this.cartaManoJugador4.setBorder(none);
+        this.cartaManoJugador5.setBorder(none);
+        this.posicionManoJugador = this.getValorRealPosicion(true, 2);
+    }//GEN-LAST:event_cartaManoJugador3MouseClicked
 
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+    private void cartaManoJugador4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaManoJugador4MouseClicked
         // TODO add your handling code here:
-        this.posicionTablero = 7;
-        this.jLabel24.setText("8");
-    }//GEN-LAST:event_jLabel8MouseClicked
+        Border red = BorderFactory.createLineBorder(Color.RED,2);
+        Border none = BorderFactory.createLineBorder(Color.RED,0);
+        this.cartaManoJugador1.setBorder(none);
+        this.cartaManoJugador2.setBorder(none);
+        this.cartaManoJugador3.setBorder(none);
+        this.cartaManoJugador4.setBorder(red);
+        this.cartaManoJugador5.setBorder(none);
+        this.posicionManoJugador = this.getValorRealPosicion(true, 3);
+    }//GEN-LAST:event_cartaManoJugador4MouseClicked
 
-    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+    private void cartaManoJugador5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaManoJugador5MouseClicked
         // TODO add your handling code here:
-        this.posicionTablero = 6;
-        this.jLabel24.setText("7");
-    }//GEN-LAST:event_jLabel7MouseClicked
+        Border red = BorderFactory.createLineBorder(Color.RED,2);
+        Border none = BorderFactory.createLineBorder(Color.RED,0);
+        this.cartaManoJugador1.setBorder(none);
+        this.cartaManoJugador2.setBorder(none);
+        this.cartaManoJugador3.setBorder(none);
+        this.cartaManoJugador4.setBorder(none);
+        this.cartaManoJugador5.setBorder(red);
+        this.posicionManoJugador = this.getValorRealPosicion(true, 4);
+    }//GEN-LAST:event_cartaManoJugador5MouseClicked
 
-    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+    private void cartaTablero1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero1MouseClicked
         // TODO add your handling code here:
-        this.posicionTablero = 5;
-        this.jLabel24.setText("6");
-    }//GEN-LAST:event_jLabel6MouseClicked
+        Border yellow = BorderFactory.createLineBorder(Color.yellow,2);
+        Border none = BorderFactory.createLineBorder(Color.RED,0);
+        this.cartaTablero1.setBorder(yellow);
+        this.cartaTablero2.setBorder(none);
+        this.cartaTablero3.setBorder(none);
+        this.cartaTablero4.setBorder(none);
+        this.cartaTablero7.setBorder(none);
+        this.cartaTablero8.setBorder(none);
+        this.cartaTablero6.setBorder(none);
+        this.cartaTablero5.setBorder(none);
+        this.cartaTablero10.setBorder(none);
+        this.cartaTablero9.setBorder(none);
+        this.posicionTableroJugador = 0;
+    }//GEN-LAST:event_cartaTablero1MouseClicked
 
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+    private void cartaTablero2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero2MouseClicked
         // TODO add your handling code here:
-        this.posicionTablero = 4;
-        this.jLabel24.setText("5");
-    }//GEN-LAST:event_jLabel5MouseClicked
+        Border yellow = BorderFactory.createLineBorder(Color.yellow,2);
+        Border none = BorderFactory.createLineBorder(Color.RED,0);
+        this.cartaTablero1.setBorder(none);
+        this.cartaTablero2.setBorder(yellow);
+        this.cartaTablero3.setBorder(none);
+        this.cartaTablero4.setBorder(none);
+        this.cartaTablero7.setBorder(none);
+        this.cartaTablero8.setBorder(none);
+        this.cartaTablero6.setBorder(none);
+        this.cartaTablero5.setBorder(none);
+        this.cartaTablero10.setBorder(none);
+        this.cartaTablero9.setBorder(none);
+        this.posicionTableroJugador = 1;
+    }//GEN-LAST:event_cartaTablero2MouseClicked
 
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+    private void cartaTablero3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero3MouseClicked
         // TODO add your handling code here:
-        this.posicionTablero = 3;
-        this.jLabel24.setText("4");
-    }//GEN-LAST:event_jLabel4MouseClicked
+        Border yellow = BorderFactory.createLineBorder(Color.yellow,2);
+        Border none = BorderFactory.createLineBorder(Color.RED,0);
+        this.cartaTablero1.setBorder(none);
+        this.cartaTablero2.setBorder(none);
+        this.cartaTablero3.setBorder(yellow);
+        this.cartaTablero4.setBorder(none);
+        this.cartaTablero7.setBorder(none);
+        this.cartaTablero8.setBorder(none);
+        this.cartaTablero6.setBorder(none);
+        this.cartaTablero5.setBorder(none);
+        this.cartaTablero10.setBorder(none);
+        this.cartaTablero9.setBorder(none);
+        this.posicionTableroJugador = 2;
+    }//GEN-LAST:event_cartaTablero3MouseClicked
 
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+    private void cartaTablero4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero4MouseClicked
         // TODO add your handling code here:
-        this.posicionTablero = 2;
-        this.jLabel24.setText("3");
-    }//GEN-LAST:event_jLabel3MouseClicked
+        Border yellow = BorderFactory.createLineBorder(Color.yellow,2);
+        Border none = BorderFactory.createLineBorder(Color.RED,0);
+        this.cartaTablero1.setBorder(none);
+        this.cartaTablero2.setBorder(none);
+        this.cartaTablero3.setBorder(none);
+        this.cartaTablero4.setBorder(yellow);
+        this.cartaTablero7.setBorder(none);
+        this.cartaTablero8.setBorder(none);
+        this.cartaTablero6.setBorder(none);
+        this.cartaTablero5.setBorder(none);
+        this.cartaTablero10.setBorder(none);
+        this.cartaTablero9.setBorder(none);
+        this.posicionTableroJugador = 3;
+    }//GEN-LAST:event_cartaTablero4MouseClicked
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+    private void cartaTablero5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero5MouseClicked
         // TODO add your handling code here:
-        this.posicionTablero = 1;
-        this.jLabel24.setText("2");
-    }//GEN-LAST:event_jLabel2MouseClicked
+        Border yellow = BorderFactory.createLineBorder(Color.yellow,2);
+        Border none = BorderFactory.createLineBorder(Color.RED,0);
+        this.cartaTablero1.setBorder(none);
+        this.cartaTablero2.setBorder(none);
+        this.cartaTablero3.setBorder(none);
+        this.cartaTablero4.setBorder(none);
+        this.cartaTablero7.setBorder(none);
+        this.cartaTablero8.setBorder(none);
+        this.cartaTablero6.setBorder(none);
+        this.cartaTablero5.setBorder(yellow);
+        this.cartaTablero10.setBorder(none);
+        this.cartaTablero9.setBorder(none);
+        this.posicionTableroJugador = 4;
+    }//GEN-LAST:event_cartaTablero5MouseClicked
 
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+    private void cartaTablero6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero6MouseClicked
+        // TODO add your handling code here:
+        Border yellow = BorderFactory.createLineBorder(Color.yellow,2);
+        Border none = BorderFactory.createLineBorder(Color.RED,0);
+        this.cartaTablero1.setBorder(none);
+        this.cartaTablero2.setBorder(none);
+        this.cartaTablero3.setBorder(none);
+        this.cartaTablero4.setBorder(none);
+        this.cartaTablero7.setBorder(none);
+        this.cartaTablero8.setBorder(none);
+        this.cartaTablero6.setBorder(yellow);
+        this.cartaTablero5.setBorder(none);
+        this.cartaTablero10.setBorder(none);
+        this.cartaTablero9.setBorder(none);
+        this.posicionTableroJugador = 5;
+    }//GEN-LAST:event_cartaTablero6MouseClicked
 
-        this.posicionTablero = 0;
-        this.jLabel24.setText("1");
-    }//GEN-LAST:event_jLabel1MouseClicked
+    private void cartaTablero7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero7MouseClicked
+        // TODO add your handling code here:
+        Border yellow = BorderFactory.createLineBorder(Color.yellow,2);
+        Border none = BorderFactory.createLineBorder(Color.RED,0);
+        this.cartaTablero1.setBorder(none);
+        this.cartaTablero2.setBorder(none);
+        this.cartaTablero3.setBorder(none);
+        this.cartaTablero4.setBorder(none);
+        this.cartaTablero7.setBorder(yellow);
+        this.cartaTablero8.setBorder(none);
+        this.cartaTablero6.setBorder(none);
+        this.cartaTablero5.setBorder(none);
+        this.cartaTablero10.setBorder(none);
+        this.cartaTablero9.setBorder(none);
+        this.posicionTableroJugador = 6;
+    }//GEN-LAST:event_cartaTablero7MouseClicked
 
+    private void cartaTablero8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero8MouseClicked
+        // TODO add your handling code here:
+        Border yellow = BorderFactory.createLineBorder(Color.yellow,2);
+        Border none = BorderFactory.createLineBorder(Color.RED,0);
+        this.cartaTablero1.setBorder(none);
+        this.cartaTablero2.setBorder(none);
+        this.cartaTablero3.setBorder(none);
+        this.cartaTablero4.setBorder(none);
+        this.cartaTablero7.setBorder(none);
+        this.cartaTablero8.setBorder(yellow);
+        this.cartaTablero6.setBorder(none);
+        this.cartaTablero5.setBorder(none);
+        this.cartaTablero10.setBorder(none);
+        this.cartaTablero9.setBorder(none);
+        this.posicionTableroJugador = 7;
+    }//GEN-LAST:event_cartaTablero8MouseClicked
+
+    private void cartaTablero9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero9MouseClicked
+        // TODO add your handling code here:
+        Border yellow = BorderFactory.createLineBorder(Color.yellow,2);
+        Border none = BorderFactory.createLineBorder(Color.RED,0);
+        this.cartaTablero1.setBorder(none);
+        this.cartaTablero2.setBorder(none);
+        this.cartaTablero3.setBorder(none);
+        this.cartaTablero4.setBorder(none);
+        this.cartaTablero7.setBorder(none);
+        this.cartaTablero8.setBorder(none);
+        this.cartaTablero6.setBorder(none);
+        this.cartaTablero5.setBorder(none);
+        this.cartaTablero10.setBorder(none);
+        this.cartaTablero9.setBorder(yellow);
+        this.posicionTableroJugador = 8;
+    }//GEN-LAST:event_cartaTablero9MouseClicked
+
+    private void cartaTablero10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero10MouseClicked
+        // TODO add your handling code here:
+        Border yellow = BorderFactory.createLineBorder(Color.yellow,2);
+        Border none = BorderFactory.createLineBorder(Color.RED,0);
+        this.cartaTablero1.setBorder(none);
+        this.cartaTablero2.setBorder(none);
+        this.cartaTablero3.setBorder(none);
+        this.cartaTablero4.setBorder(none);
+        this.cartaTablero7.setBorder(none);
+        this.cartaTablero8.setBorder(none);
+        this.cartaTablero6.setBorder(none);
+        this.cartaTablero5.setBorder(none);
+        this.cartaTablero10.setBorder(yellow);
+        this.cartaTablero9.setBorder(none);
+        this.posicionTableroJugador = 9;
+    }//GEN-LAST:event_cartaTablero10MouseClicked
+                                         
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(TableroForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(TableroForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(TableroForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(TableroForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new TableroForm().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel cartaManoJugador1;
+    private javax.swing.JLabel cartaManoJugador2;
+    private javax.swing.JLabel cartaManoJugador3;
+    private javax.swing.JLabel cartaManoJugador4;
+    private javax.swing.JLabel cartaManoJugador5;
+    private javax.swing.JLabel cartaManoMaquina1;
+    private javax.swing.JLabel cartaManoMaquina2;
+    private javax.swing.JLabel cartaManoMaquina3;
+    private javax.swing.JLabel cartaManoMaquina4;
+    private javax.swing.JLabel cartaManoMaquina5;
+    private javax.swing.JLabel cartaTablero1;
+    private javax.swing.JLabel cartaTablero10;
+    private javax.swing.JLabel cartaTablero2;
+    private javax.swing.JLabel cartaTablero3;
+    private javax.swing.JLabel cartaTablero4;
+    private javax.swing.JLabel cartaTablero5;
+    private javax.swing.JLabel cartaTablero6;
+    private javax.swing.JLabel cartaTablero7;
+    private javax.swing.JLabel cartaTablero8;
+    private javax.swing.JLabel cartaTablero9;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -579,10 +1611,6 @@ public class TableroForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -590,143 +1618,6 @@ public class TableroForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
-
-    private void getImagesUser() {
-        try{
-           String rutaImagenUser;
-           this.jLabel15.setSize(130, 100);
-           rutaImagenUser = this.usuario.getcarta(0).getnombreImagen();
-           ImageIcon imagenManoUser1 = new ImageIcon(rutaImagenUser);
-           ImageIcon imgRedimensionada1 = new ImageIcon(imagenManoUser1.getImage().getScaledInstance(jLabel15.getWidth(), jLabel15.getHeight(), 1));
-           this.jLabel15.setIcon(imgRedimensionada1);
-           arrayRutasImagenesUser.add(rutaImagenUser);
-           //his.jLabel25.setText(Integer.toString(this.usuario.getcarta(0).getValorIzq()));
-           //this.jLabel26.setText(Integer.toString(this.usuario.getcarta(0).getValorDer()));
-
-           String rutaImagen2;
-           this.jLabel14.setSize(130, 100);
-           rutaImagen2 = this.usuario.getcarta(1).getnombreImagen();
-           ImageIcon imagenManoUser2 = new ImageIcon(rutaImagen2); //Se redimensiona
-           ImageIcon imgRedimensionada2 = new ImageIcon(imagenManoUser2.getImage().getScaledInstance(jLabel14.getWidth(), jLabel14.getHeight(), 1));
-           this.jLabel14.setIcon(imgRedimensionada2);
-           arrayRutasImagenesUser.add(rutaImagen2);
-           //this.jLabel27.setText(Integer.toString(this.usuario.getcarta(1).getValorIzq()));
-           //this.jLabel28.setText(Integer.toString(this.usuario.getcarta(1).getValorDer()));
-
-           String rutaImagen3;
-           this.jLabel11.setSize(130, 100);
-           rutaImagen3 = this.usuario.getcarta(2).getnombreImagen();
-           ImageIcon imagenManoUser3 = new ImageIcon(rutaImagen3); //Se redimensiona
-           ImageIcon imgRedimensionada3 = new ImageIcon(imagenManoUser3.getImage().getScaledInstance(jLabel11.getWidth(), jLabel11.getHeight(), 1));
-           this.jLabel11.setIcon(imgRedimensionada3);
-           arrayRutasImagenesUser.add(rutaImagen3);
-           //this.jLabel29.setText(Integer.toString(this.usuario.getcarta(2).getValorIzq()));
-          // this.jLabel30.setText(Integer.toString(this.usuario.getcarta(2).getValorDer()));
-
-           String rutaImagen4;
-           this.jLabel12.setSize(130, 100);
-           rutaImagen4 = this.usuario.getcarta(3).getnombreImagen();
-           ImageIcon imagenManoUser4 = new ImageIcon(rutaImagen4); //Se redimensiona
-           ImageIcon imgRedimensionada4 = new ImageIcon(imagenManoUser4.getImage().getScaledInstance(jLabel12.getWidth(), jLabel12.getHeight(), 1));
-           this.jLabel12.setIcon(imgRedimensionada4);
-           arrayRutasImagenesUser.add(rutaImagen4);
-           //this.jLabel31.setText(Integer.toString(this.usuario.getcarta(3).getValorIzq()));
-           //this.jLabel32.setText(Integer.toString(this.usuario.getcarta(3).getValorDer()));
-
-           String rutaImagen5;
-           this.jLabel13.setSize(130, 100);
-           rutaImagen5 = this.usuario.getcarta(4).getnombreImagen();
-           ImageIcon imagenManoUser5 = new ImageIcon(rutaImagen2); //Se redimensiona
-           ImageIcon imgRedimensionada5 = new ImageIcon(imagenManoUser5.getImage().getScaledInstance(jLabel13.getWidth(), jLabel13.getHeight(), 1));
-           this.jLabel13.setIcon(imgRedimensionada5);
-           arrayRutasImagenesUser.add(rutaImagen5);
-           //this.jLabel33.setText(Integer.toString(this.usuario.getcarta(4).getValorIzq()));
-           //this.jLabel34.setText(Integer.toString(this.usuario.getcarta(4).getValorDer()));
-
-       }catch (Exception e){
-            System.out.println("Error: "+e.toString());
-        }
-    }
-       private void getImagesMachine() {
-       try{
-           String rutaImagen;
-           this.jLabel16.setSize(130, 100);
-           rutaImagen = this.maquina.getcarta(0).getnombreImagen();
-           ImageIcon imagenManoMaquina1 = new ImageIcon(rutaImagen); //Se redimensiona
-           //ImageIcon imgRedimensionada = new ImageIcon(imagenManoMaquina1.getImage().getScaledInstance(jLabel16.getWidth(), jLabel16.getHeight(), 1));
-           this.jLabel16.setIcon(imagenManoMaquina1);
-           arrayRutasImagenesMaquina.add(rutaImagen);
-           this.jLabel16.setVisible(false);
-
-           String rutaImagen2;
-           this.jLabel17.setSize(130, 100);
-           rutaImagen2 = this.maquina.getcarta(1).getnombreImagen();
-           ImageIcon imagenManoMaquina2 = new ImageIcon(rutaImagen2); //Se redimensiona
-           ImageIcon imgRedimensionada2 = new ImageIcon(imagenManoMaquina2.getImage().getScaledInstance(jLabel17.getWidth(), jLabel17.getHeight(), 1));
-           this.jLabel17.setIcon(imagenManoMaquina2);
-           arrayRutasImagenesMaquina.add(rutaImagen2);
-           this.jLabel17.setVisible(false);
-
-
-           String rutaImagen3;
-           this.jLabel18.setSize(130, 100);
-           rutaImagen3 = this.maquina.getcarta(2).getnombreImagen();
-           ImageIcon imagenManoMaquina3 = new ImageIcon(rutaImagen3); //Se redimensiona
-           ImageIcon imgRedimensionada3 = new ImageIcon(imagenManoMaquina3.getImage().getScaledInstance(jLabel18.getWidth(), jLabel18.getHeight(), 1));
-           this.jLabel18.setIcon(imagenManoMaquina3);
-           arrayRutasImagenesMaquina.add(rutaImagen3);
-           this.jLabel18.setVisible(false);
-
-
-           String rutaImagen4;
-           this.jLabel19.setSize(130, 100);
-           rutaImagen4 = this.maquina.getcarta(3).getnombreImagen();
-           ImageIcon imagenManoMaquina4 = new ImageIcon(rutaImagen4); //Se redimensiona
-           ImageIcon imgRedimensionada4 = new ImageIcon(imagenManoMaquina4.getImage().getScaledInstance(jLabel19.getWidth(), jLabel19.getHeight(), 1));
-           this.jLabel19.setIcon(imagenManoMaquina4);
-           arrayRutasImagenesMaquina.add(rutaImagen4);
-           this.jLabel19.setVisible(false);
-
-
-           String rutaImagen5;
-           this.jLabel20.setSize(130, 100);
-           rutaImagen5 = this.usuario.getcarta(4).getnombreImagen();
-           ImageIcon imagenManoMaquina5 = new ImageIcon(rutaImagen2); //Se redimensiona
-           ImageIcon imgRedimensionada5 = new ImageIcon(imagenManoMaquina5.getImage().getScaledInstance(jLabel20.getWidth(), jLabel20.getHeight(), 1));
-           this.jLabel20.setIcon(imagenManoMaquina5);
-           arrayRutasImagenesMaquina.add(rutaImagen5);
-           this.jLabel20.setVisible(false);
-
-
-       }catch (Exception e){
-            System.out.println("Error: "+e.toString());
-        }
-
-       }
-
-       public int getposicionMano(){return this.posicionMano;}
-       public int getposicionTablero(){return this.posicionTablero;}
-       public void setposicionMano(int elementoEntrada){this.posicionMano=elementoEntrada;}
-       public void setposicionTablero(int elementoEntrada){this.posicionTablero=elementoEntrada;}
-
-       public void pasarCartaManoAlTablero(int posicionMano, int posicionTablero, int esMaquina){
-           String rutaImagen;
-           switch (esMaquina){
-               case 0:
-                    ImageIcon imagenTablero = new ImageIcon(arrayRutasImagenesUser.get(posicionMano)); //Se redimensiona
-                    ImageIcon imgRedimensionada = new ImageIcon(imagenTablero.getImage().getScaledInstance(this.posicionesTablero.get(posicionTablero).getWidth(), this.posicionesTablero.get(posicionTablero).getHeight(), 1));
-                    this.posicionesTablero.get(posicionTablero).setIcon(imgRedimensionada);
-                    this.manoJugador.get(posicionMano).setVisible(false);
-               case 1:
-                    
-                    ImageIcon imagenTablero2 = new ImageIcon(arrayRutasImagenesMaquina.get(posicionMano)); //Se redimensiona
-                    ImageIcon imgRedimensionada2 = new ImageIcon(imagenTablero2.getImage().getScaledInstance(this.posicionesTablero.get(posicionTablero).getWidth(), this.posicionesTablero.get(posicionTablero).getHeight(), 1));
-                    this.posicionesTablero.get(posicionTablero).setIcon(imgRedimensionada2);
-                    
-           }
-           rutaImagen = null;
-       }
-       
-      
 }
