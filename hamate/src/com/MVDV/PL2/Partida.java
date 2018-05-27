@@ -1,4 +1,9 @@
 package com.MVDV.PL2;
+import java.io.*;
+import java.nio.file.DirectoryNotEmptyException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.Collections;
@@ -11,7 +16,7 @@ import javax.swing.JOptionPane;
  * @version v2.0.0
  */
 
-public class Partida {
+public class Partida  implements Serializable{
 
     private ArrayList <CartaEnMazo> mazo = new ArrayList <>();
     private Tablero tableroPartida = new Tablero();
@@ -20,6 +25,7 @@ public class Partida {
     private datosJugadorClasificacion clasificacion = new datosJugadorClasificacion();
     private TableroForm tableroInterface;
     private PreguntarJugador preguntaFinalPartida;
+   
 /**
  * Constructor especifico de la GUI
  * @param nombre
@@ -53,6 +59,13 @@ public class Partida {
         this.maquina.setPuntos(this.clasificacion.getPuntosAnteDeComenzarPartida(this.maquina.getNif()));
         this.maquina = new Jugador (true, false);
         this.jugarJuego();
+    }
+    
+    
+    public String continuarPartida(){
+        while (!this.tableroPartida.estaElTableroLleno())
+            turnoInterface();
+        return this.preguntarJugadorInterface();
     }
     
 
@@ -109,9 +122,9 @@ public class Partida {
         int posicionElegidaTablero;
         try{
             while(this.tableroInterface.getPosicionManoJugador() == -1 || this.tableroInterface.getPosicionTablero() == -1){
-                  try{
-                         Thread.sleep(250);
-                     }catch(InterruptedException e){}
+                try{
+                    Thread.sleep(250);
+                }catch(InterruptedException e){}
              }
              this.tableroInterface.pasarCartaManoAlTablero(false);
              posicionElegidaMano = this.tableroInterface.getPosicionManoJugador();
@@ -175,6 +188,7 @@ public class Partida {
            String methodName;
            methodName = e.getStackTrace()[0].getMethodName();
            e.getMessage();
+            System.out.println(methodName + e);
            JFrame frame = new JFrame();
            JOptionPane.showMessageDialog(frame, e + methodName, "Error", JOptionPane.INFORMATION_MESSAGE);
            turnoMaquinaInterface();
@@ -463,7 +477,6 @@ public class Partida {
         this.tableroInterface.setVisible(true);
     }
 
-
     /**
      * Funcion de turno avanzada de la maquina
      * tl;dr
@@ -720,5 +733,31 @@ public class Partida {
             return false;
         return !this.tableroPartida.getCartasYaBajadas().get(posicion).getHayUnaCarta();
     }
+    
+    public void guardarDatos(){
+        try {
+            File file = new File(fileWithDirectoryAssurance("datosPartidas", this.jugador.getNif()));
+            file.delete();
+        } catch (Exception e) {}
 
+        try{
+            FileOutputStream fs = new FileOutputStream("agenda.ser");//Creamos el archivo
+            ObjectOutputStream os = new ObjectOutputStream(fs);//Esta clase tiene el método writeObject() que necesitamos
+            os.writeObject(this);//El método writeObject() serializa el objeto y lo escribe en el archivo
+            os.close();//Hay que cerrar siempre el archivo
+          }catch(FileNotFoundException e){
+            e.printStackTrace();
+          }catch(IOException e){
+            e.printStackTrace();
+          }
+        
+        System.exit(0);
+    }
+    
+    private static String fileWithDirectoryAssurance(String directory, String filename) {
+        File dir = new File(directory);
+        if (!dir.exists()) dir.mkdirs();
+        return (directory + "/" + filename + ".ser");
+    }
+    
 }

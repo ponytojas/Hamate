@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 
 
 /**
@@ -13,7 +14,7 @@ import java.io.IOException;
  * @version v2.0.0
  */
 
-public class Jugador {
+public class Jugador implements Serializable{
     private boolean maquina;
     private ArrayList <CartaEnMano> mano = new ArrayList<>();
     private String nombre;

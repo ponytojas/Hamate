@@ -1,6 +1,8 @@
 package com.MVDV.PL2;
 
-public class HuecoDelTablero {
+import java.io.Serializable;
+
+public class HuecoDelTablero implements Serializable{
 
     private boolean hayUnaCarta;
     private CartaEnJuego cartaEnElHueco;

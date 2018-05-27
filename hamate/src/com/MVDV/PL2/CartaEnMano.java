@@ -1,11 +1,13 @@
 package com.MVDV.PL2;
 
+import java.io.Serializable;
+
 /**
  * @author Marcos Vicente - Daniel Villalobos
  * @version v2.0.0
  */
 
-public class CartaEnMano extends CartaEnMazo {
+public class CartaEnMano extends CartaEnMazo implements Serializable{
 
     /**
      * Constructor por defecto

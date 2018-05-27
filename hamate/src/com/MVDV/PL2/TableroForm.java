@@ -7,6 +7,7 @@ package com.MVDV.PL2;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -19,14 +20,15 @@ import javax.swing.border.Border;
  * @author Marcos Vicente - Daniel Villalobos
  * @version v2.0.0
  */
-public class TableroForm extends javax.swing.JFrame {
+public class TableroForm extends javax.swing.JFrame{
     private Jugador jugador;
     private Jugador maquina;
     private int posicionManoJugador = -1;
     private int posicionManoMaquina = -1 ;
     private int posicionTableroJugador = -1;
     private int posicionTableroMaquina = -1;
-    ArrayList <JLabel> arrayCartasTablero = new ArrayList<>();
+    private ArrayList <JLabel> arrayCartasTablero = new ArrayList<>();
+    private String salir="";
   
     private ArrayList <String> arrayRutasImagenesTablero = new ArrayList<>();
     private ArrayList <JLabel> arrayCartasManoJugador = new ArrayList<>();
@@ -38,7 +40,6 @@ public class TableroForm extends javax.swing.JFrame {
     private datosJugadorClasificacion clasificacion = new datosJugadorClasificacion();
     private ArrayList <String> arrayRutasImagenesJugador = new ArrayList<>();
     private ArrayList <String> arrayRutasImagenesMaquina = new ArrayList<>();
-    
     /**
      * Funcion que crea el tablero, sus elementos e inicializa los elementos auxiliares (ArrayList) que se utilizan
      */
@@ -46,6 +47,7 @@ public class TableroForm extends javax.swing.JFrame {
         //get imagenes de las cartas
         this.jugador = jugador;
         this.maquina = maquina;
+        
         ArrayList <String> arrayImagenesJugador = getImagenesCartas(true);
         ArrayList <String> arrayImagenesMaquina = getImagenesCartas(false);
         initComponents();
@@ -669,6 +671,7 @@ public class TableroForm extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 87, 68));
         jPanel1.setForeground(new java.awt.Color(0, 87, 68));
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setSize(new java.awt.Dimension(1410, 890));
 
         cartaManoJugador1.setBackground(new java.awt.Color(33, 150, 243));
@@ -1264,7 +1267,7 @@ public class TableroForm extends javax.swing.JFrame {
                         .addComponent(jLabel8)
                         .addComponent(jLabel9))
                     .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton3)
@@ -1277,13 +1280,16 @@ public class TableroForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        jPanel1.getAccessibleContext().setAccessibleName("");
+        jPanel1.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1610,6 +1616,9 @@ public class TableroForm extends javax.swing.JFrame {
         this.posicionTableroJugador = 9;
     }//GEN-LAST:event_cartaTablero10MouseClicked
                                          
+    
+    public String getSalir(){return this.salir;}
+    
 
     /**
      * @param args the command line arguments

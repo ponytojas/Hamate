@@ -1,5 +1,6 @@
 package com.MVDV.PL2;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Random;
  * @version v2.0.0
  */
 
-public class CartaEnMazo extends Carta {
+public class CartaEnMazo extends Carta implements Serializable{
 
     private String nombreImagen;
     private boolean valeDoble;

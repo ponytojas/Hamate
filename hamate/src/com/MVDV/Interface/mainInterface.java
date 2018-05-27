@@ -5,6 +5,12 @@
  */
 package com.MVDV.Interface;
 import com.MVDV.PL2.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -12,9 +18,10 @@ import javax.swing.*;
  * @author Marcos Vicente - Daniel Villalobos
  * @version v2.0.0
  */
-public class mainInterface extends javax.swing.JFrame {
+public class mainInterface extends javax.swing.JFrame{
 
     private datosJugadorClasificacion clasificacion;
+    private String cargarPartidaNif;
     /**
      * Creates new form mainInterface
      */
@@ -26,6 +33,9 @@ public class mainInterface extends javax.swing.JFrame {
         this.jTextField1.setVisible(false);
         this.jLabel3.setVisible(false);
         this.jTextFieldEdad.setVisible(false);
+        this.jLabel5.setVisible(false);
+        this.jButton4.setVisible(false);
+        this.jButton5.setVisible(false);
     }
 
     /**
@@ -49,6 +59,9 @@ public class mainInterface extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jTextFieldEdad = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(72, 72, 85));
@@ -120,34 +133,59 @@ public class mainInterface extends javax.swing.JFrame {
 
         jTextFieldEdad.setFont(new java.awt.Font("Open Sans", 0, 18)); // NOI18N
 
+        jLabel5.setFont(new java.awt.Font("Open Sans", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(250, 250, 250));
+        jLabel5.setText("Se ha encontrado una partida empezada, ¿Continuar?");
+
+        jButton4.setText("Si");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("No");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(100, 100, 100)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(77, 77, 77)
-                        .addComponent(jButton2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabelNombre)
-                            .addComponent(jLabel3))
-                        .addGap(116, 116, 116)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton5))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jButton1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(77, 77, 77)
+                            .addComponent(jButton2))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nifTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTextFieldEdad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(168, Short.MAX_VALUE))
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabelNombre)
+                                .addComponent(jLabel3))
+                            .addGap(116, 116, 116)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(nifTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextFieldEdad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,7 +206,12 @@ public class mainInterface extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton4)
+                    .addComponent(jButton5))
+                .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -257,6 +300,33 @@ public class mainInterface extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        this.cargarDatos(this.cargarPartidaNif);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        try {
+            File file = new File(fileWithDirectoryAssurance("datosPartidas", this.cargarPartidaNif));
+            file.delete();
+        } catch (Exception e) {}
+            String nif = this.cargarPartidaNif;
+            Thread thread = new Thread() {
+                public void run() {
+                    datosJugadorClasificacion clasificacionThread = new datosJugadorClasificacion();
+                    ArrayList <String> datos = clasificacionThread.getDatosRegistradoInterface(nif);
+                    String dificultad = jComboBox1.getSelectedItem().toString();
+                    boolean dificultadBool = true;
+                    if (dificultad.equals("Facil"))
+                        dificultadBool = false;
+                    Partida partida = new Partida(datos.get(1), datos.get(0), Integer.valueOf(datos.get(2)), dificultadBool);
+                }
+            };
+             thread.start();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -295,21 +365,54 @@ public class mainInterface extends javax.swing.JFrame {
     }
     
     public void comenzarPartida (String nif){
-        this.setVisible(false);
-        Thread thread = new Thread() {
-            public void run() {
-                datosJugadorClasificacion clasificacionThread = new datosJugadorClasificacion();
-                ArrayList <String> datos = clasificacionThread.getDatosRegistradoInterface(nif);
-                String dificultad = jComboBox1.getSelectedItem().toString();
-                boolean dificultadBool = true;
-                if (dificultad.equals("Facil"))
-                    dificultadBool = false;
-                Partida partida = new Partida(datos.get(1), datos.get(0), Integer.valueOf(datos.get(2)), dificultadBool);
-            }
-        };
-         thread.start();
         
+        if (!comprobarPartidaGuarda(nif)){
+            this.setVisible(false);
+            Thread thread = new Thread() {
+                public void run() {
+                    datosJugadorClasificacion clasificacionThread = new datosJugadorClasificacion();
+                    ArrayList <String> datos = clasificacionThread.getDatosRegistradoInterface(nif);
+                    String dificultad = jComboBox1.getSelectedItem().toString();
+                    boolean dificultadBool = true;
+                    if (dificultad.equals("Facil"))
+                        dificultadBool = false;
+                    Partida partida = new Partida(datos.get(1), datos.get(0), Integer.valueOf(datos.get(2)), dificultadBool);
+                }
+            };
+             thread.start();
+        }else{
+            JFrame frame = new JFrame();
+            JOptionPane.showMessageDialog(frame, "Datos encontrados", "Datos Encontrados", JOptionPane.INFORMATION_MESSAGE);
+            this.cargarPartidaNif = nif;
+            this.jButton1.setVisible(false);
+            this.jButton2.setVisible(false);
+            this.jLabel5.setVisible(true);
+            this.jButton4.setVisible(true);
+            this.jButton5.setVisible(true);
+        }
     }
+    
+    private boolean comprobarPartidaGuarda(String nif){
+        File f = new File("datosPartidas/"+nif+".ser");
+        return f.exists();
+    }
+
+    private void cargarDatos(String nif){
+        try{
+            FileInputStream fis = new FileInputStream("datosPartidas/"+nif+".ser");
+            ObjectInputStream ois =  new ObjectInputStream(fis);
+            Partida partida = (Partida) ois.readObject();//El método readObject() recupera el objeto
+            ois.close(); fis.close();
+            partida.continuarPartida();
+          }catch(FileNotFoundException e){
+            e.printStackTrace();
+          }catch(IOException e){
+            e.printStackTrace();
+          }catch(ClassNotFoundException e){
+            e.printStackTrace();
+          }
+    }
+    
     
     private void comprobarDni(String nif, boolean registrando){
         if (registrando){
@@ -349,15 +452,23 @@ public class mainInterface extends javax.swing.JFrame {
             }
         }
     }
-
+ private static String fileWithDirectoryAssurance(String directory, String filename) {
+        File dir = new File(directory);
+        if (!dir.exists()) dir.mkdirs();
+        return (directory + "/" + filename + ".ser");
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;

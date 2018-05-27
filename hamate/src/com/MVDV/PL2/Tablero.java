@@ -1,4 +1,5 @@
 package com.MVDV.PL2;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -7,7 +8,7 @@ import java.util.Objects;
  * @version v2.0.0
  */
 
-public class Tablero {
+public class Tablero implements Serializable{
     private ArrayList<HuecoDelTablero> cartasYaBajadas = new ArrayList<>();
     private ArrayList <Integer> posicionesVacias = new ArrayList<>();
     private ArrayList <Integer> posicionesLLenas = new ArrayList<>();

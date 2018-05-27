@@ -1,11 +1,13 @@
 package com.MVDV.PL2;
 
+import java.io.Serializable;
+
 /**
  * @author Marcos Vicente - Daniel Villalobos
  * @version v2.0.0
  */
 
-public class CartaEnJuego extends CartaEnMano {
+public class CartaEnJuego extends CartaEnMano implements Serializable{
 
     private boolean isMaquina;
 

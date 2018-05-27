@@ -5,12 +5,15 @@
  */
 package com.MVDV.PL2;
 
+import java.io.Serializable;
+
 /**
  * @author Marcos Vicente - Daniel Villalobos
  * @version v2.0.0
  */
-public class PreguntarJugador extends javax.swing.JFrame {
+public class PreguntarJugador extends javax.swing.JFrame implements Serializable{
 
+   
     /**
      * Creates new form preguntarJugador
      */

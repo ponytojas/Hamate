@@ -1,18 +1,20 @@
 package com.MVDV.PL2;
 
+import java.io.Serializable;
+
 /**
  * @author Marcos Vicente - Daniel Villalobos
  * @version v2.0.0
  * Clase basica de las cartas, se utiliza de clase padre para el resto de clases referentes a las cartas
  */
-public class Carta {
+public class Carta implements Serializable{
     private int valorIzq;
     private int valorDer;
 
     /**
      * Constructor basico
      */
-    public Carta() {
+    public Carta () {
     }
 
     /**

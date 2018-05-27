@@ -14,7 +14,7 @@ import java.util.Scanner;
  * @author Marcos Vicente - Daniel Villalobos
  * @version 1.0.0
  */
-public class datosJugadorClasificacion {
+public class datosJugadorClasificacion implements Serializable{
 
     private Jugador jugador;
 
