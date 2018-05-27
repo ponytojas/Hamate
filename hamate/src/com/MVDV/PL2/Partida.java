@@ -4,7 +4,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.Collections;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import sun.rmi.runtime.Log;
 
 
 /**
@@ -20,15 +19,29 @@ public class Partida {
     private Jugador maquina;
     private datosJugadorClasificacion clasificacion = new datosJugadorClasificacion();
     private TableroForm tableroInterface;
-
+    private PreguntarJugador preguntaFinalPartida;
+/**
+ * Constructor especifico de la GUI
+ * @param nombre
+ * @param nif
+ * @param edad
+ * @param facilDificil 
+ */
 
     public Partida(String nombre, String nif, int edad, boolean facilDificil){
+        String respuesta = "";
         this.jugador.setNombre(nombre);
         this.jugador.setEdad(edad);
         this.jugador.setNif(nif);
         this.maquina = new Jugador (true, true);
         this.maquina.setDificultad(facilDificil);
-        jugarJuego();
+        respuesta = jugarJuego();
+        if(respuesta.equals("Si")){
+            Partida partidaNueva = new Partida (nombre, nif, edad, facilDificil);
+        }
+        else{
+         System.exit(0);
+        }
     }
 
     public Partida(){
@@ -81,35 +94,50 @@ public class Partida {
                 turnoMaquinaAvanzado();*/
             
         }
-        return this.preguntarJugador();
+        //return this.preguntarJugador();
+        return this.preguntarJugadorInterface();
     }
+    
+    /**
+     * Funcion principal del jugador en la interface
+     * Espera hasta que se haya selecionado valores en las cartas, y realiza las llamadas correspondientes al proceso de la partida
+     */
 
     private void turnoInterface(){
         
         int posicionElegidaMano;
         int posicionElegidaTablero;
         try{
-
-       while(this.tableroInterface.getPosicionManoJugador() == -1 || this.tableroInterface.getPosicionTablero() == -1){
-             try{
-                    Thread.sleep(250);
-                }catch(InterruptedException e){}
-        }
-        this.tableroInterface.pasarCartaManoAlTablero(false);
-        posicionElegidaMano = this.tableroInterface.getPosicionManoJugador();
-        posicionElegidaTablero = this.tableroInterface.getPosicionTablero();
-        jugar(posicionElegidaMano, posicionElegidaTablero, this.jugador.getisMaquina());
-        this.tableroInterface.actualizarColores(true);
-        this.tableroInterface.setPosicionManoJugador(-1);
-        this.tableroInterface.setPosicionTableroJugador(-1);
-        if(!this.maquina.getDificultad())
-            turnoMaquinaInterface();
-        else
-            turnoMaquinaAvanzadoInterface();
+            while(this.tableroInterface.getPosicionManoJugador() == -1 || this.tableroInterface.getPosicionTablero() == -1){
+                  try{
+                         Thread.sleep(250);
+                     }catch(InterruptedException e){}
+             }
+             this.tableroInterface.pasarCartaManoAlTablero(false);
+             posicionElegidaMano = this.tableroInterface.getPosicionManoJugador();
+             posicionElegidaTablero = this.tableroInterface.getPosicionTablero();
+             jugar(posicionElegidaMano, posicionElegidaTablero, this.jugador.getisMaquina());
+             this.tableroInterface.actualizarColores(true);
+             this.tableroInterface.setPosicionManoJugador(-1);
+             this.tableroInterface.setPosicionTableroJugador(-1);
+             if(!this.maquina.getDificultad())
+                 turnoMaquinaInterface();
+             else
+                 turnoMaquinaAvanzadoInterface();
         }catch(Exception e){
-            e.getMessage();
+            String methodName;
+           methodName = e.getStackTrace()[0].getMethodName();
+            System.out.println(e);
+            JFrame frame = new JFrame();
+            JOptionPane.showMessageDialog(frame, e + methodName, "Error", JOptionPane.INFORMATION_MESSAGE);
+            
         }
     }
+    
+    /**
+     * Funcion principal Facil de la maquina
+     * Realiza la llamada a las funciones una vez ha generado la posicion de tablero y mano
+     */
     
     private void turnoMaquinaInterface(){
         
@@ -144,11 +172,20 @@ public class Partida {
             JOptionPane.showMessageDialog(frame, "Error: "+msg, "Error en la posicion", JOptionPane.INFORMATION_MESSAGE);
             turnoMaquinaInterface();
        }catch (Exception e){
-       e.getMessage();
+           String methodName;
+           methodName = e.getStackTrace()[0].getMethodName();
+           e.getMessage();
+           JFrame frame = new JFrame();
+           JOptionPane.showMessageDialog(frame, e + methodName, "Error", JOptionPane.INFORMATION_MESSAGE);
+           turnoMaquinaInterface();
        }
            
     }
     
+    /**
+     * Funcion principal Avanzado de la maquina
+     * Realiza la llamada a las funciones una vez ha generado la posicion de tablero y mano
+     */
     private void turnoMaquinaAvanzadoInterface(){ArrayList<Integer> posicionesLlenasDelContrario = this.tableroPartida.getPosicionesLlenas();
 
         ArrayList<ArrayList<Integer>> arrayConPosicionesValoresIzqDerDeCartasEnTableroOponente = cogerPosicionesIzqDerOponenteTablero(posicionesLlenasDelContrario);
@@ -318,6 +355,25 @@ public class Partida {
             super("Excepcion definida por el usuario: " + msg);
         }
     }
+    /**
+     * Funcion que muestra el resultado de la partida y pregunta al jugador si desea o no echar otra partida
+     * @return Respuesta del jugador
+     */
+    
+    private String preguntarJugadorInterface(){
+        JFrame frame = new JFrame();
+        JOptionPane.showMessageDialog(frame, this.ganoJugadorInterface(), "Resultado", JOptionPane.INFORMATION_MESSAGE);
+        this.tableroInterface.setVisible(false);
+        this.tableroInterface = null;
+        this.preguntaFinalPartida = new PreguntarJugador();
+        this.preguntaFinalPartida.setVisible(true);
+        while(this.preguntaFinalPartida.hayRespuesta() == 0){
+                  try{
+                         Thread.sleep(250);
+                     }catch(InterruptedException e){}
+             }
+        return this.preguntaFinalPartida.getText();
+    }
 
     /**
      * Metodo que pregunta al jugador si quiere jugar otra partida o no
@@ -338,7 +394,39 @@ public class Partida {
             System.out.println("La respuesta no es correcta");
            return respuestaJugador = preguntarJugador();
     }
+    
+     /**
+     * Metodo que comprueba que jugador gana especifico para la GUI
+     */
 
+    private String ganoJugadorInterface(){
+        String devolucion = "";
+   
+        this.tableroPartida.getCartasYaBajadas().forEach((huecoAux) -> {
+            huecoAux.dibujarHueco();
+        });
+        int cantidadJugador = this.tableroPartida.getcantidadCartas(true);
+        int cantidadMaquina = tableroPartida.getcantidadCartas(false);
+        int puntosJugador = this.tableroPartida.calcularPuntos(true);
+        int puntosMaquina = this.tableroPartida.calcularPuntos(false);
+        int ganaJugador = 0;
+        this.clasificacion.actualizarDatosPartida(this.jugador.getNif(), this.maquina.getNif(), cantidadJugador, cantidadMaquina, puntosJugador, puntosMaquina);
+        if (cantidadJugador > cantidadMaquina) ganaJugador = 1;
+        else if (cantidadJugador == cantidadMaquina) ganaJugador = 3;
+        switch (ganaJugador){
+            case 0:
+                devolucion = ("\n\n\nGana la maquina con "+puntosMaquina+" puntos");
+                break;
+            case 1:
+                devolucion = ("\n\n\nGana el jugador "+this.jugador.getNombre()+" con "+puntosJugador+" puntos");
+
+                break;
+            default:
+                devolucion = ("\n\n\nHa habido un empate");
+        }
+        return devolucion;
+    }
+    
     /**
      * Metodo que comprueba que jugador gana
      */
@@ -367,6 +455,9 @@ public class Partida {
         }
     }
 
+    /**
+     * Lanza la interfaz principal del tablero en la GUI
+     */
     private void lanzarInterfaz (){
         this.tableroInterface = new TableroForm(this.jugador, this.maquina);
         this.tableroInterface.setVisible(true);

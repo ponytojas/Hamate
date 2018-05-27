@@ -16,8 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 
 /**
- *
- * @author ponytojas
+ * @author Marcos Vicente - Daniel Villalobos
+ * @version v1.0.0
  */
 public class TableroForm extends javax.swing.JFrame {
     private Jugador jugador;
@@ -33,16 +33,14 @@ public class TableroForm extends javax.swing.JFrame {
     private ArrayList <JLabel> arrayCartasManoMaquina = new ArrayList<>();
     private ArrayList <String> pertenenciaCartasTablero = new ArrayList <>();
     private ArrayList<ArrayList<JLabel>> valoresIzqDerManoJugador = new ArrayList<>();
-    private ArrayList<ArrayList<String>> valoresIzqDerManoMaquina = new ArrayList<>();
     private ArrayList<ArrayList<JLabel>> valoresIzqDerTablero = new ArrayList<>();
     private ArrayList<ArrayList<String>> arrayPosicionesCartasJugador = new ArrayList <>();
-    private ArrayList<ArrayList<String>> arrayPosicionesCartasMaquina = new ArrayList <>();
     private datosJugadorClasificacion clasificacion = new datosJugadorClasificacion();
     private ArrayList <String> arrayRutasImagenesJugador = new ArrayList<>();
     private ArrayList <String> arrayRutasImagenesMaquina = new ArrayList<>();
     
     /**
-     * Creates new form TableroForm
+     * Funcion que crea el tablero, sus elementos e inicializa los elementos auxiliares (ArrayList) que se utilizan
      */
     public TableroForm(Jugador jugador, Jugador maquina) {
         //get imagenes de las cartas
@@ -57,7 +55,6 @@ public class TableroForm extends javax.swing.JFrame {
         meterValoresIzqDerTablero();
         meterPosicionesCartasEnArray();
         setValorDerIzq();
-        meterValoresIzqDerManoMaquina();
         iniciarPertenenciasTablero();
         generarArrayImagenesJugadorMaquina();
         int contador = 0;
@@ -67,6 +64,10 @@ public class TableroForm extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Genera dos arrays con las rutas de las imagenes tanto del jugador como de la maquina
+     */
+    
     private void generarArrayImagenesJugadorMaquina(){
     for (int recorrerMano = 0; recorrerMano < 5; recorrerMano++)
         this.arrayRutasImagenesJugador.add(this.jugador.getMano().get(recorrerMano).getnombreImagen());
@@ -74,10 +75,21 @@ public class TableroForm extends javax.swing.JFrame {
         this.arrayRutasImagenesMaquina.add(this.maquina.getMano().get(recorrerMano).getnombreImagen());
     }
     
+    /**
+     * Genera un array Con las 10 posiciones del tablero y sus pertenencias
+     * En un momento de la partida, tendría la siguiente forma (J=jugador, N=nadie, M=Maquina)
+     * [J][M][J][J][N][N][N][M][N][N]
+     * Es un elemento auxiliar que se utiliza en diferentes metodos
+     */
+    
     private void iniciarPertenenciasTablero(){
         for (int i = 0; i < 10; i++)
             pertenenciaCartasTablero.add("Nadie");
     }
+    
+    /**
+     * Generamos un array con las posiciones del tablero para facilitar el acceder a ellas
+     */
     
     private void meterPosicionesTablero(){
         this.arrayCartasTablero.add(cartaTablero1);
@@ -91,6 +103,10 @@ public class TableroForm extends javax.swing.JFrame {
         this.arrayCartasTablero.add(cartaTablero9);
         this.arrayCartasTablero.add(cartaTablero10);
     }
+    
+    /**
+     * Generamos un array de los label de valores izquierdos y derechos de las cartas del jugador para facilitar el acceder a ellas
+     */
     
     private void meterValoresIzqDerManoJugador(){
         ArrayList <JLabel> labelsMano;
@@ -121,17 +137,9 @@ public class TableroForm extends javax.swing.JFrame {
         this.valoresIzqDerManoJugador.add(labelsMano);
     }
     
-    private void meterValoresIzqDerManoMaquina(){
-        ArrayList <String> valoresIzqDerMaquina;
-        
-        for (int recorrerManoMaquina = 0; recorrerManoMaquina < 5; recorrerManoMaquina++){
-            valoresIzqDerMaquina = new ArrayList<>();
-            valoresIzqDerMaquina.add(String.valueOf(this.maquina.getMano().get(recorrerManoMaquina).getValorIzq()));
-            valoresIzqDerMaquina.add(String.valueOf(this.maquina.getMano().get(recorrerManoMaquina).getValorDer()));
-            this.valoresIzqDerManoMaquina.add(valoresIzqDerMaquina);
-        }
-    
-    }
+    /**
+     * Generamos un array de los label de valores izquierdos y derechos de las cartas del tablero para facilitar el acceder a ellas
+     */
     
     private void meterValoresIzqDerTablero(){
         ArrayList <JLabel> labelsMano;
@@ -187,6 +195,10 @@ public class TableroForm extends javax.swing.JFrame {
         this.valoresIzqDerTablero.add(labelsMano);
     }
     
+    /**
+     * Generamos dos arrays con los jFrame de las manos de maquina y jugador para facilitar el acceso
+     */
+    
     private void meterManosEnArray(){
         this.arrayCartasManoJugador.add(cartaManoJugador1);
         this.arrayCartasManoJugador.add(cartaManoJugador2);
@@ -200,6 +212,10 @@ public class TableroForm extends javax.swing.JFrame {
         this.arrayCartasManoMaquina.add(cartaManoMaquina4);
         this.arrayCartasManoMaquina.add(cartaManoMaquina5);
     }
+    
+    /**
+     * Generamos un array con las posiciones originales de cada carta en la mano, y si sufre alguna modificacion como posicion nueva
+     */
     
     private void meterPosicionesCartasEnArray(){
         ArrayList <String> posicionNueva = new ArrayList();
@@ -215,72 +231,73 @@ public class TableroForm extends javax.swing.JFrame {
             posicionNueva.add("Jugador");
             this.arrayPosicionesCartasJugador.add(posicionNueva);
         }
-        for (int i = 0; i < 5; i ++){
-            posicionNueva = new ArrayList();
-            posicionNueva.add("Posicion Original");
-            posicionNueva.add(String.valueOf(i));
-            posicionNueva.add("Posicion Nueva");
-            posicionNueva.add(String.valueOf(i));
-            posicionNueva.add("Hay Carta");
-            posicionNueva.add("Si");
-            posicionNueva.add("Jugador o Maquina");
-            posicionNueva.add("Maquina");
-            this.arrayPosicionesCartasMaquina.add(posicionNueva);
-        }
-        
     }
     
-    public void actualizarPosiciones(boolean esJugador){
+    /**
+     * Actualiza las posiciones del array modificando la posicion nueva de la carta en la mano
+     */
+    
+    public void actualizarPosiciones(){
         int posicionTemporalAuxiliar = 0;
         int auxiliarValorArray;
-        if (esJugador){
-            posicionTemporalAuxiliar = Integer.valueOf(this.arrayPosicionesCartasJugador.get(this.posicionManoJugador).get(3));
-            for (int auxiliar = 0; auxiliar < 5; auxiliar++)
-                if(this.posicionManoJugador == Integer.valueOf(this.arrayPosicionesCartasJugador.get(auxiliar).get(3)) 
-                        && this.arrayPosicionesCartasJugador.get(auxiliar).get(5).equals("Si"))
-                    this.arrayPosicionesCartasJugador.get(auxiliar).set(5, "No");
-                else if (Integer.valueOf(this.arrayPosicionesCartasJugador.get(auxiliar).get(3)) >= this.posicionManoJugador 
-                        && this.arrayPosicionesCartasJugador.get(auxiliar).get(5).equals("Si")){
-                    int valorTemporal = Integer.valueOf(this.arrayPosicionesCartasJugador.get(auxiliar).get(3));
-                    valorTemporal -= 1;
-                    this.arrayPosicionesCartasJugador.get(auxiliar).set(3, String.valueOf(valorTemporal));
-                }
         
-        }else{
-            for (int auxiliarArray = this.posicionManoMaquina; auxiliarArray < 5; auxiliarArray ++){
-                posicionTemporalAuxiliar = Integer.valueOf(this.arrayPosicionesCartasMaquina.get(this.posicionManoMaquina).get(3));
-                for (int auxiliar = 0; auxiliar < 5; auxiliar++)
-                    if(this.posicionManoMaquina == Integer.valueOf(this.arrayPosicionesCartasMaquina.get(auxiliar).get(3)) 
-                            && this.arrayPosicionesCartasMaquina.get(auxiliar).get(5).equals("Si"))
-                        this.arrayPosicionesCartasMaquina.get(auxiliar).set(5, "No");
-                    else if (Integer.valueOf(this.arrayPosicionesCartasMaquina.get(auxiliar).get(3)) >= this.posicionManoMaquina
-                            && this.arrayPosicionesCartasMaquina.get(auxiliar).get(5).equals("Si")){
-                        int valorTemporal = Integer.valueOf(this.arrayPosicionesCartasMaquina.get(auxiliar).get(3));
-                        valorTemporal -= 1;
-                        this.arrayPosicionesCartasMaquina.get(auxiliar).set(3, String.valueOf(valorTemporal));
-                    }
+        posicionTemporalAuxiliar = Integer.valueOf(this.arrayPosicionesCartasJugador.get(this.posicionManoJugador).get(3));
+        for (int auxiliar = 0; auxiliar < 5; auxiliar++)
+            if(this.posicionManoJugador == Integer.valueOf(this.arrayPosicionesCartasJugador.get(auxiliar).get(3)) 
+                    && this.arrayPosicionesCartasJugador.get(auxiliar).get(5).equals("Si"))
+                this.arrayPosicionesCartasJugador.get(auxiliar).set(5, "No");
+            else if (Integer.valueOf(this.arrayPosicionesCartasJugador.get(auxiliar).get(3)) >= this.posicionManoJugador 
+                    && this.arrayPosicionesCartasJugador.get(auxiliar).get(5).equals("Si")){
+                int valorTemporal = Integer.valueOf(this.arrayPosicionesCartasJugador.get(auxiliar).get(3));
+                valorTemporal -= 1;
+                this.arrayPosicionesCartasJugador.get(auxiliar).set(3, String.valueOf(valorTemporal));
             }
         }
-    }
     
-    public int seleccionarCartaDeLaInterfaz (){
-        ArrayList <String> arrayAuxiliar = new ArrayList();
-        return Integer.valueOf(this.arrayPosicionesCartasJugador.get(this.posicionManoJugador).get(3));
-    }
-    
+    /**
+     * Getter
+     * @return Posicion de la mano seleccionada por el jugador
+     */
     public int getPosicionManoJugador(){return this.posicionManoJugador;}
     
+    /**
+     * Getter
+     * @return Posicion seleccionada del tablero
+     */
     public int getPosicionTablero(){return this.posicionTableroJugador;}
     
+     /**
+     * Setter
+     */
     public void setPosicionManoMaquina(int posicion){this.posicionManoMaquina = posicion;}
     
+    /**
+     * Setter
+     */
     public void setPosicionTableroMaquina(int posicion){this.posicionTableroMaquina = posicion;}
     
+    /**
+     * Setter
+     */
     public void setPosicionManoJugador(int posicion){this.posicionManoJugador = posicion;}
     
+    /**
+     * Setter
+     */
     public void setPosicionTableroJugador(int posicion){this.posicionTableroJugador = posicion;}
     
+    
+    /**
+     * Funcion principal que gestiona la bajada de cartas desde la mano al tablero
+     * Primeramente cogemos la imagen de la carta de la mano y la ponemos en el hueco del tablero correspondiente
+     * Despues, ocultamos los valores de izquierda y derecha de la carta de la mano si es el jugador, y ponemos los que correspondan en el tablero
+     * Seguidamente, ocultamos el icono de la carta de la mano
+     * Actualizamos la pertenencia de la carta que corresponda, asi como los colores de las adyacentes
+     * Por ultimo, actualizamos las posiciones del array (posicion nueva referida anterioremente)
+     * @param esMaquina Variable para comprobar si el turno es de la maquina o jugador
+     */
     public void pasarCartaManoAlTablero(boolean esMaquina){
+        try{
         String rutaImagenAColocarEnTablero;
         if (!esMaquina)
             rutaImagenAColocarEnTablero = this.arrayRutasImagenesJugador.get(posicionManoJugador);
@@ -291,13 +308,28 @@ public class TableroForm extends javax.swing.JFrame {
         ocultarCartaValoresIzqDerAndsetValoresIzqDerTablero(!esMaquina);
         ocultarCartaMano(!esMaquina);
         this.actualizarPertenencia(!esMaquina);
-        if (!esMaquina)
-            this.arrayRutasImagenesJugador.remove(getValorOriginalPosicion(!esMaquina));
+        if (!esMaquina){
+            this.arrayRutasImagenesJugador.remove(this.posicionManoJugador);
+            actualizarPosiciones();
+        }
         else
-            this.arrayRutasImagenesMaquina.remove(getValorOriginalPosicion(!esMaquina));
+            this.arrayRutasImagenesMaquina.remove(this.posicionManoMaquina);
         
-        actualizarPosiciones(!esMaquina);
+    } catch (Exception e){
+        String methodName;
+           methodName = e.getStackTrace()[0].getMethodName();
+           e.getMessage();
+           String message = String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber());
+           JFrame frame = new JFrame();
+           JOptionPane.showMessageDialog(frame, e + methodName + message, "Error tableroForm", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
+    
+    /**
+     * Setter 
+     * Si la carta bajada es del jugador o la maquina dejamos referencia de ello
+     * @param esJugador Variable de control sobre si es carta del jugador o la maquina
+     */
     
     private void actualizarPertenencia(boolean esJugador){
         if (esJugador)
@@ -306,44 +338,49 @@ public class TableroForm extends javax.swing.JFrame {
             this.pertenenciaCartasTablero.set(this.posicionTableroMaquina, "Maquina");
     }
     
-    private int getValorRealPosicion(boolean esJugador, int posicion){
-        
-        if (esJugador)
-            return Integer.valueOf(this.arrayPosicionesCartasJugador.get(posicion).get(3));
-        else
-            return Integer.valueOf(this.arrayPosicionesCartasMaquina.get(posicion).get(3));
-        
+    /**
+     * Funcion para obtener el valor de la posicion de la carta real que tiene en ese momento en la mano
+     * @param posicion
+     * @return La posicion real actual de la carta
+     */
+    private int getValorRealPosicion(int posicion){
+        return Integer.valueOf(this.arrayPosicionesCartasJugador.get(posicion).get(3));
     }
     
-    private int getValorOriginalPosicion (boolean esJugador){
+    
+     /**
+     * Funcion para obtener el valor de la posicion de la carta original que tiene en ese momento en la mano
+     * @param posicion
+     * @return La posicion original de la carta
+     */
+    private int getValorOriginalPosicion (){
         int devolucion = -1;
-        if (esJugador){
-            for (ArrayList <String> arrayAuxiliar : arrayPosicionesCartasJugador)
-                if(this.posicionManoJugador == Integer.valueOf(arrayAuxiliar.get(3)) && arrayAuxiliar.get(5).equals("Si"))
-                    devolucion = Integer.valueOf(arrayAuxiliar.get(1));
-        }else
-            for (ArrayList <String> arrayAuxiliar : arrayPosicionesCartasMaquina)
-                if(this.posicionManoMaquina == Integer.valueOf(arrayAuxiliar.get(3)) && arrayAuxiliar.get(5).equals("Si"))
-                    devolucion = Integer.valueOf(arrayAuxiliar.get(1));
-        
+        for (ArrayList <String> arrayAuxiliar : arrayPosicionesCartasJugador)
+            if(this.posicionManoJugador == Integer.valueOf(arrayAuxiliar.get(3)) && arrayAuxiliar.get(5).equals("Si")){
+                devolucion = Integer.valueOf(arrayAuxiliar.get(1));
+                break;
+            }
         return devolucion;
     }
     
     
-    
+    /**
+     * Metodo que oculta los valores en la mano y los coloca en el tablero
+     * @param esJugador Variable de control si es jugador o maquina
+     */
     private void ocultarCartaValoresIzqDerAndsetValoresIzqDerTablero(boolean esJugador){
         if (esJugador){
-            String textAux = this.valoresIzqDerManoJugador.get(this.posicionManoJugador).get(0).getText();
-            String textAux2 = this.valoresIzqDerManoJugador.get(this.posicionManoJugador).get(1).getText();
+            String textAux = String.valueOf(this.jugador.getMano().get(this.posicionManoJugador).getValorIzq());
+            String textAux2 = String.valueOf(this.jugador.getMano().get(this.posicionManoJugador).getValorDer());
             this.valoresIzqDerTablero.get(this.posicionTableroJugador).get(0).setText(textAux);
             this.valoresIzqDerTablero.get(this.posicionTableroJugador).get(0).setVisible(true);
             this.valoresIzqDerTablero.get(this.posicionTableroJugador).get(1).setText(textAux2);
             this.valoresIzqDerTablero.get(this.posicionTableroJugador).get(1).setVisible(true);
-            this.valoresIzqDerManoJugador.get(this.posicionManoJugador).get(0).setVisible(false);
-            this.valoresIzqDerManoJugador.get(this.posicionManoJugador).get(1).setVisible(false);
+            this.valoresIzqDerManoJugador.get(getValorOriginalPosicion()).get(0).setVisible(false);
+            this.valoresIzqDerManoJugador.get(getValorOriginalPosicion()).get(1).setVisible(false);
         }else{
-            String textAux = this.valoresIzqDerManoMaquina.get(this.posicionManoMaquina).get(0);
-            String textAux2 = this.valoresIzqDerManoMaquina.get(this.posicionManoMaquina).get(1);
+            String textAux = String.valueOf(this.maquina.getMano().get(this.posicionManoMaquina).getValorIzq());
+            String textAux2 = String.valueOf(this.maquina.getMano().get(this.posicionManoMaquina).getValorDer());
             this.valoresIzqDerTablero.get(this.posicionTableroMaquina).get(0).setText(textAux);
             this.valoresIzqDerTablero.get(this.posicionTableroMaquina).get(0).setVisible(true);
             this.valoresIzqDerTablero.get(this.posicionTableroMaquina).get(1).setText(textAux2);
@@ -352,13 +389,27 @@ public class TableroForm extends javax.swing.JFrame {
         
     }
     
+    /**
+     * Metodo que oculta la carta de la mano
+     * @param esJugador Variable de control sobre si es jugador o maquina
+     */
     private void ocultarCartaMano(boolean esJugador){
-        if (esJugador)
-            this.arrayCartasManoJugador.get(this.posicionManoJugador).setVisible(false);
-        else
+        if (esJugador){
+            this.arrayCartasManoJugador.get(getValorOriginalPosicion()).setVisible(false);
+            
+        }else{
             this.arrayCartasManoMaquina.get(this.posicionManoMaquina).setVisible(false);
+            this.arrayCartasManoMaquina.remove(this.posicionManoMaquina);
+        }
     }
     
+    
+    /**
+     * Setter
+     * Aplica la imagen correspondiente a la posicion del tablero
+     * @param rutaImagen Ruta de la imagen a colocar
+     * @param esJugador Variable de control
+     */
     private void setImagenTablero(String rutaImagen, boolean esJugador){
         Border none = BorderFactory.createLineBorder(Color.RED,0);
         
@@ -384,6 +435,12 @@ public class TableroForm extends javax.swing.JFrame {
         this.arrayCartasTablero.set(posicionTableroAuxiliar, auxiliarCarta);
     }
     
+    
+    /**
+     * Funcion del reto adaptada a GUI
+     * Comprobamos los valores izquierda o derecha que correspondan y cambiamos los colores
+     * @param esJugador 
+     */
     public void actualizarColores(boolean esJugador){
         int posicionAuxiliarTablero;
         if (esJugador)
@@ -430,6 +487,12 @@ public class TableroForm extends javax.swing.JFrame {
         
     }
     
+    /**
+     * Establece el color
+     * @param esJugador Variable de control
+     * @param posicion  Posicion donde se cambiara el color
+     */
+    
     private void ponerColor(boolean esJugador, int posicion){
         if (esJugador)
             this.arrayCartasTablero.get(posicion).setBackground(new java.awt.Color(33, 150, 243));
@@ -438,10 +501,21 @@ public class TableroForm extends javax.swing.JFrame {
     }
     
     
+    /**
+     * Variable auxiliar que compara dos valores
+     * @param valorCartaBajada
+     * @param valorCartaEnJuego
+     * @return Si el valor de la carta que se baja es mayor
+     */
     private boolean esElValorBajadoMayor(int valorCartaBajada, int valorCartaEnJuego){
         return (valorCartaBajada > valorCartaEnJuego);
     }
     
+    /**
+     * Establece la imagen en las cartas del jugador
+     * @param rutaImagen Ruta a la imagen
+     * @param posicionMano Posicion de la carta de la mano que se establece
+     */
     private void setImagenMano(String rutaImagen, String posicionMano){
         switch (posicionMano){
             case "1":
@@ -486,6 +560,10 @@ public class TableroForm extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Establece el valor de los valores izq y der en las cartas de la mano del jugador
+     */
+    
     private void setValorDerIzq (){
         this.jLabel1.setText(String.valueOf(this.jugador.getMano().get(0).getValorIzq()));
         this.jLabel2.setText(String.valueOf(this.jugador.getMano().get(0).getValorDer()));
@@ -503,6 +581,12 @@ public class TableroForm extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    
+    /**
+     * Genera un array con las imagenes de las cartas de la mano
+     * @param esJugador Variable de control
+     * @return ArrayList con las rutas de las imagenes
+     */
     private ArrayList <String> getImagenesCartas(boolean esJugador){
         ArrayList <String> arrayImagenes = new ArrayList<>();
         if (esJugador)
@@ -577,13 +661,15 @@ public class TableroForm extends javax.swing.JFrame {
         cartaManoMaquina3 = new javax.swing.JLabel();
         cartaManoMaquina4 = new javax.swing.JLabel();
         cartaManoMaquina5 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 87, 68));
+        setUndecorated(true);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 87, 68));
         jPanel1.setForeground(new java.awt.Color(0, 87, 68));
+        jPanel1.setSize(new java.awt.Dimension(1410, 890));
 
         cartaManoJugador1.setBackground(new java.awt.Color(33, 150, 243));
         cartaManoJugador1.setForeground(new java.awt.Color(210, 9, 40));
@@ -1069,7 +1155,7 @@ public class TableroForm extends javax.swing.JFrame {
                                         .addComponent(cartaManoMaquina4, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(31, 31, 31)
                                         .addComponent(cartaManoMaquina5, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 62, Short.MAX_VALUE))
+                        .addGap(0, 52, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jButton3)
@@ -1111,9 +1197,6 @@ public class TableroForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel10)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSeparator1))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1125,9 +1208,7 @@ public class TableroForm extends javax.swing.JFrame {
                     .addComponent(cartaManoMaquina3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cartaManoMaquina4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cartaManoMaquina5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cartaTablero3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -1140,7 +1221,7 @@ public class TableroForm extends javax.swing.JFrame {
                         .addComponent(cartaTablero9, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cartaTablero10, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cartaTablero1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 26, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(jLabel12)
@@ -1183,23 +1264,25 @@ public class TableroForm extends javax.swing.JFrame {
                         .addComponent(jLabel8)
                         .addComponent(jLabel9))
                     .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton3)
                     .addComponent(jButton2))
-                .addGap(83, 83, 83))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -1306,7 +1389,7 @@ public class TableroForm extends javax.swing.JFrame {
         this.cartaManoJugador3.setBorder(none);
         this.cartaManoJugador4.setBorder(none);
         this.cartaManoJugador5.setBorder(none);
-        this.posicionManoJugador = this.getValorRealPosicion(true, 0);
+        this.posicionManoJugador = this.getValorRealPosicion(0);
     }//GEN-LAST:event_cartaManoJugador1MouseClicked
 
     private void cartaManoJugador2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaManoJugador2MouseClicked
@@ -1318,7 +1401,7 @@ public class TableroForm extends javax.swing.JFrame {
         this.cartaManoJugador3.setBorder(none);
         this.cartaManoJugador4.setBorder(none);
         this.cartaManoJugador5.setBorder(none);
-        this.posicionManoJugador = this.getValorRealPosicion(true, 1);
+        this.posicionManoJugador = this.getValorRealPosicion(1);
     }//GEN-LAST:event_cartaManoJugador2MouseClicked
 
     private void cartaManoJugador3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaManoJugador3MouseClicked
@@ -1330,7 +1413,7 @@ public class TableroForm extends javax.swing.JFrame {
         this.cartaManoJugador3.setBorder(red);
         this.cartaManoJugador4.setBorder(none);
         this.cartaManoJugador5.setBorder(none);
-        this.posicionManoJugador = this.getValorRealPosicion(true, 2);
+        this.posicionManoJugador = this.getValorRealPosicion(2);
     }//GEN-LAST:event_cartaManoJugador3MouseClicked
 
     private void cartaManoJugador4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaManoJugador4MouseClicked
@@ -1342,7 +1425,7 @@ public class TableroForm extends javax.swing.JFrame {
         this.cartaManoJugador3.setBorder(none);
         this.cartaManoJugador4.setBorder(red);
         this.cartaManoJugador5.setBorder(none);
-        this.posicionManoJugador = this.getValorRealPosicion(true, 3);
+        this.posicionManoJugador = this.getValorRealPosicion(3);
     }//GEN-LAST:event_cartaManoJugador4MouseClicked
 
     private void cartaManoJugador5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaManoJugador5MouseClicked
@@ -1354,7 +1437,7 @@ public class TableroForm extends javax.swing.JFrame {
         this.cartaManoJugador3.setBorder(none);
         this.cartaManoJugador4.setBorder(none);
         this.cartaManoJugador5.setBorder(red);
-        this.posicionManoJugador = this.getValorRealPosicion(true, 4);
+        this.posicionManoJugador = this.getValorRealPosicion(4);
     }//GEN-LAST:event_cartaManoJugador5MouseClicked
 
     private void cartaTablero1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaTablero1MouseClicked
@@ -1618,6 +1701,5 @@ public class TableroForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }

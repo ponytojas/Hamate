@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 /**
- *
- * @author ponytojas
+ * @author Marcos Vicente - Daniel Villalobos
+ * @version v1.0.0
  */
 public class mainInterface extends javax.swing.JFrame {
 
@@ -295,6 +295,7 @@ public class mainInterface extends javax.swing.JFrame {
     }
     
     public void comenzarPartida (String nif){
+        this.setVisible(false);
         Thread thread = new Thread() {
             public void run() {
                 datosJugadorClasificacion clasificacionThread = new datosJugadorClasificacion();
