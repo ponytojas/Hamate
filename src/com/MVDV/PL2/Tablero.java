@@ -4,7 +4,7 @@ import java.util.Objects;
 
 /**
  * @author Marcos Vicente - Daniel Villalobos
- * @version v1.0.0
+ * @version v2.0.0
  */
 
 public class Tablero {

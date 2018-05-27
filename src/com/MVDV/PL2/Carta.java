@@ -2,7 +2,7 @@ package com.MVDV.PL2;
 
 /**
  * @author Marcos Vicente - Daniel Villalobos
- * @version v1.0.0
+ * @version v2.0.0
  * Clase basica de las cartas, se utiliza de clase padre para el resto de clases referentes a las cartas
  */
 public class Carta {
