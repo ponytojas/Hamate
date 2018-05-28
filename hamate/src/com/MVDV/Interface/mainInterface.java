@@ -254,12 +254,21 @@ public class mainInterface extends javax.swing.JFrame{
        
     }//GEN-LAST:event_jButton3MouseClicked
 
+    /**
+     * Boton que lanza un mensaje con la clasificacion
+     * @param evt Evento de clickeo
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
         JFrame frame = new JFrame();
         JOptionPane.showMessageDialog(frame, this.clasificacion.dibujarClasificacionInterfaz(), "Clasificacion", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    /**
+     * Cuando se pulsa el boton, se comprueba si el usuario esta o no registrado, si lo esta se comienza la partida normalmente.
+     * Sino, se muestran campos necesarios que hay que rellenar para generar nu usuario nuevo y empezar a jugar.
+     * Se contemplan diferentes excepciones si no se completan correctamente los datos
+     * @param evt Evento de clickeo
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         String nif;
@@ -299,12 +308,19 @@ public class mainInterface extends javax.swing.JFrame{
             JOptionPane.showMessageDialog(frame, msg);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-
+/**
+ * WIP: Pulsando este boton cargamos la partida anterior 
+ * @param evt Evento de clickeo
+ */
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         this.cargarDatos(this.cargarPartidaNif);
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    /**
+     * WIP: Pulsando este boton se elimina el archivo de anterior partida y se comienza una nueva
+     * @param evt Evento de clickeo
+     */
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
@@ -364,6 +380,11 @@ public class mainInterface extends javax.swing.JFrame{
         });
     }
     
+    /**
+     * Funcion principal, comienza la partida con los datos del jugador
+     * @param nif Identificacion del jugador para obtener los datos necesarios
+     */
+    
     public void comenzarPartida (String nif){
         
         if (!comprobarPartidaGuarda(nif)){
@@ -392,10 +413,21 @@ public class mainInterface extends javax.swing.JFrame{
         }
     }
     
+    /**
+     * Metodo que comprueba si hay una partida anterior guardada
+     * @param nif Identificacion del jugador, asi mismo la usamos como identificacion de la partida
+     * @return Booleano de control si existe o no
+     */
+    
     private boolean comprobarPartidaGuarda(String nif){
         File f = new File("datosPartidas/"+nif+".ser");
         return f.exists();
     }
+    
+    /**
+     * Metodo que realiza la carga de la partida anterior
+     * @param nif Identificador para la partida y jugador
+     */
 
     private void cargarDatos(String nif){
         try{
@@ -412,7 +444,11 @@ public class mainInterface extends javax.swing.JFrame{
             e.printStackTrace();
           }
     }
-    
+    /**
+     * Metodo que dado un nif comprueba si esta o no registrado el usuario, ademas si el usuario no esta registrado habilita los campos necesarios para registrarlo
+     * @param nif Identificacion de usuario
+     * @param registrando Variable de control para comprobar el identificador en primera o segunda instancia
+     */
     
     private void comprobarDni(String nif, boolean registrando){
         if (registrando){
@@ -452,6 +488,13 @@ public class mainInterface extends javax.swing.JFrame{
             }
         }
     }
+    
+    /**
+     * Metodo que dado un directorio, crea la carpeta del directorio si no existe y devuelve la ruta relativa al fichero
+     * @param directory Directorio al fichero
+     * @param filename Nombre del fichero
+     * @return Ruta relativa al fichero
+     */
  private static String fileWithDirectoryAssurance(String directory, String filename) {
         File dir = new File(directory);
         if (!dir.exists()) dir.mkdirs();

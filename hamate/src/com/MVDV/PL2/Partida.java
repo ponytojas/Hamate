@@ -1,9 +1,9 @@
 package com.MVDV.PL2;
 import java.io.*;
-import java.nio.file.DirectoryNotEmptyException;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Path;
+//import java.nio.file.DirectoryNotEmptyException;
+//import java.nio.file.Files;
+//import java.nio.file.NoSuchFileException;
+//import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.Collections;
@@ -28,10 +28,10 @@ public class Partida  implements Serializable{
    
 /**
  * Constructor especifico de la GUI
- * @param nombre
- * @param nif
- * @param edad
- * @param facilDificil 
+ * @param nombre Nombre del jugador
+ * @param nif Identificador del jugador
+ * @param edad Edad del jugador
+ * @param facilDificil Dificultad de la partida
  */
 
     public Partida(String nombre, String nif, int edad, boolean facilDificil){
@@ -49,6 +49,10 @@ public class Partida  implements Serializable{
          System.exit(0);
         }
     }
+    
+    /**
+     * Constructor por defecto
+     */
 
     public Partida(){
         boolean datosCorrectos = false;
@@ -61,7 +65,10 @@ public class Partida  implements Serializable{
         this.jugarJuego();
     }
     
-    
+    /**
+     * WIP: Funcion principal al cargar una partida
+     * @return Respuesta del jugador a empezar o no otra partida
+     */
     public String continuarPartida(){
         while (!this.tableroPartida.estaElTableroLleno())
             turnoInterface();
@@ -339,7 +346,7 @@ public class Partida  implements Serializable{
 
 
     /**
-     * Excepcion
+     * Exception
      * Excepcion de control
      */
     class HuecoOcupado extends Exception {
@@ -350,6 +357,11 @@ public class Partida  implements Serializable{
             super("Excepcion definida por el usuario: " + msg);
         }
     }
+    
+    /**
+     * Exception
+     * Excepcion para version terminal donde podemos seleccionar una carta fuera del rango de la mano
+     */
 
     class fueraDelRangoDeLaMano extends Exception {
 
@@ -360,6 +372,10 @@ public class Partida  implements Serializable{
         }
     }
 
+    /**
+     * Exception
+     * Excepcion que controla que se haya ponderado correctamente las cartas en el modo avanzado
+     */
 
     class noPonderacion extends Exception {
 
@@ -734,6 +750,11 @@ public class Partida  implements Serializable{
         return !this.tableroPartida.getCartasYaBajadas().get(posicion).getHayUnaCarta();
     }
     
+    /**
+     * WIP: MEtodo que guarda la partida actual mediante Serializacion de Java
+     * Actualment no funciona, Java no permite serializar elementos swing desde la version 1.0.2
+     */
+    
     public void guardarDatos(){
         try {
             File file = new File(fileWithDirectoryAssurance("datosPartidas", this.jugador.getNif()));
@@ -754,6 +775,12 @@ public class Partida  implements Serializable{
         System.exit(0);
     }
     
+   /**
+     * Metodo que dado un directorio, crea la carpeta del directorio si no existe y devuelve la ruta relativa al fichero
+     * @param directory Directorio al fichero
+     * @param filename Nombre del fichero
+     * @return Ruta relativa al fichero
+     */
     private static String fileWithDirectoryAssurance(String directory, String filename) {
         File dir = new File(directory);
         if (!dir.exists()) dir.mkdirs();

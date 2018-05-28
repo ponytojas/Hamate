@@ -22,6 +22,14 @@ public class Jugador implements Serializable{
     private int edad;
     private boolean facilAvanzado;
     private int puntos;
+    
+    /**
+     * Constructor utilizado en la GUI
+     * @param nombreInput Nombre del jugador
+     * @param nifInput Identificador del jugador
+     * @param edad Edad del jugador
+     * @param esMaquinaInput Variable de control sobre si es o no usuario jugable
+     */
 
 
     public Jugador(String nombreInput, String nifInput, int edad, boolean esMaquinaInput){
@@ -142,7 +150,10 @@ public class Jugador implements Serializable{
     public int getManoSize(){
         return mano.size();
     }
-
+    
+    /**
+     * Preguntas iniciales para la creacion de un nuevo usuario
+     */
 
     public void preguntasInicioPartida(){
         Scanner entrada = new Scanner(System.in);
@@ -176,32 +187,79 @@ public class Jugador implements Serializable{
         }
     }
 
+    /**
+     * Setter
+     * @param nombre Nombre del usuario
+     */
     public void setNombre (String nombre){this.nombre = nombre; }
 
+    /**
+     * Getter
+     * @return Nombre del usuario
+     */
     public String getNombre(){return this.nombre; }
-
+/**
+     * Setter
+     * @param edad Edad del usuario
+     */
     public void setEdad (int edad){this.edad = edad; }
 
+    /**
+     * Setter
+     * @param nif Identificador de usuario
+     */
     public void setNif (String nif){this.nif = nif; }
 
+    /**
+     * Getter
+     * @return Dificultad de la partida
+     */
     public boolean getDificultad(){return  this.facilAvanzado;}
     
+    /**
+     * Setter
+     * @param facilDificil Dificultad de usuario para la partida
+     */
     public void setDificultad(boolean facilDificil){  this.facilAvanzado = facilDificil;}
 
+    /**
+     * Getter
+     * @return Mano del jugador
+     */
     public ArrayList <CartaEnMano> getMano(){return this.mano;}
 
+    /**
+     * Getter
+     * @return Identificador usuario
+     */
     public String getNif(){return this.nif;}
 
+    /**
+     * Getter
+     * @return Edad del jugador
+     */
     public int getEdad() { return edad; }
 
     public void setMaquina(boolean maquina) {
         this.maquina = maquina;
     }
 
+    /**
+     * Setter
+     * @param puntosInput Puntos del jugador
+     */
     public void setPuntos(int puntosInput){this.puntos += puntosInput;}
 
+    /**
+     * Getter
+     * @return Objeto jugador
+     */
     public Jugador getJugador (){return this;}
 
+    /**
+     * Getter 
+     * @return Puntos 
+     */
     public int getPuntos(){return  this.puntos;}
 
 }

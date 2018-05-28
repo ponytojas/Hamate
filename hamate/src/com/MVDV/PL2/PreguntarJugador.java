@@ -106,17 +106,27 @@ public class PreguntarJugador extends javax.swing.JFrame implements Serializable
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+ * De forma auxiliar, se guarda el texto en un JLabel oculto que leeremos en la funcion principal con la respuesta
+ * @param evt Clickeado del boton
+ */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.respuestaField.setText("Si");
     }//GEN-LAST:event_jButton2ActionPerformed
-
+/**
+ * De forma auxiliar, se guarda el texto en un JLabel oculto que leeremos en la funcion principal con la respuesta
+ * @param evt Clickeado del boton
+ */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.respuestaField.setText("No");
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * Metodo auxilir que comprueba si hay respuesta o no
+     * @return 1 si existe y 0 si no existe respuesta
+     */
     public int hayRespuesta(){
         if (this.respuestaField.getText().equals(""))
             return 0;
@@ -124,6 +134,10 @@ public class PreguntarJugador extends javax.swing.JFrame implements Serializable
             return 1;
     }
     
+    /**
+     * Getter
+     * @return Texto del JLabel oculto
+     */
     public String getText(){
         return this.respuestaField.getText();
     }

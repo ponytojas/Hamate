@@ -2,7 +2,7 @@ package com.MVDV.PL2;
 
 /**
  * @author Marcos Vicente - Daniel Villalobos
- * @version 1.0.0
+ * @version 2.0.0
  */
 public class JugadorException extends Exception {
     public static final String NIF_INCORRECTO = "El NIF proporcionado es incorrecto.";

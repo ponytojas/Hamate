@@ -32,7 +32,16 @@ public class CartaEnMazo extends Carta implements Serializable{
        this.nombreImagen = "Images/"+ String.valueOf(rand.nextInt(110)+1)+".png";
     }
 
+    /**
+     * Getter
+     * @return Ruta relativa de la imagen asociada a la carta
+     */
     public String getnombreImagen(){return this.nombreImagen;}
+    
+    /**
+     * Getter
+     * @return Comprueba si el valor de la carta es doble o no
+     */
 
     public boolean getvaleDoble(){return valeDoble;}
 

@@ -2,6 +2,11 @@ package com.MVDV.PL2;
 
 import java.io.Serializable;
 
+/**
+ * @author Marcos Vicente - Daniel Villalobos
+ * @version v2.0.0
+ */
+
 public class HuecoDelTablero implements Serializable{
 
     private boolean hayUnaCarta;
@@ -120,6 +125,10 @@ public class HuecoDelTablero implements Serializable{
         this.getcartaEnElHueco().cambiarJugador();
     }
 
+    /**
+     * Setter
+     * @param posicion Especifica la posicion que tiene el hueco
+     */
     public void setPosicion(int posicion){this.posicion = posicion;}
 
 

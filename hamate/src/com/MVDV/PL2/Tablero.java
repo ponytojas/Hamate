@@ -82,7 +82,10 @@ public class Tablero implements Serializable{
         this.cartasYaBajadas.get(posicionDelTablero).setcartaEnElHueco(nuevaCartaEnTablero, posicionDelTablero, isMaquina);
         reto(posicionDelTablero);
     }
-
+/**
+ * Una vez se coloca una carta, la posicion se elimina del array de elementos vacios
+ * @param posicionDondeSeQuiereBajarLaCarta Posicion a eliminar
+ */
     private void quitarPosicionDelArrayDeHuecosVacios(int posicionDondeSeQuiereBajarLaCarta){
         for (int i = 0; i < this.posicionesVacias.size(); i++){
             if (this.posicionesVacias.get(i) == posicionDondeSeQuiereBajarLaCarta){
@@ -216,6 +219,11 @@ public class Tablero implements Serializable{
         return cantidad;
     }
 
+    /**
+     * Metodo que calcula los puntos ganados por cada jugador, teniendo en cuenta si valen o no doble
+     * @param jugadorMaquina Variable de control para saber si nos referimos a la maquina o jugador
+     * @return 
+     */
     public int calcularPuntos(boolean jugadorMaquina){
         int jugador = 0;
         int cantidad = 0;
@@ -244,10 +252,41 @@ public class Tablero implements Serializable{
         return cantidad;
     }
 
+    /**
+     * Getter
+     * @return tamaño del array de elementos vacios
+     */
     public int getCantidadCartasVacias(){ return this.posicionesVacias.size(); }
+    
+    /**
+     * Getter
+     * @param posicion Dada una posicion devuelve el valor de la misma
+     * @return 
+     */
     public int getPosicionDelArrayVacio(int posicion){return this.posicionesVacias.get(posicion);}
+    
+    /**
+     * Getter
+     * @return Tamaño del array de posiciones llenas
+     */
     public int getCantidadCartasLlenas(){return this.posicionesLLenas.size();}
+    
+    /**
+     * Getter
+     * @param posicion Posicion que solicitamos
+     * @return Posicion del hueco lleno
+     */
     public int getPosicionDelArrayLleno(int posicion){return this.posicionesLLenas.get(posicion);}
+    
+    /**
+     * Getter
+     * @return Array de todas las posiciones llenas
+     */
     public ArrayList<Integer> getPosicionesLlenas(){return this.posicionesLLenas;}
+    
+    /**
+     * Getter
+     * @return Array de todas las cartas ya bajadas
+     */
     public ArrayList getArrayCartasYaBajadas (){return this.cartasYaBajadas;}
 }

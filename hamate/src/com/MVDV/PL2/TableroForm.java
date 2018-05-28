@@ -268,24 +268,28 @@ public class TableroForm extends javax.swing.JFrame{
      */
     public int getPosicionTablero(){return this.posicionTableroJugador;}
     
-     /**
+    /**
      * Setter
+     * @param posicion Posicion de la mano de la maquina
      */
     public void setPosicionManoMaquina(int posicion){this.posicionManoMaquina = posicion;}
     
     /**
      * Setter
+     * @param posicion Posicion del tablero de la maquina
      */
     public void setPosicionTableroMaquina(int posicion){this.posicionTableroMaquina = posicion;}
     
     /**
      * Setter
+     * @param posicion Posicion de la mano del jugador
      */
     public void setPosicionManoJugador(int posicion){this.posicionManoJugador = posicion;}
     
-    /**
-     * Setter
-     */
+   /**
+    * Setter
+    * @param posicion Posicion del tablero del jugador
+    */
     public void setPosicionTableroJugador(int posicion){this.posicionTableroJugador = posicion;}
     
     
