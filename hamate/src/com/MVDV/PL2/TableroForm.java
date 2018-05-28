@@ -449,10 +449,15 @@ public class TableroForm extends javax.swing.JFrame{
      */
     public void actualizarColores(boolean esJugador){
         int posicionAuxiliarTablero;
-        if (esJugador)
+        String pertenenciaAuxiliar;
+        if (esJugador){
             posicionAuxiliarTablero = this.posicionTableroJugador;
-        else
+            pertenenciaAuxiliar = "Jugador";
+        }
+        else{
             posicionAuxiliarTablero = this.posicionTableroMaquina;
+            pertenenciaAuxiliar = "Maquina";
+        }
         
         switch (posicionAuxiliarTablero){
             case 0:
@@ -460,8 +465,11 @@ public class TableroForm extends javax.swing.JFrame{
                         && !this.pertenenciaCartasTablero.get((posicionAuxiliarTablero+1)).equals("Nadie")){
                     int valorDerCartaBajada = Integer.valueOf(this.valoresIzqDerTablero.get(posicionAuxiliarTablero).get(1).getText());
                     int ValorIzqCartaYaEnJuego = Integer.valueOf(this.valoresIzqDerTablero.get((posicionAuxiliarTablero+1)).get(0).getText());
-                    if (esElValorBajadoMayor(valorDerCartaBajada, ValorIzqCartaYaEnJuego))
+                    if (esElValorBajadoMayor(valorDerCartaBajada, ValorIzqCartaYaEnJuego)){
                         ponerColor(esJugador, (posicionAuxiliarTablero+1));
+                        this.pertenenciaCartasTablero.set(posicionAuxiliarTablero+1, pertenenciaAuxiliar);
+                    }
+                    
                 }
                 break;
             case 9:
@@ -469,8 +477,10 @@ public class TableroForm extends javax.swing.JFrame{
                         && !this.pertenenciaCartasTablero.get((posicionAuxiliarTablero-1)).equals("Nadie")){
                     int valorDerCartaBajada = Integer.valueOf(this.valoresIzqDerTablero.get(posicionAuxiliarTablero).get(0).getText());
                     int ValorIzqCartaYaEnJuego = Integer.valueOf(this.valoresIzqDerTablero.get((posicionAuxiliarTablero-1)).get(1).getText());
-                    if (esElValorBajadoMayor(valorDerCartaBajada, ValorIzqCartaYaEnJuego))
+                    if (esElValorBajadoMayor(valorDerCartaBajada, ValorIzqCartaYaEnJuego)){
                         ponerColor(esJugador, (posicionAuxiliarTablero-1));
+                        this.pertenenciaCartasTablero.set(posicionAuxiliarTablero-1, pertenenciaAuxiliar);
+                    }
                 }
                 break;
             default:
@@ -478,15 +488,19 @@ public class TableroForm extends javax.swing.JFrame{
                         && !this.pertenenciaCartasTablero.get((posicionAuxiliarTablero+1)).equals("Nadie")){
                     int valorDerCartaBajada = Integer.valueOf(this.valoresIzqDerTablero.get(posicionAuxiliarTablero).get(1).getText());
                     int ValorIzqCartaYaEnJuego = Integer.valueOf(this.valoresIzqDerTablero.get((posicionAuxiliarTablero+1)).get(0).getText());
-                    if (esElValorBajadoMayor(valorDerCartaBajada, ValorIzqCartaYaEnJuego))
+                    if (esElValorBajadoMayor(valorDerCartaBajada, ValorIzqCartaYaEnJuego)){
                         ponerColor(esJugador, (posicionAuxiliarTablero+1));
+                        this.pertenenciaCartasTablero.set(posicionAuxiliarTablero+1, pertenenciaAuxiliar);
+                    }
                 }
                 if (!this.pertenenciaCartasTablero.get(posicionAuxiliarTablero).equals(this.pertenenciaCartasTablero.get((posicionAuxiliarTablero-1)))
                         && !this.pertenenciaCartasTablero.get((posicionAuxiliarTablero-1)).equals("Nadie")){
                     int valorDerCartaBajada = Integer.valueOf(this.valoresIzqDerTablero.get(posicionAuxiliarTablero).get(0).getText());
                     int ValorIzqCartaYaEnJuego = Integer.valueOf(this.valoresIzqDerTablero.get(posicionAuxiliarTablero-1).get(1).getText());
-                    if (esElValorBajadoMayor(valorDerCartaBajada, ValorIzqCartaYaEnJuego))
+                    if (esElValorBajadoMayor(valorDerCartaBajada, ValorIzqCartaYaEnJuego)){
                         ponerColor(esJugador, (posicionAuxiliarTablero-1));
+                        this.pertenenciaCartasTablero.set(posicionAuxiliarTablero-1, pertenenciaAuxiliar);
+                    }
                 }
                 break;
         }
